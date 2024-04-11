@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+
+<!-- Mirrored from eecs390.github.io/notes/concurrent.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Mar 2024 18:15:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parallel Computing &mdash; Programming Language Principles and Paradigms 0.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/style-extra.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery3b25.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compatfa9a.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options804b.js?v=7f00635f"></script>
+        <script src="_static/doctools56c1.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight7f57.js?v=dc90522c"></script>
+        <script src="_static/js-extraf31b.js?v=c32e72a1"></script>
+        <script async="async" src="../../cdn.jsdelivr.net/npm/mathjax%403/es5/tex-mml-chtml.js"></script>
+        <script src="_static/dark_mode_js/default_light679c.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher2b7c.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Macros and Code Generation" href="metaprogramming.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #C53390" >
+
+          
+          
+          <a href="index-2.html" class="icon icon-home">
+            Programming Language Principles and Paradigms
+          </a>
+              <div class="version">
+                0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="https://eecs390.github.io/notes/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Foundations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#basic-python">Basic Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#basic-data-structures">Basic Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#compound-statements">Compound Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#function-definitions">Function Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#class-definitions">Class Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#executing-a-module">Executing a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#python-reference-semantics">Python Reference Semantics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#basic-elements">Basic Elements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#levels-of-description">Levels of Description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#lexical-structure">Lexical Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#syntax">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#semantics">Semantics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#entities-objects-and-variables">Entities, Objects, and Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#l-values-and-r-values">L-Values and R-Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#expressions">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#statements">Statements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#names-and-environments">Names and Environments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#blocks">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#name-lookup">Name Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#nested-inline-blocks">Nested Inline Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#scope-in-functions">Scope in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#id2">Static Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#dynamic-scope">Dynamic Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#point-of-declaration-or-definition">Point of Declaration or Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#implementation-strategies">Implementation Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#control-flow">Control Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#expression-sequencing">Expression Sequencing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#short-circuiting">Short Circuiting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#explicit-sequences">Explicit Sequences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#compound-assignment">Compound Assignment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#statement-sequences">Statement Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#unstructured-transfer-of-control">Unstructured Transfer of Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#structured-control">Structured Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#conditionals">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#loops">Loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#loop-termination">Loop Termination</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#memory-management">Memory Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#storage-duration-classes">Storage Duration Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#static-storage">Static Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#automatic-storage">Automatic Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#thread-local-storage">Thread-Local Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#dynamic-storage">Dynamic Storage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#value-and-reference-semantics">Value and Reference Semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#raii-and-scope-based-resource-management">RAII and Scope-Based Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#garbage-collection">Garbage Collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#reference-counting">Reference Counting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#tracing-collectors">Tracing Collectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#finalizers">Finalizers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#grammars">Grammars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#regular-expressions">Regular Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#context-free-grammars">Context-Free Grammars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#grammars-in-programming-languages">Grammars in Programming Languages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#vexing-parse">Vexing Parse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Functional Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">Introduction to Scheme</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#expressions">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#compound-values">Compound Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#symbolic-data">Symbolic Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#functions">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#keyword-arguments">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#default-arguments">Default Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#variadic-functions">Variadic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#parameter-passing">Parameter Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#evaluation-of-function-calls">Evaluation of Function Calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#recursion">Recursion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#activation-records">Activation Records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#tail-recursion">Tail Recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#higher-order-functions">Higher-Order Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#function-objects">Function Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#functions-as-parameters">Functions as Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#function-pointers">Function Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#binding-policy">Binding Policy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#nested-functions">Nested Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#decorators">Decorators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#lambda-functions">Lambda Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#scheme">Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#java">Java</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#c">C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#common-patterns">Common Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#sequence-patterns">Sequence Patterns</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#map">Map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#reduce">Reduce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#filter">Filter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#any">Any</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#composition">Composition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#partial-application-and-currying">Partial Application and Currying</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#continuations">Continuations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#restricted-continuations">Restricted Continuations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#subroutines">Subroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#generators">Generators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#first-class-continuations">First-Class Continuations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#signaling-errors">Signaling Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#call-and-return">Call and Return</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#id11">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Lambda Calculus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#non-terminating-computation">Non-Terminating Computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#normal-order-evaluation">Normal-Order Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#encoding-data">Encoding Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#booleans">Booleans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#pairs">Pairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#church-numerals">Church Numerals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#recursion">Recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#equivalent-models">Equivalent Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html#operational-semantics">Operational Semantics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#language">Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#states-and-transitions">States and Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#expressions">Expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#arithmetic-expressions">Arithmetic Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#order-of-evaluation">Order of Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#boolean-expressions">Boolean Expressions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#statements">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#operational-semantics-for-lambda-calculus">Operational Semantics for Lambda Calculus</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html#formal-type-systems">Formal Type Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#subtyping">Subtyping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#subtyping-and-arithmetic-operators">Subtyping and Arithmetic Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#the-top-type">The Top Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#subtyping-and-functions">Subtyping and Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#full-typing-rules">Full Typing Rules</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Abstraction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Functional Data Abstraction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#pairs-and-lists">Pairs and Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#message-passing">Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#lists">Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dictionaries">Dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dispatch-dictionaries">Dispatch Dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#object-oriented-programming">Object-Oriented Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#members">Members</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#access-control">Access Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#kinds-of-methods">Kinds of Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#nested-and-local-classes">Nested and Local Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implementation-strategies">Implementation Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#inheritance-and-polymorphism">Inheritance and Polymorphism</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#types-of-inheritance">Types of Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#class-hierarchies">Class Hierarchies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#method-overriding">Method Overriding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#covariance-and-contravariance">Covariance and Contravariance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#accessing-hidden-or-overridden-members">Accessing Hidden or Overridden Members</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implementing-dynamic-binding">Implementing Dynamic Binding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#full-lookup-and-dispatch-process">Full Lookup and Dispatch Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#multiple-inheritance">Multiple Inheritance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#dictionary-based-implementation">Dictionary-Based Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#record-based-implementation">Record-Based Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#static-analysis">Static Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#types">Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-equivalence">Type Equivalence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-compatibility">Type Compatibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-inference">Type Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#control-flow-analysis">Control-Flow Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#dynamic-typing">Dynamic Typing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#generics">Generics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implicit-parametric-polymorphism">Implicit Parametric Polymorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#explicit-parametric-polymorphism">Explicit Parametric Polymorphism</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#non-type-parameters">Non-Type Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#constraints">Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#implementation">Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#java-generics">Java Generics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#curiously-recurring-template-pattern">Curiously Recurring Template Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#duck-typing">Duck Typing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#modules-and-namespaces">Modules and Namespaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#translation-units">Translation Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#modules-packages-and-namespaces">Modules, Packages, and Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#linkage">Linkage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#information-hiding">Information Hiding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#initialization">Initialization</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Declarative Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html">Logic Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#prolog">Prolog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#lists">Lists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#arithmetic">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#side-effects">Side Effects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#unification-and-search">Unification and Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#search-order-and-backtracking">Search Order and Backtracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#the-cut-operator">The Cut Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#negation">Negation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html#constraints-and-dependencies">Constraints and Dependencies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#constraint-logic-programming">Constraint Logic Programming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#search">Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#id2">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#make">Make</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html#pattern-matching">Pattern Matching</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Metaprogramming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html">Macros and Code Generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#scheme-macros">Scheme Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#cpp-macros">CPP Macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metaprogramming.html#stringification-and-concatenation">Stringification and Concatenation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metaprogramming.html#the-macro-namespace">The Macro Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#code-generation">Code Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html#template-metaprogramming">Template Metaprogramming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#pairs">Pairs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#numerical-computations">Numerical Computations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#templates-and-function-overloading">Templates and Function Overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#sfinae">SFINAE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#ensuring-a-substitution-failure">Ensuring a Substitution Failure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#variadic-templates">Variadic Templates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html#example-multidimensional-arrays">Example: Multidimensional Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#points">Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#domains">Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#arrays">Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#stencil">Stencil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#nested-iteration">Nested Iteration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Concurrent Programming</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parallel Computing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parallelism-in-python">Parallelism in Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#threading">Threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiprocessing">Multiprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-problem-with-shared-state">The Problem with Shared State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#when-no-synchronization-is-necessary">When No Synchronization is Necessary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#synchronized-data-structures">Synchronized Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#locks">Locks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#barriers">Barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#message-passing">Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-examples">Application Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#web-crawler">Web Crawler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#particle-simulator">Particle Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#synchronization-pitfalls">Synchronization Pitfalls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#under-synchronization">Under-synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#over-synchronization">Over-synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deadlock">Deadlock</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#asynchronous-tasks">Asynchronous Tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#limiting-the-number-of-tasks">Limiting the Number of Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-policy">Launch Policy</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #C53390" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index-2.html">Programming Language Principles and Paradigms</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index-2.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parallel Computing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="metaprogramming.html" class="btn btn-neutral float-left" title="Macros and Code Generation" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Concurrent Programming</h1><p>We now take a brief look at <em>concurrent programming</em>, where a program
+is structured so that several computations can execute concurrently
+during overlapping time periods. We focus on aspects of concurrency
+that are explicitly specified by a programmer, rather than the
+implicit concurrency provided by compiler optimizations or the
+underlying system hardware.</p>
+<section id="parallel-computing">
+<h1>Parallel Computing<a class="headerlink" href="#parallel-computing" title="Link to this heading"></a></h1>
+<p>From the 1970s through the mid-2000s, the speed of individual
+processor cores grew at an exponential rate. Much of this increase in
+speed was accomplished by increasing the <em>clock frequency</em>, the rate
+at which a processor performs basic operations. In the mid-2000s,
+however, this exponential increase came to an abrupt end, due to power
+and thermal constraints, and the speed of individual processor cores
+has increased much more slowly since then.
+<a class="reference internal" href="#figure-cpu-frequency"><span class="std std-numref">Figure 46</span></a> is graph from <a class="reference external" href="http://cpudb.stanford.edu/visualize/clock_frequency">Stanford’s CPU database</a> that
+illustrates this trend:</p>
+<figure class="align-center" id="id1">
+<span id="figure-cpu-frequency"></span><a class="reference internal image-reference" href="_images/cpu_frequency.svg"><img alt="_images/cpu_frequency.svg" src="_images/cpu_frequency.svg" width="900" /></a>
+<figcaption>
+<p><span class="caption-number">Figure 46 </span><span class="caption-text">Historical data of CPU clock frequencies.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Instead of increasing clock frequency, CPU manufacturers began to
+place multiple cores in a single processor, enabling more operations
+to be performed concurrently.</p>
+<p>Parallelism is not a new concept. Large-scale parallel machines have
+been used for decades, primarily for scientific computing and data
+analysis. Even in personal computers with a single processor core,
+operating systems and interpreters have provided the abstraction of
+concurrency. This is done through <em>context switching</em>, or rapidly
+switching between different tasks without waiting for them to
+complete. Thus, multiple programs can run on the same machine
+concurrently, even if it only has a single processing core.</p>
+<p>Given the current trend of increasing the number of processor cores,
+individual applications must now take advantage of parallelism in
+order to run faster. Within a single program, computation must be
+arranged so that as much work can be done in parallel as possible.
+However, parallelism introduces new challenges in writing correct
+code, particularly in the presence of shared, mutable state.</p>
+<p>For problems that can be solved efficiently in the functional model,
+with no shared mutable state, parallelism poses few problems. Pure
+functions provide <em>referential transparency</em>, meaning that expressions
+can be replaced with their values, and vice versa, without affecting
+the behavior of a program. This enables expressions that do not depend
+on each other to be evaluated in parallel. The <a class="reference external" href="http://en.wikipedia.org/wiki/MapReduce">MapReduce</a> framework is one system
+that allows functional programs to be specified and run in parallel
+with minimal programmer effort. Several functional languages,
+including <a class="reference external" href="https://en.wikipedia.org/wiki/NESL">NESL</a> and <a class="reference external" href="http://en.wikipedia.org/wiki/Clojure">Clojure</a>,
+have been designed with parallelism at their core.</p>
+<p>Unfortunately, not all problems can be solved efficiently using
+functional programming. The Berkeley View project has identified
+<a class="reference external" href="https://www2.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html">thirteen common computational patterns</a>
+in science and engineering, only one of which is MapReduce. The
+remaining patterns require shared state.</p>
+<p>In the remainder of this section, we will see how mutable shared state
+can introduce bugs into parallel programs and a number of approaches
+to prevent such bugs. We will examine these techniques in the context
+of two applications, a web <a class="reference external" href="http://composingprograms.com/examples/parallel/crawler.py.html">crawler</a> and a particle <a class="reference external" href="http://composingprograms.com/examples/parallel/particle.py.html">simulator</a>.</p>
+<section id="parallelism-in-python">
+<h2>Parallelism in Python<a class="headerlink" href="#parallelism-in-python" title="Link to this heading"></a></h2>
+<p>Before we dive deeper into the details of parallelism, let us first
+explore Python’s support for parallel computation. Python provides two
+means of parallel execution: threading and multiprocessing.</p>
+<section id="threading">
+<h3>Threading<a class="headerlink" href="#threading" title="Link to this heading"></a></h3>
+<p>In <em>threading</em>, multiple “threads” of execution exist within a single
+interpreter. Each thread executes code independently from the others,
+though they share the same data. However, the CPython interpreter, the
+main implementation of Python, only interprets code in one thread at a
+time, switching between them in order to provide the illusion of
+parallelism. On the other hand, operations external to the
+interpreter, such as writing to a file or accessing the network, may
+run in parallel.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">threading</span></code> module contains classes that enable threads to be
+created and synchronized. The following is a simple example of a
+multithreaded program:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">thread_hello</span><span class="p">():</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">thread_say_hello</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+    <span class="n">other</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">thread_say_hello</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">thread_say_hello</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello from&#39;</span><span class="p">,</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">thread_hello</span><span class="p">()</span>
+<span class="go">hello from Thread-1</span>
+<span class="go">hello from MainThread</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Thread</span></code> constructor creates a new thread. It requires a target
+function that the new thread should run, as well as the arguments to
+that function. Calling <code class="docutils literal notranslate"><span class="pre">start</span></code> on a <code class="docutils literal notranslate"><span class="pre">Thread</span></code> object marks it ready
+to run. The <code class="docutils literal notranslate"><span class="pre">current_thread</span></code> function returns the <code class="docutils literal notranslate"><span class="pre">Thread</span></code> object
+associated with the current thread of execution.</p>
+<p>In this example, the prints can happen in any order, since we haven’t
+synchronized them in any way. The output can even be interleaved on
+some systems.</p>
+</section>
+<section id="multiprocessing">
+<h3>Multiprocessing<a class="headerlink" href="#multiprocessing" title="Link to this heading"></a></h3>
+<p>Python also supports <em>multiprocessing</em>, which allows a program to
+spawn multiple interpreters, or <em>processes</em>, each of which can run
+code independently. These processes do not generally share data, so
+any shared state must be communicated between processes. On the other
+hand, processes execute in parallel according to the level of
+parallelism provided by the underlying operating system and hardware.
+Thus, if the CPU has multiple processor cores, Python processes can
+truly run concurrently.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> module contains classes for creating and
+synchronizing processes. The following is the hello example using
+processes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">def</span> <span class="nf">process_hello</span><span class="p">():</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">process_say_hello</span><span class="p">,</span>
+                                    <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+    <span class="n">other</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">process_say_hello</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">process_say_hello</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello from&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">process_hello</span><span class="p">()</span>
+<span class="go">hello from MainProcess</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hello</span> <span class="kn">from</span> <span class="nn">Process</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>As this example demonstrates, many of the classes and functions in
+<code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> are analogous to those in <code class="docutils literal notranslate"><span class="pre">threading</span></code>. This
+example also demonstrates how lack of synchronization affects shared
+state, as the display can be considered shared state. Here, the
+interpreter prompt from the interactive process appears before the
+print output from the other process.</p>
+</section>
+</section>
+<section id="the-problem-with-shared-state">
+<h2>The Problem with Shared State<a class="headerlink" href="#the-problem-with-shared-state" title="Link to this heading"></a></h2>
+<p>To further illustrate the problem with shared state, let’s look at a
+simple example of a counter that is shared between two threads:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>     <span class="c1"># store in a list to avoid global statements</span>
+
+<span class="k">def</span> <span class="nf">increment</span><span class="p">():</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">other</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">increment</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+<span class="n">other</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">increment</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;count is now: &#39;</span><span class="p">,</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>In this program, two threads attempt to increment the same counter.
+The CPython interpreter can switch between threads at almost any time.
+Only the most basic operations are <em>atomic</em>, meaning that they appear
+to occur instantly, with no switch possible during their evaluation or
+execution. Incrementing a counter requires multiple basic operations:
+read the old value, add one to it, and write the new value. The
+interpreter can switch threads between any of these operations.</p>
+<p>In order to show what happens when the interpreter switches threads at
+the wrong time, we can attempt to force a switch by sleeping for 0
+seconds:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">increment</span><span class="p">():</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># try to force a switch to the other thread</span>
+    <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>When this code is run, the interpreter often does switch
+threads at the <code class="docutils literal notranslate"><span class="pre">sleep</span></code> call. This can result in the following
+sequence of operations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Thread</span> <span class="mi">0</span>                    <span class="n">Thread</span> <span class="mi">1</span>
+<span class="n">read</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="mi">0</span>
+                            <span class="n">read</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="mi">0</span>
+<span class="n">calculate</span> <span class="mi">0</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">write</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">calculate</span> <span class="mi">0</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">1</span>
+                            <span class="n">write</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The end result is that the counter has a value of 1, even though it
+was incremented twice! Worse, the interpreter may only switch at the
+wrong time very rarely, making this difficult to debug. Even with the
+<code class="docutils literal notranslate"><span class="pre">sleep</span></code> call, this program sometimes produces a correct count of 2
+and sometimes an incorrect count of 1.</p>
+<p>This problem arises only in the presence of shared data that may be
+mutated by one thread while another thread accesses it. Such a
+conflict is called a <em>race condition</em>, and it is an example of a bug
+that only exists in the parallel world.</p>
+<p>In order to avoid race conditions, shared data that may be mutated and
+accessed by multiple threads must be protected against concurrent
+access. For example, if we can ensure that thread 1 only accesses the
+counter after thread 0 finishes accessing it, or vice versa, we can
+guarantee that the right result is computed. We say that shared data
+is <em>synchronized</em> if it is protected from concurrent access. In the
+next few subsections, we will see multiple mechanisms providing
+synchronization.</p>
+</section>
+<section id="when-no-synchronization-is-necessary">
+<h2>When No Synchronization is Necessary<a class="headerlink" href="#when-no-synchronization-is-necessary" title="Link to this heading"></a></h2>
+<p>In some cases, access to shared data need not be synchronized, if
+concurrent access cannot result in incorrect behavior. The simplest
+example is read-only data. Since such data is never mutated, all
+threads will always read the same values regardless when they access
+the data.</p>
+<p>In rare cases, shared data that is mutated may not require
+synchronization. However, understanding when this is the case requires
+a deep knowledge of how the interpreter and underlying software and
+hardware work. Consider the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">consume</span><span class="p">():</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">flag</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;items is&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">produce</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">flag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;go&#39;</span><span class="p">)</span>
+
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">consume</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+<span class="n">consumer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">produce</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here, the producer thread adds items to <code class="docutils literal notranslate"><span class="pre">items</span></code>, while the consumer
+waits until <code class="docutils literal notranslate"><span class="pre">flag</span></code> is non-empty. When the producer finishes adding
+items, it adds an element to <code class="docutils literal notranslate"><span class="pre">flag</span></code>, allowing the consumer to
+proceed.</p>
+<p>In most Python implementations, this example will work correctly.
+However, a common optimization in other compilers and interpreters,
+and even the hardware itself, is to reorder operations within a single
+thread that do not depend on each other for data. In such a system,
+the statement <code class="docutils literal notranslate"><span class="pre">flag.append('go')</span></code> may be moved before the loop,
+since neither depends on the other for data. In general, you should
+avoid code like this unless you are certain that the underlying system
+won’t reorder the relevant operations.</p>
+</section>
+<section id="synchronized-data-structures">
+<h2>Synchronized Data Structures<a class="headerlink" href="#synchronized-data-structures" title="Link to this heading"></a></h2>
+<p>The simplest means of synchronizing shared data is to use a data
+structure that provides synchronized operations. The <code class="docutils literal notranslate"><span class="pre">queue</span></code> module
+contains a <code class="docutils literal notranslate"><span class="pre">Queue</span></code> class that provides synchronized first-in,
+first-out access to data. The <code class="docutils literal notranslate"><span class="pre">put</span></code> method adds an item to the
+<code class="docutils literal notranslate"><span class="pre">Queue</span></code> and the <code class="docutils literal notranslate"><span class="pre">get</span></code> method retrieves an item. The class itself
+ensures that these methods are synchronized, so items are not lost no
+matter how thread operations are interleaved. Here is a
+producer/consumer example that uses a <code class="docutils literal notranslate"><span class="pre">Queue</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+
+<span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">synchronized_consume</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;got an item:&#39;</span><span class="p">,</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">synchronized_produce</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">synchronized_consume</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+<span class="n">consumer</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">consumer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">synchronized_produce</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>There are a few changes to this code, in addition to the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> and
+<code class="docutils literal notranslate"><span class="pre">get</span></code> and <code class="docutils literal notranslate"><span class="pre">put</span></code> calls. We have marked the consumer thread as a
+<em>daemon</em>, which means that the program will not wait for that thread
+to complete before exiting. This allows us to use an infinite loop in
+the consumer. However, we do need to ensure that the main thread
+exits, but only after all items have been consumed from the <code class="docutils literal notranslate"><span class="pre">Queue</span></code>.
+The consumer calls the <code class="docutils literal notranslate"><span class="pre">task_done</span></code> method to inform the <code class="docutils literal notranslate"><span class="pre">Queue</span></code>
+that it is done processing an item, and the main thread calls the
+<code class="docutils literal notranslate"><span class="pre">join</span></code> method, which waits until all items have been processed,
+ensuring that the program exits only after that is the case.</p>
+<p>A more complex example that makes use of a <code class="docutils literal notranslate"><span class="pre">Queue</span></code> is a parallel
+<a class="reference internal" href="#web-crawler">web crawler</a> that searches for dead links on a website.</p>
+</section>
+<section id="locks">
+<h2>Locks<a class="headerlink" href="#locks" title="Link to this heading"></a></h2>
+<p>When a synchronized version of a particular data structure is not
+available, we have to provide our own synchronization. A <em>lock</em> is a
+basic mechanism to do so. It can be <em>acquired</em> by at most one thread,
+after which no other thread may acquire it until it is <em>released</em> by
+the thread that previously acquired it.</p>
+<p>In Python, the <code class="docutils literal notranslate"><span class="pre">threading</span></code> module contains a <code class="docutils literal notranslate"><span class="pre">Lock</span></code> class to
+provide locking. A <code class="docutils literal notranslate"><span class="pre">Lock</span></code> has <code class="docutils literal notranslate"><span class="pre">acquire</span></code> and <code class="docutils literal notranslate"><span class="pre">release</span></code> methods to
+acquire and release the lock, and the class guarantees that only one
+thread at a time can acquire it. All other threads that attempt to
+acquire a lock while it is already being held are forced to wait until
+it is released.</p>
+<p>For a lock to protect a particular set of data, all the threads need
+to be programmed to follow a rule: no thread will access any of the
+shared data unless it owns that particular lock. In effect, all the
+threads need to “wrap” their manipulation of the shared data in
+<code class="docutils literal notranslate"><span class="pre">acquire</span></code> and <code class="docutils literal notranslate"><span class="pre">release</span></code> calls for that lock.</p>
+<p>The following is an example of two threads incrementing a counter
+that is protected by a lock, avoiding a race condition:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span><span class="p">,</span> <span class="n">Lock</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">counter_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">increment</span><span class="p">():</span>
+    <span class="n">counter_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">counter_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+<span class="n">other</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">increment</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+<span class="n">other</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">increment</span><span class="p">()</span>
+<span class="n">other</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;count is now&#39;</span><span class="p">,</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Acquiring the lock prevents another thread from acquiring it and
+proceeding to increment the counter. When the lock has been acquired,
+the thread can be assured that no other thread can enter the <em>critical
+section</em> that is protected by the lock. Once the thread has incremented
+the counter, it releases the lock so that another thread can access the
+counter.</p>
+<p>In this code, we had to be careful not to return until after we
+released the lock. In general, we have to ensure that we release a
+lock when we no longer need it. This can be very error-prone,
+particularly in the presence of exceptions, so Python locks are
+context managers that can be used with <a class="reference internal" href="foundations.html#scope-based-resource-management"><span class="std std-ref">scope-based resource
+management</span></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">increment</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">counter_lock</span><span class="p">:</span>
+      <span class="n">count</span> <span class="o">=</span> <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">counter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">with</span></code> statement ensures that <code class="docutils literal notranslate"><span class="pre">counter_lock</span></code> is acquired
+before its suite is executed and that it is released when the suite is
+exited for any reason.</p>
+<p>Operations that must be synchronized with each other must use the same
+lock. However, two disjoint sets of operations that must be
+synchronized only with operations in the same set should use two
+different lock objects to avoid <a class="reference internal" href="#over-synchronization">over-synchronization</a>.</p>
+</section>
+<section id="barriers">
+<h2>Barriers<a class="headerlink" href="#barriers" title="Link to this heading"></a></h2>
+<p>Another way to avoid conflicting access to shared data is to divide a
+program into phases, ensuring that shared data is mutated in a phase
+in which no other thread accesses it. A <em>barrier</em> divides a program
+into phases by requiring all threads to reach it before any of them
+can proceed. Code that is executed after a barrier cannot be
+concurrent with code executed before the barrier.</p>
+<p>In Python, the <code class="docutils literal notranslate"><span class="pre">threading</span></code> module provides a barrier in the form of
+the the <code class="docutils literal notranslate"><span class="pre">wait</span></code> method of a <code class="docutils literal notranslate"><span class="pre">Barrier</span></code> instance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">counters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">barrier</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Barrier</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">thread_num</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">other</span> <span class="o">=</span> <span class="n">counters</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">thread_num</span><span class="p">]</span>
+        <span class="n">barrier</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># wait for reads to complete</span>
+        <span class="n">counters</span><span class="p">[</span><span class="n">thread_num</span><span class="p">]</span> <span class="o">=</span> <span class="n">other</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">barrier</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span> <span class="c1"># wait for writes to complete</span>
+
+<span class="k">def</span> <span class="nf">threaded_count</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="p">))</span>
+    <span class="n">other</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">count</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;counters:&#39;</span><span class="p">,</span> <span class="n">counters</span><span class="p">)</span>
+
+<span class="n">threaded_count</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, reading and writing to shared data take place in
+different phases, separated by barriers. The writes occur in the same
+phase, but they are disjoint; this disjointness is necessary to avoid
+concurrent writes to the same data in the same phase. Since this code
+is properly synchronized, both counters will always be 10 at the end.</p>
+</section>
+<section id="message-passing">
+<h2>Message Passing<a class="headerlink" href="#message-passing" title="Link to this heading"></a></h2>
+<p>A final mechanism to avoid improper mutation of shared data is to
+entirely avoid concurrent access to the same data. In Python, using
+multiprocessing rather than threading naturally results in this, since
+processes run in separate interpreters with their own data. Any state
+required by multiple processes can be communicated by passing messages
+between processes.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Pipe</span></code> function in the <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> module constructs a
+communication channel between processes, returning a pair of
+connection endpoints. By default, the connection is duplex, meaning a
+two-way channel, though passing in the argument <code class="docutils literal notranslate"><span class="pre">False</span></code> results in a
+one-way channel. The <code class="docutils literal notranslate"><span class="pre">send</span></code> method on a connection sends an object
+over the channel, while the <code class="docutils literal notranslate"><span class="pre">recv</span></code> method receives an object. The
+latter is <em>blocking</em>, meaning that a process that calls <code class="docutils literal notranslate"><span class="pre">recv</span></code> will
+wait until an object is received.</p>
+<p>The following is a producer/consumer example using processes and
+pipes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_consume</span><span class="p">(</span><span class="n">in_pipe</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">in_pipe</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;got an item:&#39;</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">process_produce</span><span class="p">(</span><span class="n">out_pipe</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">out_pipe</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">out_pipe</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="c1"># done signal</span>
+
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pipe</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">consumer</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">process_consume</span><span class="p">,</span>
+                                   <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pipe</span><span class="p">[</span><span class="mi">0</span><span class="p">],))</span>
+<span class="n">consumer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">process_produce</span><span class="p">(</span><span class="n">pipe</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The two ends of the pipe are obtained by indexing into the result of
+<code class="docutils literal notranslate"><span class="pre">Pipe()</span></code>. Since the pipe is created as a one-way channel, the sender
+must use the end at index 1 and the receiver the end at index 2.</p>
+<p>In this example, we use a <code class="docutils literal notranslate"><span class="pre">None</span></code> message to signal the end of
+communication. We also passed in one end of the pipe as an argument to
+the target function when creating the consumer process. This is
+necessary, since state must be explicitly shared between processes.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> module provides other synchronization
+mechanisms for processes, including synchronized queues, locks, and as
+of Python 3.3, barriers. For example, a lock or a barrier can be used
+to synchronize printing to the screen, avoiding the improper display
+output we saw previously.</p>
+</section>
+<section id="application-examples">
+<h2>Application Examples<a class="headerlink" href="#application-examples" title="Link to this heading"></a></h2>
+<p>We now examine two application examples in more detail, exploring how
+the techniques above can be used to properly synchronize access to
+shared resources.</p>
+<section id="web-crawler">
+<h3>Web Crawler<a class="headerlink" href="#web-crawler" title="Link to this heading"></a></h3>
+<p>A <em>web crawler</em> is a program that systematically browses the Internet.
+Such a program may have several uses; one example is a <a class="reference external" href="http://composingprograms.com/examples/parallel/crawler.py.html">crawler</a> that
+validates links on a website, recursively checking that all links
+hosted by the site are to valid webpages. This crawler could be
+implemented with a work queue of URLs that need to be recursively
+checked and a set of URLs that have already been encountered by the
+program. Then for each URL in the work queue, the program would:</p>
+<ol class="arabic simple">
+<li><p>Load the webpage, parsing it for outgoing links.</p></li>
+<li><p>For each link on the page:</p>
+<ol class="loweralpha simple">
+<li><p>Check if the link has already been seen.</p></li>
+<li><p>If the link has not been seen, then add it to both the seen
+set and the work queue.</p></li>
+</ol>
+</li>
+</ol>
+<p>Since Python threading enables network requests to be serviced
+concurrently, this program can be parallelized by using several
+threads to process different URLs. However, the shared queue and set
+data structures must be protected from concurrent access.</p>
+<p>The work queue can be represented using the synchronized <code class="docutils literal notranslate"><span class="pre">Queue</span></code>
+class, since it ensures that no more than one thread can perform an
+operation on the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> at a time. However, Python does not provide
+a synchronized set, so we must use a lock to protect access to a
+normal set:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="n">seen_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">already_seen</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">seen_lock</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>A lock is necessary here, in order to prevent another thread from
+adding the URL to the set between this thread checking if it is in the
+set and adding it to the set. Furthermore, adding to a set is not
+atomic, so concurrent attempts to add to a set may corrupt its
+internal data. The <code class="docutils literal notranslate"><span class="pre">already_seen()</span></code> function adds the given item to
+the set if it is not already in there, returning whether or not the
+item was added.</p>
+<p>The following then checks if a URL has been seen and adds it to the
+work queue if not:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">work_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">queue_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">already_seen</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+        <span class="n">work_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The call to <code class="docutils literal notranslate"><span class="pre">already_seen()</span></code> ensures that a given URL has not been
+seen when it is added to the work queue, so that the URL is only
+processed once.</p>
+</section>
+<section id="particle-simulator">
+<h3>Particle Simulator<a class="headerlink" href="#particle-simulator" title="Link to this heading"></a></h3>
+<p>A particle <a class="reference external" href="http://composingprograms.com/examples/parallel/particle.py.html">simulator</a> simulates the interactions between independent
+particles within a confined space. Each particle interacts with every
+other particle; for example, molecules may apply a repulsive force to
+other molecules based on the distance between them, resulting from the
+electric field of the electrons in each molecule. This interaction can
+be can be computed over the course of many discrete timesteps. A
+particle has a position, velocity, and acceleration, and a new
+acceleration is computed in each timestep based on the positions of
+the other particles. The velocity of the particle must be updated
+accordingly, and its position according to its velocity.</p>
+<p>A natural way to parallelize a particle simulator is to divide the
+particles among several threads or processes, as illustrated in
+<a class="reference internal" href="#figure-particle"><span class="std std-numref">Figure 47</span></a>.</p>
+<figure class="align-center" id="id2">
+<span id="figure-particle"></span><a class="reference internal image-reference" href="_images/particle.svg"><img alt="_images/particle.svg" src="_images/particle.svg" width="450" /></a>
+<figcaption>
+<p><span class="caption-number">Figure 47 </span><span class="caption-text">A particle interaction can be parallelized by splitting the
+particles among the computational units.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Each thread or process is then responsible for computing the forces on
+its own particles, updating their positions and velocities
+accordingly. The algorithm for a single timestep on each thread can
+then be divided into the following phases:</p>
+<ol class="arabic simple">
+<li><p>Read the current position of every particle.</p></li>
+<li><p>For each of its own particles, compute the force resulting from
+interactions with every other particle, using their current
+positions.</p></li>
+<li><p>Update the velocities of its particles based on the forces
+computed.</p></li>
+<li><p>Update the positions of its particles based on the new
+velocities.</p></li>
+</ol>
+<p>In this algorithm, the positions of the particles constitute shared
+data and must be protected from concurrent access. The multithreaded
+implementation of the <a class="reference external" href="http://composingprograms.com/examples/parallel/particle.py.html">simulator</a> uses barriers to separate phases 1
+and 4, which access the shared data. Two barriers are required, one to
+ensure that all threads move together between phase 1 and 4 within a
+timestep, and another to ensure that they synchronously move between
+phase 4 in a timestep to phase 1 in the next timestep. The writes in
+phases 2 and 3 are to separate data on each thread, so they need not
+be synchronized.</p>
+<p>An alternative algorithm is to use message passing to send copies of
+particle positions to other threads or processes. This is the strategy
+implemented by the multiprocess version of the particle <a class="reference external" href="http://composingprograms.com/examples/parallel/particle.py.html">simulator</a>,
+with pipes used to communicate particle positions between processes in
+each timestep. A circular pipeline is set up between processes in
+order to minimize communication. Each process injects its own
+particles’ positions into its pipeline stage, which eventually go
+through a full rotation of the pipeline, as shown in
+<a class="reference internal" href="#figure-particle-message"><span class="std std-numref">Figure 48</span></a>.</p>
+<figure class="align-center" id="id3">
+<span id="figure-particle-message"></span><a class="reference internal image-reference" href="_images/particle_message.svg"><img alt="_images/particle_message.svg" src="_images/particle_message.svg" width="720" /></a>
+<figcaption>
+<p><span class="caption-number">Figure 48 </span><span class="caption-text">Copies of each particle can be rotated among the processes. A
+process computes the interaction between its own particles and the
+copies it sees in each step of the rotation.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>At each step of the rotation, a process applies forces from the
+positions that are currently in its own pipeline stage on to its own
+particles, so that after a full rotation, all forces have been applied
+to its particles.</p>
+</section>
+</section>
+<section id="synchronization-pitfalls">
+<h2>Synchronization Pitfalls<a class="headerlink" href="#synchronization-pitfalls" title="Link to this heading"></a></h2>
+<p>While synchronization methods are effective for protecting shared
+state, they can also be used incorrectly, failing to accomplish the
+proper synchronization, over-synchronizing, or causing the program to
+hang as a result of deadlock.</p>
+<section id="under-synchronization">
+<h3>Under-synchronization<a class="headerlink" href="#under-synchronization" title="Link to this heading"></a></h3>
+<p>A common pitfall in parallel computing is to neglect to properly
+synchronize shared accesses. In the set example for the <a class="reference internal" href="#web-crawler">web
+crawler</a>, we need to synchronize the membership check and insertion
+together, so that another thread cannot perform an insertion in
+between these two operations. Failing to synchronize the two
+operations together is erroneous, even if they are separately
+synchronized:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">already_seen</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">seen_lock</span><span class="p">:</span>
+        <span class="n">present</span> <span class="o">=</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">seen</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">present</span>
+        <span class="k">with</span> <span class="n">seen_lock</span><span class="p">:</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">present</span>
+</pre></div>
+</div>
+<p>Here, it is possible for one thread to acquire <code class="docutils literal notranslate"><span class="pre">seen_lock</span></code> and see
+that the item is not in the set. But between releasing the lock and
+requiring it for insertion, another thread can obtain the lock and
+also see that the item is not in the set. This results in both threads
+thinking that they inserted the item, potentially resulting in
+duplicate work.</p>
+</section>
+<section id="over-synchronization">
+<h3>Over-synchronization<a class="headerlink" href="#over-synchronization" title="Link to this heading"></a></h3>
+<p>Another common error is to over-synchronize a program, so that
+non-conflicting operations cannot occur concurrently. As a trivial
+example, we can avoid all conflicting access to shared data by
+acquiring a master lock when a thread starts and only releasing it
+when a thread completes. This serializes our entire code, so that
+nothing runs in parallel. In some cases, this can even cause our
+program to hang indefinitely. For example, consider a
+consumer/producer program in which the consumer obtains the lock and
+never releases it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">consume</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># wait for a bit</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;got an item:&#39;</span><span class="p">,</span> <span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">synchronized_produce</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This prevents the producer from producing any items, which in turn
+prevents the consumer from doing anything since it has nothing to
+consume.</p>
+<p>While this example is trivial, in practice, programmers often
+over-synchronize their code to some degree, preventing their code from
+taking complete advantage of the available parallelism.</p>
+</section>
+<section id="deadlock">
+<h3>Deadlock<a class="headerlink" href="#deadlock" title="Link to this heading"></a></h3>
+<p>Because they cause threads or processes to wait on each other,
+synchronization mechanisms are vulnerable to <em>deadlock</em>, a situation
+in which two or more threads or processes are stuck, waiting for each
+other to finish. We have just seen how neglecting to release a lock
+can cause a thread to get stuck indefinitely. But even if threads or
+processes do properly release locks, programs can still reach
+deadlock.</p>
+<p>The source of deadlock is a <em>circular wait</em>, illustrated in
+<a class="reference internal" href="#figure-deadlock"><span class="std std-numref">Figure 49</span></a> with processes. A process cannot continue
+because it is waiting for other processes, which are in turn waiting
+for the first process to complete.</p>
+<figure class="align-center" id="id4">
+<span id="figure-deadlock"></span><a class="reference internal image-reference" href="_images/deadlock.svg"><img alt="_images/deadlock.svg" src="_images/deadlock.svg" width="400" /></a>
+<figcaption>
+<p><span class="caption-number">Figure 49 </span><span class="caption-text">Deadlock arises when a set of threads or processes is each waiting
+on another thread or process.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>As an example, we will set up a deadlock with two processes. Suppose
+they share a duplex pipe and attempt to communicate with each other as
+follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">deadlock</span><span class="p">(</span><span class="n">in_pipe</span><span class="p">,</span> <span class="n">out_pipe</span><span class="p">):</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">in_pipe</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;got an item:&#39;</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+    <span class="n">out_pipe</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">item</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_deadlock</span><span class="p">():</span>
+    <span class="n">pipe</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pipe</span><span class="p">()</span>
+    <span class="n">other</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">deadlock</span><span class="p">,</span>
+                                    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pipe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pipe</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">other</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">deadlock</span><span class="p">(</span><span class="n">pipe</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">pipe</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">create_deadlock</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Both processes attempt to receive data first. Recall that the <code class="docutils literal notranslate"><span class="pre">recv</span></code>
+method blocks until an item is available. Since neither process has
+sent anything, both will wait indefinitely for the other to send it
+data, resulting in deadlock.</p>
+<p>Synchronization operations must be properly aligned to avoid deadlock.
+This may require sending over a pipe before receiving, acquiring
+multiple locks in the same order, and ensuring that all threads reach
+the right barrier at the right time.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h2>
+<p>As we have seen, parallelism presents new challenges in writing
+correct and efficient code. As the trend of increasing parallelism at
+the hardware level will continue for the foreseeable future, parallel
+computation will become more and more important in application
+programming. There is a very active body of research on making
+parallelism easier and less error-prone for programmers. Our
+discussion here serves only as a basic introduction to this crucial
+area of computer science.</p>
+</section>
+</section>
+<section id="asynchronous-tasks">
+<h1>Asynchronous Tasks<a class="headerlink" href="#asynchronous-tasks" title="Link to this heading"></a></h1>
+<p>In parallelizing a computation, one strategy is to explicitly
+decompose a program over the set of workers, as we did in the previous
+section. Another option is to divide the work according to the natural
+granularity of an operation and to rely on the runtime system to
+schedule the work appropriately. This latter strategy can be
+accomplished with <em>asynchronous tasks</em>, where an operation is launched
+to be computed asynchronously, and its result used at some further
+point.</p>
+<p>In C++11, an asynchronous task can be launched with the <code class="docutils literal notranslate"><span class="pre">async()</span></code>
+function template, contained in the <code class="docutils literal notranslate"><span class="pre">&lt;future&gt;</span></code> header. The first
+argument to <code class="docutils literal notranslate"><span class="pre">async()</span></code> is the function or function object
+representing a task, and the remaining arguments are the arguments
+with which to invoke that function. The following is a basic example:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">foo</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">async</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">  </span><span class="n">async</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code above launches separate tasks to compute <code class="docutils literal notranslate"><span class="pre">foo(3,</span> <span class="pre">4)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">foo(5,</span> <span class="pre">6)</span></code> asynchronously. The print outputs 7 and 11 can appear in
+any order, since the two tasks aren’t synchronized with respect to
+each other, and the outputs can even be interleaved with each other.</p>
+<p>The return value of <code class="docutils literal notranslate"><span class="pre">async()</span></code> is a <em>future</em> object, which is a proxy
+for the result of the asynchronous task. In particular, the
+<code class="docutils literal notranslate"><span class="pre">async()</span></code> calls above return objects of type <code class="docutils literal notranslate"><span class="pre">future&lt;void&gt;</span></code>, since
+the return type of <code class="docutils literal notranslate"><span class="pre">foo()</span></code> is <code class="docutils literal notranslate"><span class="pre">void</span></code>. We can wait on the result
+of an asynchronous task by calling the <code class="docutils literal notranslate"><span class="pre">wait()</span></code> method of the
+corresponding <code class="docutils literal notranslate"><span class="pre">future</span></code> object, as in the following:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">  </span><span class="n">f1</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="w">  </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="w">  </span><span class="n">f2</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, we wait for the first task to complete before launching the
+second. This ensures that the 7 will appear as output before the 11.</p>
+<p>In the case of a function that returns a non-void value, we can also
+obtain the result by calling the <code class="docutils literal notranslate"><span class="pre">get()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">future</span></code>
+object, which waits until the result is available and then returns the
+result. This is particularly useful if we have some computation that
+depends on the result of the task, as in the following:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="p">([](</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">  </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">f1</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This launches a task to asynchronously call a lambda function, waits
+for the result and adds 5 to it, and prints the sum.</p>
+<p>As a more complex example, let’s consider the tree-recursive
+computation of the Fibonacci sequence. The following is a sequential
+function to compute a Fibonacci number:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="nf">fib</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We can observe that the two recursive calls do not depend on each
+other, so we can compute them asynchronously by launching a separate
+task for one of the calls. The following code does so:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="nf">async_fib</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">  </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="p">(</span><span class="n">async_fib</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">res2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async_fib</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">res2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">res1</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This code uses <code class="docutils literal notranslate"><span class="pre">async()</span></code> to compute one recursive call, while the
+other call is computed in the existing task. We require the result of
+the asynchronous task before we can compute the sum and return, so we
+use <code class="docutils literal notranslate"><span class="pre">get()</span></code> on its <code class="docutils literal notranslate"><span class="pre">future</span></code> object in order to obtain its result.</p>
+<p>As an aside, we write the two recursive calls in separate statements
+to ensure that the asynchronous task is launched before the recursive
+call that takes place in the existing task. Consider the following
+version that makes both calls in the same statement:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">return</span><span class="w"> </span><span class="n">async</span><span class="p">(</span><span class="n">async_fib</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">get</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">async_fib</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In C++, the order of evaluation of the two operands to <code class="docutils literal notranslate"><span class="pre">+</span></code> is
+unspecified, so it would be valid for the compiler to produce code
+that sequentially computes the right-hand side before launching the
+asynchronous task to compute the left-hand side. This would turn the
+whole computation into a sequential one. Thus, we need to use
+statement sequencing to ensure that the asynchronous task is launched
+before the sequential recursive call is made.</p>
+<section id="limiting-the-number-of-tasks">
+<h2>Limiting the Number of Tasks<a class="headerlink" href="#limiting-the-number-of-tasks" title="Link to this heading"></a></h2>
+<p>Most implementations of C++ that execute tasks in parallel do so with
+the use of an internal <em>thread pool</em>, scheduling the tasks among the
+available threads in the pool. There is significant overhead to
+computing a function with a task, as it needs go through the
+scheduling system and then be dispatched to a thread. As such, we
+often need to limit the granularity of our tasks to be large enough to
+amortize this overhead, as well as to reduce the number of tasks to
+limit the total overhead.</p>
+<p>As an example, computing <code class="docutils literal notranslate"><span class="pre">async_fib(15)</span></code> on the author’s quad-core
+iMac computer takes about 4000 times longer than <code class="docutils literal notranslate"><span class="pre">fib(15)</span></code>, using
+Clang 8, due to the large number of small tasks that are launched.
+Instead, we need to rewrite <code class="docutils literal notranslate"><span class="pre">async_fib()</span></code> to do the remaining
+computation sequentially when a threshold is reached. The following
+does so, using the number of tasks launched so far to determine if the
+threshold has been met:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="nf">async_fib</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tasks</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;</span><span class="w"> </span><span class="n">res1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="p">(</span><span class="n">async_fib</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span>
+<span class="w">                                   </span><span class="n">max_tasks</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">res2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async_fib</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">res2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">res1</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The function takes in two extra arguments, representing the current
+number of tasks and the threshold value for the maximum number of
+tasks. If the threshold has not been reached, then the recursion
+proceeds as before, launching a new asynchronous task for one of the
+calls. In making the recursive calls, we double the number of current
+tasks to account for the fact that each step of the recursion doubles
+the number of concurrent computations. On the other hand, if the
+threshold has been reached, then we do the rest of the computation
+sequentially by calling <code class="docutils literal notranslate"><span class="pre">fib()</span></code>. <a class="reference internal" href="#figure-async-fib"><span class="std std-numref">Figure 50</span></a> is the
+task graph for computing <code class="docutils literal notranslate"><span class="pre">async_fib(5,</span> <span class="pre">1,</span> <span class="pre">4)</span></code>, limiting the number
+of tasks to four.</p>
+<figure class="align-center" id="id5">
+<span id="figure-async-fib"></span><a class="reference internal image-reference" href="_images/async_fib.svg"><img alt="_images/async_fib.svg" src="_images/async_fib.svg" width="640" /></a>
+<figcaption>
+<p><span class="caption-number">Figure 50 </span><span class="caption-text">Task graph for computing <code class="docutils literal notranslate"><span class="pre">async_fib(5,</span> <span class="pre">1,</span> <span class="pre">4)</span></code>.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>With the ability to limit the number of tasks, we find that
+<code class="docutils literal notranslate"><span class="pre">fib(42)</span></code> takes 1.63 seconds on the author’s quad-core iMac, whereas
+<code class="docutils literal notranslate"><span class="pre">async_fib(42,</span> <span class="pre">1,</span> <span class="pre">512)</span></code> takes 0.47 seconds, about a 3.5x speedup.
+The 512-task limit was determined experimentally to be close to the
+optimal value.</p>
+<p>As another example, let’s write quicksort using asynchronous tasks.
+First, we write the sequential version as follows:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">size_t</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">start</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">start</span><span class="p">],</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">end</span><span class="o">--</span><span class="p">]);</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">start</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">start</span><span class="p">]);</span>
+<span class="w">      </span><span class="n">start</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">quicksort</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">CUTOFF</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">];</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">]);</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+<span class="w">  </span><span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">pivot_index</span><span class="p">);</span>
+<span class="w">  </span><span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This implements an in-place quicksort, partitioning the input array by
+swapping elements to the appropriate side of the pivot. We cut off the
+quicksort itself once we reach a small number of elements, since at
+that point other sorts such as insertion sort are more efficient. For
+simplicity, we use <code class="docutils literal notranslate"><span class="pre">std::sort()</span></code> when we reach the cutoff point,
+which will be 10 elements in our examples.</p>
+<p>As with the Fibonacci sequence, we can launch a separate task to
+compute one of the recursive calls, limiting ourselves to a maximum
+number of tasks:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">async_quicksort</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">thread_count</span><span class="p">,</span>
+<span class="w">                     </span><span class="kt">int</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">CUTOFF</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">];</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">]);</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">thread_count</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">rec1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="p">(</span><span class="n">async_quicksort</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">pivot_index</span><span class="p">,</span>
+<span class="w">                              </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">thread_count</span><span class="p">,</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">);</span>
+<span class="w">    </span><span class="n">async_quicksort</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">thread_count</span><span class="p">,</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">);</span>
+<span class="w">    </span><span class="n">rec1</span><span class="p">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">pivot_index</span><span class="p">);</span>
+<span class="w">    </span><span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pivot_index</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In order to ensure that the asynchronous recursive call completes
+before returning, we call <code class="docutils literal notranslate"><span class="pre">wait()</span></code> on its associated <code class="docutils literal notranslate"><span class="pre">future</span></code>
+object. Sorting ten million elements with sequential <code class="docutils literal notranslate"><span class="pre">quicksort()</span></code>
+takes 0.93 seconds on the author’s iMac, while sorting with
+<code class="docutils literal notranslate"><span class="pre">async_quicksort()</span></code> takes 0.35 seconds with the task limit at 128.</p>
+</section>
+<section id="launch-policy">
+<h2>Launch Policy<a class="headerlink" href="#launch-policy" title="Link to this heading"></a></h2>
+<p>By default, launching an asynchronous task does not require it to be
+immediately run in another thread. Rather, it merely allows the task
+to be run concurrently. Equally valid semantically is to defer
+execution of the task until the <code class="docutils literal notranslate"><span class="pre">wait()</span></code> or <code class="docutils literal notranslate"><span class="pre">get()</span></code> method is
+called on the associated <code class="docutils literal notranslate"><span class="pre">future</span></code> object, obtaining lazy evaluation
+of the task.</p>
+<p>We can explicitly specify whether the task should be run in a
+different thread or deferred until its completion is required. We do
+so by specifying <code class="docutils literal notranslate"><span class="pre">std::launch::async</span></code> or <code class="docutils literal notranslate"><span class="pre">std::launch::deferred</span></code>
+as the first argument to <code class="docutils literal notranslate"><span class="pre">async()</span></code>, before the function to be run:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">async</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span><span class="w"> </span><span class="n">async_fib</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tasks</span><span class="p">,</span><span class="w"> </span><span class="n">max_tasks</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Without the policy specifier, the implementation is free to follow
+either launch policy.</p>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">std::launch::async</span></code> policy to partition work over a
+fixed set of computational resources, as in multithreading. As an
+example, the we can estimate the value of <span class="math notranslate nohighlight">\(pi\)</span> by choosing
+random points in the range <span class="math notranslate nohighlight">\([(0, 0), (1, 1)]\)</span> and determining
+whether the point lies in the upper-right quadrant of the unit circle,
+as illustrated by the shaded area in <a class="reference internal" href="#figure-pi"><span class="std std-numref">Figure 51</span></a>.</p>
+<figure class="align-center" id="id6">
+<span id="figure-pi"></span><a class="reference internal image-reference" href="_images/pi.svg"><img alt="_images/pi.svg" src="_images/pi.svg" width="200" /></a>
+<figcaption>
+<p><span class="caption-number">Figure 51 </span><span class="caption-text">The value of <span class="math notranslate nohighlight">\(pi\)</span> can be estimated by generating random
+points in <span class="math notranslate nohighlight">\([(0, 0), (1, 1)]\)</span> and counting how many lie within
+the upper-right quadrant of the unit circle.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The ratio of samples within the circle to total samples approximates
+<span class="math notranslate nohighlight">\(\frac{\pi}{4}\)</span>, the ratio of the area of a quadrant of the unit
+circle to the area of a unit square. The following sequential function
+implements this algorithm:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="nf">compute_pi</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">samples</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">default_random_engine</span><span class="w"> </span><span class="n">generator</span><span class="p">;</span>
+<span class="w">  </span><span class="n">uniform_real_distribution</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="n">dist</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">samples</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="p">(</span><span class="n">generator</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dist</span><span class="p">(</span><span class="n">generator</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span>
+<span class="w">      </span><span class="n">count</span><span class="o">++</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mf">4.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">samples</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We use the default random-generation engine from the <code class="docutils literal notranslate"><span class="pre">&lt;random&gt;</span></code>
+header, along with a uniform distribution of real numbers between 0.0
+and 1.0. Run sequentially for 100 million samples, the computation
+takes 1.86 seconds on the author’s iMac computer.</p>
+<p>We can parallelize the computation over a fixed set of threads with
+the following:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">double</span><span class="w"> </span><span class="nf">async_compute_pi</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">num_workers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">future</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">[</span><span class="n">num_workers</span><span class="p">];</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_workers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">async</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">launch</span><span class="o">::</span><span class="n">async</span><span class="p">,</span>
+<span class="w">                       </span><span class="n">compute_pi</span><span class="p">,</span><span class="w"> </span><span class="n">samples</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">num_workers</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_workers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">total</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">get</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">delete</span><span class="p">[]</span><span class="w"> </span><span class="n">results</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">num_workers</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, we construct a new task for each worker, launching it on a new
+thread using the <code class="docutils literal notranslate"><span class="pre">async::launch::async</span></code> policy. The main thread then
+waits on each worker thread in turn, accumulating the results from
+each worker. On the author’s quad-core iMac, the computation takes
+0.95 seconds for 100 million total samples with two worker threads,
+and 0.52 seconds with four worker threads. The latter is a speedup of
+about 3.6x over the sequential computation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="metaprogramming.html" class="btn btn-neutral float-left" title="Macros and Code Generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016, Amir Kamil, licensed under the Creative Commons Attribution-ShareAlike 4.0 International license.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+
+<!-- Mirrored from eecs390.github.io/notes/concurrent.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Mar 2024 18:15:56 GMT -->
+</html>

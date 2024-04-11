@@ -1,0 +1,2785 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+
+<!-- Mirrored from eecs390.github.io/notes/theory.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Mar 2024 18:15:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lambda Calculus &mdash; Programming Language Principles and Paradigms 0.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/style-extra.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery3b25.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compatfa9a.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options804b.js?v=7f00635f"></script>
+        <script src="_static/doctools56c1.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight7f57.js?v=dc90522c"></script>
+        <script src="_static/js-extraf31b.js?v=c32e72a1"></script>
+        <script async="async" src="../../cdn.jsdelivr.net/npm/mathjax%403/es5/tex-mml-chtml.js"></script>
+        <script src="_static/dark_mode_js/default_light679c.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher2b7c.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Functional Data Abstraction" href="data.html" />
+    <link rel="prev" title="Introduction to Scheme" href="functional.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #C53390" >
+
+          
+          
+          <a href="index-2.html" class="icon icon-home">
+            Programming Language Principles and Paradigms
+          </a>
+              <div class="version">
+                0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="https://eecs390.github.io/notes/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Foundations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#basic-python">Basic Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#basic-data-structures">Basic Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#compound-statements">Compound Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#function-definitions">Function Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#class-definitions">Class Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#executing-a-module">Executing a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#python-reference-semantics">Python Reference Semantics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#basic-elements">Basic Elements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#levels-of-description">Levels of Description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#lexical-structure">Lexical Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#syntax">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#semantics">Semantics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#entities-objects-and-variables">Entities, Objects, and Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#l-values-and-r-values">L-Values and R-Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#expressions">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#statements">Statements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#names-and-environments">Names and Environments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#blocks">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#name-lookup">Name Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#nested-inline-blocks">Nested Inline Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#scope-in-functions">Scope in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#id2">Static Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#dynamic-scope">Dynamic Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#point-of-declaration-or-definition">Point of Declaration or Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#implementation-strategies">Implementation Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#control-flow">Control Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#expression-sequencing">Expression Sequencing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#short-circuiting">Short Circuiting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#explicit-sequences">Explicit Sequences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#compound-assignment">Compound Assignment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#statement-sequences">Statement Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#unstructured-transfer-of-control">Unstructured Transfer of Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#structured-control">Structured Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#conditionals">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#loops">Loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#loop-termination">Loop Termination</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#memory-management">Memory Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#storage-duration-classes">Storage Duration Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#static-storage">Static Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#automatic-storage">Automatic Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#thread-local-storage">Thread-Local Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#dynamic-storage">Dynamic Storage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#value-and-reference-semantics">Value and Reference Semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#raii-and-scope-based-resource-management">RAII and Scope-Based Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#garbage-collection">Garbage Collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#reference-counting">Reference Counting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#tracing-collectors">Tracing Collectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#finalizers">Finalizers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#grammars">Grammars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#regular-expressions">Regular Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#context-free-grammars">Context-Free Grammars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#grammars-in-programming-languages">Grammars in Programming Languages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#vexing-parse">Vexing Parse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Functional Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">Introduction to Scheme</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#expressions">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#compound-values">Compound Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#symbolic-data">Symbolic Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#functions">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#keyword-arguments">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#default-arguments">Default Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#variadic-functions">Variadic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#parameter-passing">Parameter Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#evaluation-of-function-calls">Evaluation of Function Calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#recursion">Recursion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#activation-records">Activation Records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#tail-recursion">Tail Recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#higher-order-functions">Higher-Order Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#function-objects">Function Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#functions-as-parameters">Functions as Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#function-pointers">Function Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#binding-policy">Binding Policy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#nested-functions">Nested Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#decorators">Decorators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#lambda-functions">Lambda Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#scheme">Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#java">Java</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#c">C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#common-patterns">Common Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#sequence-patterns">Sequence Patterns</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#map">Map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#reduce">Reduce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#filter">Filter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#any">Any</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#composition">Composition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#partial-application-and-currying">Partial Application and Currying</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#continuations">Continuations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#restricted-continuations">Restricted Continuations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#subroutines">Subroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#generators">Generators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#first-class-continuations">First-Class Continuations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#signaling-errors">Signaling Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#call-and-return">Call and Return</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#id11">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Lambda Calculus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#non-terminating-computation">Non-Terminating Computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#normal-order-evaluation">Normal-Order Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encoding-data">Encoding Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#booleans">Booleans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pairs">Pairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#church-numerals">Church Numerals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#recursion">Recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#equivalent-models">Equivalent Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#operational-semantics">Operational Semantics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#language">Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#states-and-transitions">States and Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expressions">Expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arithmetic-expressions">Arithmetic Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#order-of-evaluation">Order of Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boolean-expressions">Boolean Expressions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#statements">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#operational-semantics-for-lambda-calculus">Operational Semantics for Lambda Calculus</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#formal-type-systems">Formal Type Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subtyping">Subtyping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subtyping-and-arithmetic-operators">Subtyping and Arithmetic Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-top-type">The Top Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subtyping-and-functions">Subtyping and Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#full-typing-rules">Full Typing Rules</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Abstraction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Functional Data Abstraction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#pairs-and-lists">Pairs and Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#message-passing">Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#lists">Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dictionaries">Dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dispatch-dictionaries">Dispatch Dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#object-oriented-programming">Object-Oriented Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#members">Members</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#access-control">Access Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#kinds-of-methods">Kinds of Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#nested-and-local-classes">Nested and Local Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implementation-strategies">Implementation Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#inheritance-and-polymorphism">Inheritance and Polymorphism</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#types-of-inheritance">Types of Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#class-hierarchies">Class Hierarchies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#method-overriding">Method Overriding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#covariance-and-contravariance">Covariance and Contravariance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#accessing-hidden-or-overridden-members">Accessing Hidden or Overridden Members</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implementing-dynamic-binding">Implementing Dynamic Binding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#full-lookup-and-dispatch-process">Full Lookup and Dispatch Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#multiple-inheritance">Multiple Inheritance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#dictionary-based-implementation">Dictionary-Based Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#record-based-implementation">Record-Based Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#static-analysis">Static Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#types">Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-equivalence">Type Equivalence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-compatibility">Type Compatibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-inference">Type Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#control-flow-analysis">Control-Flow Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#dynamic-typing">Dynamic Typing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#generics">Generics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implicit-parametric-polymorphism">Implicit Parametric Polymorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#explicit-parametric-polymorphism">Explicit Parametric Polymorphism</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#non-type-parameters">Non-Type Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#constraints">Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#implementation">Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#java-generics">Java Generics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#curiously-recurring-template-pattern">Curiously Recurring Template Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#duck-typing">Duck Typing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#modules-and-namespaces">Modules and Namespaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#translation-units">Translation Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#modules-packages-and-namespaces">Modules, Packages, and Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#linkage">Linkage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#information-hiding">Information Hiding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#initialization">Initialization</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Declarative Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html">Logic Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#prolog">Prolog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#lists">Lists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#arithmetic">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#side-effects">Side Effects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#unification-and-search">Unification and Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#search-order-and-backtracking">Search Order and Backtracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#the-cut-operator">The Cut Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#negation">Negation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html#constraints-and-dependencies">Constraints and Dependencies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#constraint-logic-programming">Constraint Logic Programming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#search">Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#id2">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#make">Make</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html#pattern-matching">Pattern Matching</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Metaprogramming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html">Macros and Code Generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#scheme-macros">Scheme Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#cpp-macros">CPP Macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metaprogramming.html#stringification-and-concatenation">Stringification and Concatenation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metaprogramming.html#the-macro-namespace">The Macro Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#code-generation">Code Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html#template-metaprogramming">Template Metaprogramming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#pairs">Pairs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#numerical-computations">Numerical Computations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#templates-and-function-overloading">Templates and Function Overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#sfinae">SFINAE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#ensuring-a-substitution-failure">Ensuring a Substitution Failure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#variadic-templates">Variadic Templates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html#example-multidimensional-arrays">Example: Multidimensional Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#points">Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#domains">Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#arrays">Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#stencil">Stencil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#nested-iteration">Nested Iteration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Concurrent Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.html">Parallel Computing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#parallelism-in-python">Parallelism in Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#threading">Threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#multiprocessing">Multiprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#the-problem-with-shared-state">The Problem with Shared State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#when-no-synchronization-is-necessary">When No Synchronization is Necessary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#synchronized-data-structures">Synchronized Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#locks">Locks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#barriers">Barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#message-passing">Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#application-examples">Application Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#web-crawler">Web Crawler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#particle-simulator">Particle Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#synchronization-pitfalls">Synchronization Pitfalls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#under-synchronization">Under-synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#over-synchronization">Over-synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#deadlock">Deadlock</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.html#asynchronous-tasks">Asynchronous Tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#limiting-the-number-of-tasks">Limiting the Number of Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#launch-policy">Launch Policy</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #C53390" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index-2.html">Programming Language Principles and Paradigms</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index-2.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Lambda Calculus</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="functional.html" class="btn btn-neutral float-left" title="Introduction to Scheme" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data.html" class="btn btn-neutral float-right" title="Functional Data Abstraction" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Theory</h1><p>We now turn our attention to theoretical foundations of programming
+languages and the meaning of code. These foundations are crucial to
+understanding how languages, programs, and their implementations work.</p>
+<section id="lambda-calculus">
+<h1>Lambda Calculus<a class="headerlink" href="#lambda-calculus" title="Link to this heading"></a></h1>
+<p>We start by examining lambda calculus, the mathematical foundation of
+functional programming, and use it to reason about how to construct
+abstractions and model computations. Its simplicity allows us to
+understand every detail about how it works, yet it is general enough
+to enable the expression of arbitrary computations.</p>
+<p>Lambda calculus (also <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus), introduced by Alonzo
+Church in the 1930s, is a model of computation based on functions. All
+functions in lambda calculus are anonymous, providing the inspiration
+for lambda expressions in modern programming languages.</p>
+<p>Lambda calculus is composed of only three elements: variables,
+function abstraction, and function application. <em>Function abstraction</em>
+is the process of defining a new function through a lambda
+(<span class="math notranslate nohighlight">\(\lambda\)</span>) expression. The following is a context-free grammar
+for <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus:</p>
+<div class="math notranslate nohighlight">
+\begin{equation*}
+\begin{aligned}
+Expression\ &amp;\rightarrow\ Variable\\
+           &amp;~~|~~~~\lambda\ Variable\ .\ Expression
+                   &amp;\textrm{(function abstraction)}\\
+           &amp;~~|~~~~Expression\ Expression
+                   &amp;\textrm{(function application)}\\
+           &amp;~~|~~~~(\ Expression\ )
+\end{aligned}
+\end{equation*}</div><p>We will use individual letters, such as <span class="math notranslate nohighlight">\(x\)</span> to denote a
+variable. Function application is left associative and has higher
+precedence than abstraction, and we will use parentheses where
+necessary as a result of associativity and precedence. All functions
+have exactly one parameter, and functions that would otherwise have
+multiple parameters must be <a class="reference internal" href="functional.html#currying"><span class="std std-ref">curried</span></a>.</p>
+<p>Since function application is left associative, a sequence of
+applications such as <span class="math notranslate nohighlight">\(f~g~h\)</span> is equivalent to <span class="math notranslate nohighlight">\(((f~g)~h)\)</span>.
+And since function application has higher precedence than abstraction,
+abstraction extends as far to the right as possible. Consider the
+following example:</p>
+<div class="math notranslate nohighlight">
+\[\lambda x .~ x~ \lambda y .~ x~ y~ z\]</div>
+<p>The <span class="math notranslate nohighlight">\(\lambda x\)</span> introduces a function abstraction, which extends
+as far right as possible:</p>
+<div class="math notranslate nohighlight">
+\[\lambda x .~ \underline{x~ \lambda y .~ x~ y~ z}\]</div>
+<p>Thus, this is equivalent to</p>
+<div class="math notranslate nohighlight">
+\[\lambda x .~ (x~ \lambda y .~ x~ y~ z)\]</div>
+<p>Then within the parentheses, the <span class="math notranslate nohighlight">\(\lambda y\)</span> introduces a new
+abstraction, which now extends as far right as possible, to the point
+of the existing closing parenthesis:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}   &amp;\lambda x .~ (x~ \lambda y .~ \underline{x~ y~ z})\\
+=~ &amp;\lambda x .~ (x~ \lambda y .~ (x~ y~ z))\end{split}\]</div>
+<p>Finally, within the body of the inner abstraction, we have a sequence
+of function applications, which are left associative:</p>
+<div class="math notranslate nohighlight">
+\[\lambda x .~ (x~ \lambda y .~ ((x~ y)~ z))\]</div>
+<p>Using the syntax of Scheme, the following is a representation of
+the function above:</p>
+<div class="highlight-scheme notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nf">x</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">x</span><span class="w"> </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nf">y</span><span class="p">)</span>
+<span class="w">       </span><span class="p">((</span><span class="nf">x</span><span class="w"> </span><span class="nv">y</span><span class="p">)</span><span class="w"> </span><span class="nv">z</span><span class="p">)</span>
+<span class="w">     </span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>(This is merely for illustration. Function semantics are different
+between Scheme and <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus, so using this syntax is
+not meant to imply an equivalence.)</p>
+<p>The following is the identity function:</p>
+<div class="math notranslate nohighlight">
+\[\lambda x .~ x\]</div>
+<p>The function takes in an argument, binds it to the parameter
+<span class="math notranslate nohighlight">\(x\)</span>, and immediately returns it.</p>
+<p>Functions themselves are first-class values, so they can be bound to
+parameters and returned. The following is a function that discards its
+input and returns the identity function:</p>
+<div class="math notranslate nohighlight">
+\[\lambda y .~ \lambda x .~ x\]</div>
+<p>Since abstraction extends as far to the right as possible, this is
+equivalent to the following parenthesization:</p>
+<div class="math notranslate nohighlight">
+\[\lambda y .~ (\lambda x .~ x)\]</div>
+<p>As another example, the following function takes in another function
+as its argument and applies it to the identity function:</p>
+<div class="math notranslate nohighlight">
+\[\lambda f .~ f~ \lambda x .~ x\]</div>
+<p>In <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus, functions are statically scoped. The
+result is that in <span class="math notranslate nohighlight">\(\lambda x .~ E\)</span>, <span class="math notranslate nohighlight">\(x\)</span> is bound in
+<span class="math notranslate nohighlight">\(E\)</span>, and <span class="math notranslate nohighlight">\(E\)</span> is the scope of <span class="math notranslate nohighlight">\(x\)</span>. If the same name
+is introduced multiple times within nested scopes, then use of the
+name resolves to the closest abstraction that introduced it. The
+following illustrates these rules:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/lambda_scope.svg"><img alt="_images/lambda_scope.svg" src="_images/lambda_scope.svg" width="200" /></a>
+</figure>
+<p>The first abstraction introduces the name <span class="math notranslate nohighlight">\(x\)</span>, so the scope of
+<span class="math notranslate nohighlight">\(x\)</span> is the body of the first abstraction. Thus, when <span class="math notranslate nohighlight">\(x\)</span>
+appears within the second abstraction, it resolves to the parameter of
+the first abstraction. The second abstraction itself introduces the
+name <span class="math notranslate nohighlight">\(y\)</span>, so use of the name within its body resolves the the
+associated parameter. Finally, the third abstraction reintroduces the
+name <span class="math notranslate nohighlight">\(x\)</span>, so <span class="math notranslate nohighlight">\(x\)</span> within its body resolves to the closest
+introduction, i.e. the parameter of the third abstraction.</p>
+<p>An unbound variable is allowed to appear in an expression, and such a
+variable is called <em>free</em>. For example, in <span class="math notranslate nohighlight">\(\lambda y .~ x~ y\)</span>,
+<span class="math notranslate nohighlight">\(x\)</span> is a free variable in the expression <span class="math notranslate nohighlight">\(x~ y\)</span> but
+<span class="math notranslate nohighlight">\(y\)</span> is bound. In <span class="math notranslate nohighlight">\(\lambda x .~ \lambda y .~ x~ y\)</span>, both
+<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are bound in the expression <span class="math notranslate nohighlight">\(\lambda y
+.~ x~ y\)</span>. Free variables are useful for reasoning about subexpressions
+such as <span class="math notranslate nohighlight">\(\lambda y.~ x~ y\)</span> in isolation without needing to
+consider the full context in which the subexpression appears.</p>
+<p>In the expression <span class="math notranslate nohighlight">\(\lambda x .~ E\)</span>, replacing all occurrences of
+<span class="math notranslate nohighlight">\(x\)</span> with another variable <span class="math notranslate nohighlight">\(y\)</span> does not affect the meaning
+as long as <span class="math notranslate nohighlight">\(y\)</span> does not occur in <span class="math notranslate nohighlight">\(E\)</span>. For example,
+<span class="math notranslate nohighlight">\(\lambda y .~ y\)</span> is an equivalent expression of the identity
+function. This process of variable replacement is called
+<span class="math notranslate nohighlight">\(\alpha\)</span><em>-reduction</em>, and we denote this replacement process
+as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}                    &amp;\lambda x.~ x\\
+\rightarrow_\alpha~ &amp;\lambda y.~ y\end{split}\]</div>
+<p>The expressions <span class="math notranslate nohighlight">\(\lambda x .~
+x\)</span> and <span class="math notranslate nohighlight">\(\lambda y .~ y\)</span> are <span class="math notranslate nohighlight">\(\alpha\)</span><em>-equivalent</em>, and
+we denote this equivalence is follows:</p>
+<div class="math notranslate nohighlight">
+\[\lambda x.~ x ~=_\alpha~ \lambda y.~ y\]</div>
+<p>In function application, <span class="math notranslate nohighlight">\(\alpha\)</span>-reduction is used to ensure
+that names are restricted to the appropriate scope. This translation
+has the same effect as environments in an interpreter. As an example,
+consider applying the identity function to itself:</p>
+<div class="math notranslate nohighlight">
+\[(\lambda x.~ x)~ (\lambda x.~ x)\]</div>
+<p>First, we apply <span class="math notranslate nohighlight">\(\alpha\)</span>-reduction on the argument to ensure
+that variables in the argument are distinct from those in the function
+being applied:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}                    &amp;(\lambda x.~ x)~ (\lambda x.~ x)\\
+\rightarrow_\alpha~ &amp;(\lambda x. ~x)~ (\lambda y. ~y)\end{split}\]</div>
+<p>We then replace each occurrence of the parameter with the argument
+expression in the body of the function being applied. The result is
+the body itself after this substitution process:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\require{cancel}
+                 &amp;(\lambda x.~ x)~ (\lambda y.~ y)\\
+\Longrightarrow~ &amp;(\xcancel{\lambda x. ~x}(\lambda y. ~y))\end{split}\]</div>
+<p>This argument-substituting procedure is called <span class="math notranslate nohighlight">\(\beta\)</span><em>-reduction</em>, and it is similar to the call-by-name argument-passing
+convention in programming languages. We denote <span class="math notranslate nohighlight">\(\beta\)</span>-reduction
+as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}                   &amp;(\lambda x.~ x)~ (\lambda y.~ y)\\
+\rightarrow_\beta~ &amp;\lambda y. ~y\end{split}\]</div>
+<p>This expression is itself <span class="math notranslate nohighlight">\(\alpha\)</span>-equivalent to the identity
+function, and the original expression <span class="math notranslate nohighlight">\((\lambda x.~ x) (\lambda
+x.~ x)\)</span> is <span class="math notranslate nohighlight">\(\beta\)</span><em>-equivalent</em> to the identity function since
+it <span class="math notranslate nohighlight">\(\beta\)</span>-reduces to the same expression as the identity
+function:</p>
+<div class="math notranslate nohighlight">
+\[(\lambda x.~ x)~ (\lambda x.~ x) ~=_\beta~ \lambda x.~ x\]</div>
+<p>As a more complex example, consider the following:</p>
+<div class="math notranslate nohighlight">
+\[(\lambda x.~ x~ x~ \lambda w.~ \lambda y.~ y~ w)~ \lambda z.~ z\]</div>
+<p>In the first function application, the variable names are already
+distinct, so no <span class="math notranslate nohighlight">\(\alpha\)</span>-reduction is necessary. We can then
+apply <span class="math notranslate nohighlight">\(\beta\)</span>-reduction to obtain:</p>
+<div class="math notranslate nohighlight">
+\[(\lambda z.~ z)~ (\lambda z.~ z)~ \lambda w.~ \lambda y.~ y~ w\]</div>
+<p>This results in another function application, where the function and
+argument do share variable names. Applying <span class="math notranslate nohighlight">\(\alpha\)</span>-reduction,
+we get:</p>
+<div class="math notranslate nohighlight">
+\[(\lambda z.~ z)~ (\lambda x.~ x)~ \lambda w.~ \lambda y.~ y~ w\]</div>
+<p>This <span class="math notranslate nohighlight">\(\beta\)</span>-reduces to</p>
+<div class="math notranslate nohighlight">
+\[(\lambda x.~ x)~ \lambda w.~ \lambda y.~ y~ w\]</div>
+<p>Another <span class="math notranslate nohighlight">\(\beta\)</span>-reduction results in</p>
+<div class="math notranslate nohighlight">
+\[\lambda w.~ \lambda y.~ y~ w\]</div>
+<p>This cannot <span class="math notranslate nohighlight">\(\beta\)</span>-reduce any further, so it is said to be in
+<em>normal form</em>. The following denotes the full computation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}                    &amp;(\lambda x.~ x~ x~ \lambda w.~ \lambda y.~ y~ w)~
+                       \lambda z.~ z\\
+\rightarrow_\beta~  &amp;(\lambda z.~ z)~ (\lambda z.~ z)~
+                       \lambda w.~ \lambda y.~ y~ w\\
+\rightarrow_\alpha~ &amp;(\lambda z.~ z)~ (\lambda x.~ x)~
+                       \lambda w.~ \lambda y.~ y~ w\\
+\rightarrow_\beta~  &amp;(\lambda x.~ x)~ \lambda w.~ \lambda y.~ y~ w\\
+\rightarrow_\beta~  &amp;\lambda w.~ \lambda y.~ y~ w\end{split}\]</div>
+<section id="non-terminating-computation">
+<h2>Non-Terminating Computation<a class="headerlink" href="#non-terminating-computation" title="Link to this heading"></a></h2>
+<p>Evaluating an expression in <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus applies
+<span class="math notranslate nohighlight">\(\beta\)</span>-reduction as long as possible, until the expression is
+in normal form. Not all evaluations terminate. Consider a function
+abstraction that applies an argument to itself:</p>
+<div class="math notranslate nohighlight">
+\[\lambda x.~ x~ x\]</div>
+<p>If we apply this to the identity function, we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;(\lambda x.~ x~ x)~ (\lambda x.~ x)\\
+\rightarrow_\alpha~ &amp;(\lambda x.~ x~ x)~ (\lambda y.~ y)\\
+\rightarrow_\beta~ &amp;(\lambda y.~ y)~ (\lambda y.~ y)\\
+\rightarrow_\alpha~ &amp;(\lambda y.~ y)~ (\lambda z.~ z)\\
+\rightarrow_\beta~ &amp;\lambda z.~ z\end{split}\]</div>
+<p>This evaluation terminates, and as expected, we obtain the identity
+function. Now consider what happens when we apply the original
+function to itself:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;(\lambda x.~ x~ x)~ (\lambda x.~ x~ x)\\
+\rightarrow_\alpha~ &amp;(\lambda x.~ x~ x)~ (\lambda y.~ y~ y)\\
+\rightarrow_\beta~ &amp;(\lambda y.~ y~ y)~ (\lambda y.~ y~ y)\\
+\rightarrow_\alpha~ &amp;(\lambda y.~ y~ y)~ (\lambda z.~ z~ z)\\
+\rightarrow_\beta~ &amp;(\lambda z.~ z~ z)~ (\lambda z.~ z~ z)\\
+\dots&amp;\end{split}\]</div>
+<p>This evaluation never terminates, as reduction continues to produce an
+expression that is <span class="math notranslate nohighlight">\(\alpha\)</span>-equivalent to the original one.</p>
+</section>
+<section id="normal-order-evaluation">
+<h2>Normal-Order Evaluation<a class="headerlink" href="#normal-order-evaluation" title="Link to this heading"></a></h2>
+<p>Function application in <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus is similar to
+<a class="reference internal" href="functional.html#parameter-passing"><span class="std std-ref">call by name</span></a> in that the argument is not
+evaluated before the function is applied. Instead, the argument
+expression is substituted for the parameter directly in the body. This
+results in lazy evaluation, where the argument expression is not
+evaluated unless it is needed. As an example, consider the following:</p>
+<div class="math notranslate nohighlight">
+\[(\lambda y.~ \lambda z.~ z)~ ((\lambda x.~ x~ x)~ (\lambda x.~ x~ x))\]</div>
+<p>The argument expression is a <a class="reference internal" href="#non-terminating-computation">non-terminating computation</a>, so if we
+were to evaluate it prior to substitution, the computation as a whole
+would not terminate. Instead, <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus specifies
+that the substitution happens first:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp;(\lambda y.~ \lambda z.~ z)~ ((\lambda x.~ x~ x)~ (\lambda x.~ x~ x))\\
+\rightarrow_\beta~ &amp;\lambda z.~ z\end{split}\]</div>
+<p>Since the parameter <span class="math notranslate nohighlight">\(y\)</span> does not appear in the body, the
+argument expression is eliminated once the argument substitution is
+made. Thus, the computation terminates, and its end result is the
+identity function.</p>
+<p>There is an important distinction between the evaluation process in
+<span class="math notranslate nohighlight">\(\lambda\)</span>-calculus and call by name. In the former, function
+bodies are reduced to normal form before the function is applied. This
+is referred to as <em>normal-order evaluation</em>. By contrast, call by name
+performs argument substitution before manipulating the body of the
+function. The following illustrates normal-order evaluation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}             &amp;(\lambda x.~ (\lambda y.~ y~ y)~ x)~ (\lambda z.~ z)\\
+\rightarrow_\beta~  &amp;(\lambda x.~ x~ x)~ (\lambda z.~ z)\\
+\rightarrow_\beta~  &amp;(\lambda z.~ z)~ (\lambda z.~ z)\\
+\rightarrow_\alpha~ &amp;(\lambda z.~ z)~ (\lambda w.~ w)\\
+\rightarrow_\beta~  &amp;\lambda w.~ w\end{split}\]</div>
+<p>Before the function on the left is applied, its body is reduced, which
+involves applying the function <span class="math notranslate nohighlight">\(\lambda y.~ y~ y\)</span> to its
+argument <span class="math notranslate nohighlight">\(x\)</span>. This results in the expression <span class="math notranslate nohighlight">\(x\)</span>, so the
+function on the left becomes <span class="math notranslate nohighlight">\(\lambda x.~ x~ x\)</span>. This is in
+normal form, so the function can now be applied to its argument.
+Further <span class="math notranslate nohighlight">\(\alpha\)</span>- and <span class="math notranslate nohighlight">\(\beta\)</span>-reductions result in the
+final value of the identity function.</p>
+<p>Summarizing the evaluation rules for a function application
+<span class="math notranslate nohighlight">\(f~x\)</span>, we have the following:</p>
+<ol class="arabic simple">
+<li><p>Reduce the body of the function <span class="math notranslate nohighlight">\(f\)</span> until it is in normal
+form <span class="math notranslate nohighlight">\(f_{normal}\)</span>.</p></li>
+<li><p>If a bound-variable name appears in both <span class="math notranslate nohighlight">\(f_{normal}\)</span> and
+<span class="math notranslate nohighlight">\(x\)</span>, then perform <span class="math notranslate nohighlight">\(\alpha\)</span>-reduction on <span class="math notranslate nohighlight">\(x\)</span> so
+that this is no longer the case <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, obtaining <span class="math notranslate nohighlight">\(x_\alpha\)</span>.</p></li>
+<li><p>Perform <span class="math notranslate nohighlight">\(\beta\)</span>-reduction by substituting <span class="math notranslate nohighlight">\(x_\alpha\)</span>
+for the parameter of <span class="math notranslate nohighlight">\(f_{normal}\)</span> in the body of the latter.
+The result of this reduction is the substituted body itself.</p></li>
+<li><p>Proceed to reduce the substituted body until it is in normal form.</p></li>
+</ol>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Our convention is to <span class="math notranslate nohighlight">\(\alpha\)</span>-reduce the argument rather
+than the function, though the result of evaluation would be
+equivalent in either case.</p>
+</aside>
+</aside>
+<p>If a variable is free in <span class="math notranslate nohighlight">\(f\)</span> but bound in <span class="math notranslate nohighlight">\(x\)</span> or vice
+versa, then <span class="math notranslate nohighlight">\(\alpha\)</span>-reduction must be applied in step 2 to
+rename the bound variable. Thus:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}                      (\lambda x.~ a~ x)~ \lambda a.~ a
+~&amp;\rightarrow_\alpha~ (\lambda x.~ a~ x)~ \lambda y.~ y\\
+                      (\lambda a.~ a~ x)~ a
+~&amp;\rightarrow_\alpha~ (\lambda y.~ y~ x)~ a\\
+                      (\lambda x.~ a~ x)~ \lambda a.~ a~ x
+~&amp;\rightarrow_\alpha~ (\lambda x.~ a~ x)~ \lambda z.~ z~ x\\
+~&amp;\rightarrow_\alpha~ (\lambda y.~ a~ y)~ \lambda z.~ z~ x\end{split}\]</div>
+</section>
+<section id="encoding-data">
+<h2>Encoding Data<a class="headerlink" href="#encoding-data" title="Link to this heading"></a></h2>
+<p>Lambda calculus consists solely of variables and functions, and we can
+apply <span class="math notranslate nohighlight">\(\beta\)</span>-reduction to substitute functions for variables.
+However, none of the familiar values exist directly in
+<span class="math notranslate nohighlight">\(\lambda\)</span>-calculus, such as integers or booleans. It is thus
+surprising that <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus can model any computational
+process. We demonstrate this by encoding values as functions.</p>
+<section id="booleans">
+<h3>Booleans<a class="headerlink" href="#booleans" title="Link to this heading"></a></h3>
+<p>To start with, let us define an abstraction for the booleans
+<span class="math notranslate nohighlight">\(true\)</span> and <span class="math notranslate nohighlight">\(false\)</span>. The only building block we have to
+work with is functions, and we need to ensure that the functions that
+represent the two values are not <span class="math notranslate nohighlight">\(\beta\)</span>-equivalent so that we
+can distinguish between them. There are many ways we can do so, but
+the one we use is to define <span class="math notranslate nohighlight">\(true\)</span> and <span class="math notranslate nohighlight">\(false\)</span> as
+functions that take two values and produce either the first or the
+second value:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}true~ &amp;=~ \lambda t.~ \lambda f.~ t\\
+false~ &amp;=~ \lambda t.~ \lambda f.~ f\end{split}\]</div>
+<p>The <span class="math notranslate nohighlight">\(=\)</span> sign here means that we take this as a mathematical
+definition; it does not denote assignment. Since all functions in
+<span class="math notranslate nohighlight">\(\lambda\)</span>-calculus must take a single argument, the actual
+definitions of <span class="math notranslate nohighlight">\(true\)</span> and <span class="math notranslate nohighlight">\(false\)</span> are <a class="reference internal" href="functional.html#currying"><span class="std std-ref">curried</span></a>. Applying <span class="math notranslate nohighlight">\(true\)</span> to two values results in the first:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    true~ a~ b~ =~ &amp;(\lambda t.~ \lambda f.~ t)~ a~ b\\
+\rightarrow_\beta~ &amp;(\lambda f.~ a)~ b\\
+\rightarrow_\beta~ &amp;a\end{split}\]</div>
+<p>Similarly, applying <span class="math notranslate nohighlight">\(false\)</span> to two values yields the second:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    false~ a~ b~ =~ &amp;(\lambda t.~ \lambda f.~ f)~ a~ b\\
+\rightarrow_\beta~ &amp;(\lambda f.~ f)~ b\\
+\rightarrow_\beta~ &amp;b\end{split}\]</div>
+<p>We can proceed to define logical operators as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}and~ &amp;=~ \lambda a.~ \lambda b.~ a~ b~ a\\
+or~ &amp;=~ \lambda a.~ \lambda b.~ a~ a~ b\\
+not~ &amp;=~ \lambda b.~ b~ false~ true\end{split}\]</div>
+<p>To see how these work, let us apply them to some examples:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}and~ true~ bool~ &amp;=~ ((\lambda a.~ \lambda b.~ a~ b~ a)~ true)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ true~ b~ true)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ b)~ bool\\
+&amp;\rightarrow~ bool\\
+or~ true~ bool~ &amp;=~ ((\lambda a.~ \lambda b.~ a~ a~ b)~ true)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ true~ true~ b)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ true)~ bool\\
+&amp;\rightarrow~ true\end{split}\]</div>
+<p>Here, we use <span class="math notranslate nohighlight">\(\rightarrow\)</span> on its own to denote some sequence of
+<span class="math notranslate nohighlight">\(\alpha\)</span>- and <span class="math notranslate nohighlight">\(\beta\)</span>-reductions. Applying <span class="math notranslate nohighlight">\(and\)</span>
+to <span class="math notranslate nohighlight">\(true\)</span> and any other boolean results in the second boolean,
+while applying <span class="math notranslate nohighlight">\(or\)</span> to <span class="math notranslate nohighlight">\(true\)</span> and another boolean always
+results in <span class="math notranslate nohighlight">\(true\)</span>. Similarly:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}and~ false~ bool~ &amp;=~ ((\lambda a.~ \lambda b.~ a~ b~ a)~ false)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ false~ b~ false)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ false)~ bool\\
+&amp;\rightarrow~ false\\
+or~ false~ bool~ &amp;=~ ((\lambda a.~ \lambda b.~ a~ a~ b)~ false)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ false~ false~ b)~ bool\\
+&amp;\rightarrow~ (\lambda b.~ b)~ bool\\
+&amp;\rightarrow~ bool\end{split}\]</div>
+<p>Applying <span class="math notranslate nohighlight">\(and\)</span> to <span class="math notranslate nohighlight">\(false\)</span> and some other boolean always
+results in <span class="math notranslate nohighlight">\(false\)</span>, while applying <span class="math notranslate nohighlight">\(or\)</span> to <span class="math notranslate nohighlight">\(false\)</span>
+and another boolean results in the second boolean. Finally,
+<span class="math notranslate nohighlight">\(not\)</span> works as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}not~ true~ &amp;=~ (\lambda b.~ b~ false~ true)~ true\\
+&amp;\rightarrow~ true~ false~ true\\
+&amp;\rightarrow~ false\\
+not~ false~ &amp;=~ (\lambda b.~ b~ false~ true)~ false\\
+&amp;\rightarrow~ false~ false~ true\\
+&amp;\rightarrow~ true\end{split}\]</div>
+<p>Applying <span class="math notranslate nohighlight">\(not\)</span> to <span class="math notranslate nohighlight">\(true\)</span> results in <span class="math notranslate nohighlight">\(false\)</span>, and
+vice versa.</p>
+<p>We can define a conditional as follows:</p>
+<div class="math notranslate nohighlight">
+\[if~ =~ \lambda p.~ \lambda a.~ \lambda b.~ p~ a~ b\]</div>
+<p>If the condition <span class="math notranslate nohighlight">\(p\)</span> is <span class="math notranslate nohighlight">\(true\)</span>, then applying <span class="math notranslate nohighlight">\(p\)</span> to
+<span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> results in <span class="math notranslate nohighlight">\(a\)</span>, since <span class="math notranslate nohighlight">\(true\)</span>
+selects the first of two values. On the other hand, if <span class="math notranslate nohighlight">\(p\)</span> is
+<span class="math notranslate nohighlight">\(false\)</span>, then applying <span class="math notranslate nohighlight">\(p\)</span> to <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span>
+results in <span class="math notranslate nohighlight">\(b\)</span>, since <span class="math notranslate nohighlight">\(false\)</span> selects the second of two
+values.</p>
+</section>
+<section id="pairs">
+<h3>Pairs<a class="headerlink" href="#pairs" title="Link to this heading"></a></h3>
+<p>In order to represent structured data, we need an abstraction for a
+pair of two values. As with booleans, the only mechanism at our
+disposal is functions, so we need to produce a “container” function
+that holds the two values within its body.:</p>
+<div class="math notranslate nohighlight">
+\[pair~ =~ \lambda x.~ \lambda y.~ \lambda f.~ f~ x~ y\]</div>
+<p>The <span class="math notranslate nohighlight">\(pair\)</span> constructor takes two items <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>
+and produces as a result a function that contains <span class="math notranslate nohighlight">\(x\)</span> and
+<span class="math notranslate nohighlight">\(y\)</span> in its body. Applying <span class="math notranslate nohighlight">\(pair\)</span> to two concrete items
+<span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> results in:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    pair~ a~ b~ =~ &amp;(\lambda x.~ \lambda y.~ \lambda f.~ f~ x~ y)~ a~ b)\\
+\rightarrow_\beta~ &amp;(\lambda y.~ \lambda f.~ f~ a~ y)~ b\\
+\rightarrow_\beta~ &amp;\lambda f.~ f~ a~ b\\\end{split}\]</div>
+<p>In order to obtain the first item <span class="math notranslate nohighlight">\(a\)</span> above, we can substitute
+<span class="math notranslate nohighlight">\(true\)</span> for <span class="math notranslate nohighlight">\(f\)</span>, so that <span class="math notranslate nohighlight">\(f~a~b\)</span> evaluates to
+<span class="math notranslate nohighlight">\(a\)</span>. Similarly, to obtain the second item, we can substitute
+<span class="math notranslate nohighlight">\(false\)</span> for <span class="math notranslate nohighlight">\(f\)</span>. This leads to the following definitions
+of the <span class="math notranslate nohighlight">\(first\)</span> and <span class="math notranslate nohighlight">\(second\)</span> selectors:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}first~ &amp;=~ \lambda p.~ p~ true\\
+second~ &amp;=~ \lambda p.~ p~ false\end{split}\]</div>
+<p>The following demonstrates how selectors work:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}first~ (pair~ a~ b)~ &amp;=~ (\lambda p.~ p~ true)~ (pair~ a~ b)\\
+&amp;\rightarrow~ (pair~ a~ b)~ true\\
+&amp;=~ (\lambda f.~ f~ a~ b)~ true\\
+&amp;\rightarrow~ true~ a~ b\\
+&amp;\rightarrow~ a\\
+second~ (pair~ a~ b)~ &amp;=~ (\lambda p.~ p~ false)~ (pair~ a~ b)\\
+&amp;\rightarrow~ (pair~ a~ b)~ false\\
+&amp;=~ (\lambda f.~ f~ a~ b)~ false\\
+&amp;\rightarrow~ false~ a~ b\\
+&amp;\rightarrow~ b\end{split}\]</div>
+<p>We can also define a representation for <span class="math notranslate nohighlight">\(nil\)</span>, as well as a
+predicate to test for <span class="math notranslate nohighlight">\(nil\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}nil~ &amp;=~ \lambda x.~ true\\
+null~ &amp;=~ \lambda p.~ p~ (\lambda x.~ \lambda y.~ false)\end{split}\]</div>
+<p>Let us see how the <span class="math notranslate nohighlight">\(null\)</span> predicate works:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}null~ nil~ &amp;=~ (\lambda p.~ p~ (\lambda x.~ \lambda y.~ false))~ \lambda x.~ true\\
+&amp;\rightarrow~ (\lambda x.~ true)~ (\lambda x.~ \lambda y.~ false)\\
+&amp;\rightarrow~ true\\
+null~ (pair~ a~ b)~ &amp;=~ (\lambda p.~ p~ (\lambda x.~ \lambda y.~ false))~ (pair~ a~ b)\\
+&amp;\rightarrow~ (pair~ a~ b~)~ (\lambda x.~ \lambda y.~ false)\\
+&amp;=~ (\lambda f.~ f~ a~ b)~ (\lambda x.~ \lambda y.~ false)\\
+&amp;\rightarrow~ (\lambda x.~ \lambda y.~ false)~ a~ b\\
+&amp;\rightarrow~ (\lambda y.~ false)~ b\\
+&amp;\rightarrow~ false\end{split}\]</div>
+<p>With a definition for pairs, we can represent arbitrary data
+structures. For example, we can represent trees using nested pairs:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}tree~ &amp;=~ \lambda d.~ \lambda l.~ \lambda r.~ pair~ d~ (pair~ l~ r)\\
+datum~ &amp;=~ \lambda t.~ first~ t\\
+left~ &amp;=~ \lambda t.~ first~ (second~ t)\\
+right~ &amp;=~ \lambda t.~ second~ (second~ t)\end{split}\]</div>
+</section>
+<section id="church-numerals">
+<h3>Church Numerals<a class="headerlink" href="#church-numerals" title="Link to this heading"></a></h3>
+<p>Many representations of numbers are possible in
+<span class="math notranslate nohighlight">\(\lambda\)</span>-calculus. For example, we can represent natural
+numbers in unary format, using pairs:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}zero~ &amp;=~ \lambda x.~ nil\\
+one~ &amp;=~ \lambda x.~ pair~ x~ nil\\
+two~ &amp;=~ \lambda x.~ pair~ x~ (pair~ x~ nil)\\
+\dots\end{split}\]</div>
+<p>However, the most common representation is the <em>Church numerals</em>,
+which represents a natural number by how many times it applies a
+function to an input:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}zero~ &amp;=~ \lambda f.~ \lambda x.~ x\\
+one~ &amp;=~ \lambda f.~ \lambda x.~ f~ x\\
+two~ &amp;=~ \lambda f.~ \lambda x.~ f~ (f~ x)\\
+three~ &amp;=~ \lambda f.~ \lambda x.~ f~ (f~ (f~ x))\\
+\dots\end{split}\]</div>
+<p>A number <span class="math notranslate nohighlight">\(n\)</span> is a higher-order function that, given another
+function <span class="math notranslate nohighlight">\(f\)</span>, produces a new function that applies <span class="math notranslate nohighlight">\(f\)</span> to
+its argument <span class="math notranslate nohighlight">\(n\)</span> times in succession. Using the mathematical
+notation <span class="math notranslate nohighlight">\(f^k\)</span> to denote the composition of <span class="math notranslate nohighlight">\(f\)</span> with
+itself <span class="math notranslate nohighlight">\(k\)</span> times, e.g <span class="math notranslate nohighlight">\(f^3 = f \circ f \circ f\)</span>, the
+Church numeral <span class="math notranslate nohighlight">\(n\)</span> is a function that takes <span class="math notranslate nohighlight">\(f\)</span> and
+produces <span class="math notranslate nohighlight">\(f^n\)</span>.</p>
+<p>As a concrete example, the <span class="math notranslate nohighlight">\(right\)</span> function above applies the
+<span class="math notranslate nohighlight">\(second\)</span> function twice to its argument, so we can define it
+instead as:</p>
+<div class="math notranslate nohighlight">
+\[right~ =~ two~ second\]</div>
+<p>The following demonstrates how this works <a class="footnote-reference brackets" href="#id4" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>:</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>To simplify reasoning about the results, we depart from
+normal-order evaluation for the remainder of our discussion on
+<span class="math notranslate nohighlight">\(\lambda\)</span>-calculus when reducing expressions. In
+particular, we do not reduce a function body before applying
+it. However, applying the resulting expressions would have the
+same effect as those generated by normal-order evaluation.</p>
+</aside>
+</aside>
+<div class="math notranslate nohighlight">
+\[\begin{split}right~ (tree~ a~ b~ c)~ &amp;=~ right~ (pair~ a~ (pair~ b~ c))\\
+&amp;=~ (two~ second)~ (pair~ a~ (pair~ b~ c))\\
+&amp;=~ ((\lambda f.~ \lambda x.~ f~ (f~ x))~ second)~ (pair~ a~ (pair~ b~ c))\\
+&amp;\rightarrow~ (\lambda x.~ second~ (second~ x))~ (pair~ a~ (pair~ b~ c))\\
+&amp;\rightarrow~ second~ (second~ (pair~ a~ (pair~ b~ c)))\\
+&amp;\rightarrow~ second~ (pair~ b~ c)\\
+&amp;\rightarrow~ c\end{split}\]</div>
+<p>By applying <span class="math notranslate nohighlight">\(right\)</span> to a tree with <span class="math notranslate nohighlight">\(c\)</span> as its right
+subtree, we obtain <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<p>We can define an increment function as follows:</p>
+<div class="math notranslate nohighlight">
+\[incr~ =~ \lambda n.~ \lambda f.~ \lambda y.~ f~ (n~ f~ y)\]</div>
+<p>Given a number, <span class="math notranslate nohighlight">\(incr\)</span> produces a new one that applies a
+function to an argument one more time than the original number. Thus,
+where <span class="math notranslate nohighlight">\(n\)</span> turns its input <span class="math notranslate nohighlight">\(f\)</span> into <span class="math notranslate nohighlight">\(f^n\)</span>, the result
+of <span class="math notranslate nohighlight">\(incr~ n\)</span> turns its input <span class="math notranslate nohighlight">\(f\)</span> into <span class="math notranslate nohighlight">\(f^{n+1}\)</span>.
+This is accomplished by first applying <span class="math notranslate nohighlight">\(n~ f\)</span>, which is
+equivalent to <span class="math notranslate nohighlight">\(f^n\)</span>, and then applying <span class="math notranslate nohighlight">\(f\)</span> one more time.
+For example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}incr~ zero~ &amp;=~ (\lambda n.~ \lambda f.~ \lambda y.~ f~ (n~ f~ y))~ zero\\
+&amp;\rightarrow~ \lambda f.~ \lambda y.~ f~ (zero~ f~ y)\\
+&amp;=~ \lambda f.~ \lambda y.~ f~ ((\lambda x.~ x)~ y)\\
+&amp;\rightarrow~ \lambda f.~ \lambda y.~ f~ y\\
+&amp;=_\alpha~ one\\
+incr~ one~ &amp;=~ (\lambda n.~ \lambda f.~ \lambda y.~ f~ (n~ f~ y))~ one\\
+&amp;\rightarrow~ \lambda f.~ \lambda y.~ f~ (one~ f~ y)\\
+&amp;=~ \lambda f.~ \lambda y.~ f~ ((\lambda x.~ f~ x)~ y)\\
+&amp;\rightarrow~ \lambda f.~ \lambda y.~ f~ (f~ y)\\
+&amp;=_\alpha~ two\end{split}\]</div>
+<p>We can then define <span class="math notranslate nohighlight">\(plus\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[plus~ =~ \lambda m.~ \lambda n.~ m~ incr~ n\]</div>
+<p>This applies the <span class="math notranslate nohighlight">\(incr\)</span> function <span class="math notranslate nohighlight">\(m\)</span> times to <span class="math notranslate nohighlight">\(n\)</span>.
+For example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}plus~ two~ three~ &amp;=~ (\lambda m.~ \lambda n.~ m~ incr~ n)~ two~ three\\
+&amp;\rightarrow~ (\lambda n.~ two~ incr~ n)~ three\\
+&amp;=~ (\lambda n.~ (\lambda f.~ \lambda x.~ f~ (f~ x))~ incr~ n)~ three\\
+&amp;\rightarrow~ (\lambda n.~ (\lambda x.~ incr~ (incr~ x))~ n)~ three\\
+&amp;\rightarrow~ (\lambda n.~ incr~ (incr~ n))~ three\\
+&amp;\rightarrow~ incr~ (incr~ three)\\
+&amp;\rightarrow~ incr~ four\\
+&amp;\rightarrow~ five\end{split}\]</div>
+<p>We can then use the same strategy to define multiplication:</p>
+<div class="math notranslate nohighlight">
+\[times~ =~ \lambda m.~ \lambda n.~ m~ (plus~ n)~ zero\]</div>
+<p>Here, we perform <span class="math notranslate nohighlight">\(m\)</span> additions of <span class="math notranslate nohighlight">\(n\)</span>, starting at zero,
+resulting in the product of <span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p>We can define exponentiation using the same pattern. Decrement and
+subtraction are a little more difficult to define, but are possible.
+Finally, we need a predicate to determine when a number is zero:</p>
+<div class="math notranslate nohighlight">
+\[iszero~ =~ \lambda n.~ n~ (\lambda y.~ false)~ true\]</div>
+<p>We apply a number to a function that returns <span class="math notranslate nohighlight">\(false\)</span> and a
+starting value of <span class="math notranslate nohighlight">\(true\)</span>. Only if the function is never applied
+is the result <span class="math notranslate nohighlight">\(true\)</span>, otherwise it is <span class="math notranslate nohighlight">\(false\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}iszero~ zero~ &amp;=~ (\lambda n.~ n~ (\lambda y.~ false)~ true)~ zero\\
+&amp;\rightarrow~ zero~ (\lambda y.~ false)~ true\\
+&amp;=~ (\lambda f.~ \lambda x.~ x)~ (\lambda y.~ false)~ true\\
+&amp;\rightarrow~ (\lambda x.~ x)~ true\\
+&amp;\rightarrow~ true\\
+iszero~ two~ &amp;=~ (\lambda n.~ n~ (\lambda y.~ false)~ true)~ two\\
+&amp;\rightarrow~ two~ (\lambda y.~ false)~ true\\
+&amp;=~ (\lambda f.~ \lambda x.~ f~ (f~ x))~ (\lambda y.~ false)~ true\\
+&amp;\rightarrow~ (\lambda x.~ (\lambda y.~ false)~ ((\lambda y.~ false~)~ x))~ true\\
+&amp;\rightarrow~ (\lambda x.~ (\lambda y.~ false)~ false)~ true\\
+&amp;\rightarrow~ (\lambda x.~ false)~ true\\
+&amp;\rightarrow~ false\end{split}\]</div>
+</section>
+</section>
+<section id="recursion">
+<h2>Recursion<a class="headerlink" href="#recursion" title="Link to this heading"></a></h2>
+<p>Church numerals allow us to perform bounded repetition, but in order
+to express arbitrary computation, we need a mechanism for unbounded
+repetition. Since <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus only has functions,
+recursion is a natural mechanism for repetition.</p>
+<p>In recursion, a function needs to be able to refer to itself by name.
+However, in <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus, the only way to introduce a
+name is as a function parameter. Thus, a recursive function must take
+itself as input. For example, the following defines a factorial
+function:</p>
+<div class="math notranslate nohighlight">
+\[factorial~ =~ \lambda f.~ \lambda n.~ if~ (iszero~ n)~ one~ (times~ n~ (f~ f~ (decr~ n)))\]</div>
+<p>As an analogy, the equivalent form in Python is as follows:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">factorial</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">f</span><span class="p">)(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In order to actually apply the <span class="math notranslate nohighlight">\(factorial\)</span> function, we need
+another function that applies its argument to itself:</p>
+<div class="math notranslate nohighlight">
+\[apply~ =~ \lambda g.~ g~ g\]</div>
+<p>We can then compute a factorial as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}apply~ factorial~ m~ &amp;=~ (\lambda g.~ g~ g)~ factorial~ m\\
+&amp;\rightarrow~ factorial~ factorial~ m\\
+&amp;=~ (\lambda f.~ \lambda n.~ if~ (iszero~ n)~ one~ (times~ n~ (f~ f~ (decr~ n))))~ factorial~ m\\
+&amp;\rightarrow~ (\lambda n.~ if~ (iszero~ n)~ one~ (times~ n~ (factorial~ factorial~ (decr~ n))))~ m\\
+&amp;\rightarrow~ if~ (iszero~ m)~ one~ (times~ m~ (factorial~ factorial~ (decr~ m)))\\
+&amp;=_\beta~ if~ (iszero~ m)~ one~ (times~ m~ (apply~ factorial~ (decr~ m)))\\
+\dots\end{split}\]</div>
+<p>Further evaluation results in the factorial of <span class="math notranslate nohighlight">\(m\)</span>. Performing
+the analogous operation in Python:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">apply</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">g</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apply</span><span class="p">(</span><span class="n">factorial</span><span class="p">)(</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">24</span>
+</pre></div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(apply\)</span> function can be generalized as the following
+function in <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus, known as a <em>fixed-point
+combinator</em> and, by convention, the <em>Y combinator</em>:</p>
+<div class="math notranslate nohighlight">
+\[Y~ =~ \lambda f.~ (\lambda x.~ f~ (x~ x))~ (\lambda x.~ f~ (x~ x))\]</div>
+<p>Applying the Y combinator to a function <span class="math notranslate nohighlight">\(F\)</span> results in:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Y~ F~ &amp;=~ (\lambda f.~ (\lambda x.~ f~ (x~ x))~ (\lambda x.~ f~ (x~ x)))~ F\\
+&amp;\rightarrow~ (\lambda x.~ F~ (x~ x))~ (\lambda x.~ F~ (x~ x))\\
+&amp;\rightarrow~ (\lambda x.~ F~ (x~ x))~ (\lambda y.~ F~ (y~ y))\\
+&amp;\rightarrow~ F~ ((\lambda y.~ F~ (y~ y))~ (\lambda y.~ F~ (y~ y)))\\
+&amp;=~ F~ (Y~ F)\end{split}\]</div>
+<p>This allows us to define <span class="math notranslate nohighlight">\(factorial\)</span> more simply. Let us first
+define a concrete function <span class="math notranslate nohighlight">\(F\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[F~ =~ \lambda f.~ \lambda n.~ if~ (iszero~ n)~ one~ (times~ n~ (f~ (decr~ n)))\]</div>
+<p>Notice that this is the same as <span class="math notranslate nohighlight">\(factorial\)</span>, except that we have
+not passed the input function to itself in the recursive application.
+If we apply the Y combinator to <span class="math notranslate nohighlight">\(F\)</span> and apply the result to a
+number, we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Y~ F~ m~ &amp;\rightarrow~ F~ (Y~ F)~ m\\
+&amp;=~ (\lambda f.~ \lambda n.~ if~ (iszero~ n)~ one~ (times~ n~ (f~ (decr~ n))))~ (Y~ F)~ m\\
+&amp;\rightarrow~ (\lambda n.~ if~ (iszero~ n)~ one~ (times~ n~ ((Y~ F)~ (decr~ n))))~ m\\
+&amp;\rightarrow~ if~ (iszero~ m)~ one~ (times~ m~ ((Y~ F)~ (decr~ m)))\end{split}\]</div>
+<p>Letting <span class="math notranslate nohighlight">\(factorial~ =~ Y~ F\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[factorial~ m~ \rightarrow~ if~ (iszero~ m)~ one~ (times~ m~ (factorial~ (decr~ m)))\]</div>
+<p>Thus, we see that applying the Y combinator to <span class="math notranslate nohighlight">\(F\)</span> results in a
+recursive <span class="math notranslate nohighlight">\(factorial\)</span> function, and the Y combinator enables us
+to write recursive functions in a simpler manner.</p>
+</section>
+<section id="equivalent-models">
+<span id="turing-machines"></span><h2>Equivalent Models<a class="headerlink" href="#equivalent-models" title="Link to this heading"></a></h2>
+<p>Lambda calculus models functional programming in its simplest and
+purest form, and its ability to encode data and perform recursion
+demonstrates the power of functional programming. It is not the only
+model for computation, however. Perhaps the most famous model is the
+<em>Turing machine</em>, described by Alan Turing around the same time as
+Church’s work on <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus. The Turing model is
+imperative at its core, and it is more closely related to the workings
+of modern machines than <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus.</p>
+<p>Many variants of Turing machines have been defined, but the following
+is a description of one variant:</p>
+<figure class="align-center" id="id12">
+<span id="figure-turing-machine"></span><a class="reference internal image-reference" href="_images/turing_machine.svg"><img alt="_images/turing_machine.svg" src="_images/turing_machine.svg" width="520" /></a>
+<figcaption>
+<p><span class="caption-number">Figure 25 </span><span class="caption-text">An example of a Turing machine.</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p>A <em>tape</em> device is used for storage, divided into individual cells
+in a linear layout. Each cell contains a symbol from a finite
+alphabet. The tape extends infinitely in both left and right
+directions.</p></li>
+<li><p>A <em>head</em> reads and writes symbols from the tape. It can be moved one
+step at a time to the right or left.</p></li>
+<li><p>A <em>state register</em> keeps track of the state of the machine. There
+are a finite number of states the machine can be in, including
+special start and halt states.</p></li>
+<li><p>A <em>table</em> of instructions specifies what the machine is to do for
+each combination of state and symbol. Since the sets of states and
+symbols are finite, the instruction table is also finite. At each
+step in the computation, the machine looks up the current state and
+the symbol currently under the head in the table and follows the
+specified instruction.</p></li>
+<li><p>An <em>instruction</em> can either halt the machine, ending computation, or
+do the following:</p>
+<ul>
+<li><p>Write a specific symbol at the current position of the head.</p></li>
+<li><p>Move the head either one step to the left or the right.</p></li>
+<li><p>Go to a specified new state.</p></li>
+</ul>
+</li>
+</ul>
+<p>Analogizing with imperative programming, each instruction in a Turing
+machine can be considered a statement, and each statement transfers
+control to a new one in a manner similar to a <code class="docutils literal notranslate"><span class="pre">goto</span></code>.</p>
+<p>Despite the vastly different model of computation, Alan Turing proved
+that a Turing machine can solve exactly the same problems as
+<span class="math notranslate nohighlight">\(\lambda\)</span>-calculus. This suggests that both models encompass
+all of computation, a conjecture formalized in the <em>Church-Turing
+thesis</em>. The thesis states that a function is computable by a human
+following an algorithm if and only if it is computable by a Turing
+machine, or equivalently, an expression in <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus.</p>
+<p>All known models of computation have been shown to be either
+computationally equivalent to or weaker than Turing machines.
+Equivalent models are said to be <em>Turing complete</em>. A programming
+language also defines a model of computation, and all general-purpose
+programming languages are Turing complete, whether they follow a
+functional paradigm, an imperative one, or an alternative approach.</p>
+</section>
+</section>
+<section id="operational-semantics">
+<h1>Operational Semantics<a class="headerlink" href="#operational-semantics" title="Link to this heading"></a></h1>
+<p>As mentioned previously, <em>semantics</em> is concerned with the meaning of
+code fragments, as opposed to syntax, which is concerned with their
+structure. We have seen that syntax can be formally described with
+regular expressions and context-free grammars. Semantics can also be
+described formally, and there are a number of approaches.
+<em>Denotational semantics</em> specifies program behavior using set and
+domain theory, with program fragments described as partial functions
+over program state. <em>Axiomatic semantics</em> is concerned with proving
+logical assertions over program state, so it specifies the meaning of
+each construct with respect to its effect on these logical assertions.
+<em>Operational semantics</em> specifies what each computational step does to
+the state of a program, and what value is computed in each step.
+Operational semantics more closely describes what an interpreter for a
+language must perform for each step than denotational or axiomatic
+semantics.</p>
+<p>In this section, we will examine a form of operational semantics known
+as <em>structured operational semantics</em>, and more specifically,
+<em>natural</em> or <em>big-step</em> semantics. This form of semantics is
+particularly well-suited to implementation in a recursive interpreter.
+We specify rules for how the computation evolves for each syntactic
+construct in a programming language. We will begin our exploration
+with a simple imperative language.</p>
+<section id="language">
+<h2>Language<a class="headerlink" href="#language" title="Link to this heading"></a></h2>
+<p>Consider a simple imperative language with variables, integers,
+booleans, statements, conditionals, and loops. The following is a
+context-free grammar that describes this language:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P ~\rightarrow&amp;~ S\\
+S ~\rightarrow&amp;~ \textbf{skip}\\
+  ~|&amp;~ S;~ S\\
+  ~|&amp;~ V~ =~ A\\
+  ~|&amp;~ \textbf{if}~ B~ \textbf{then}~ S~ \textbf{else}~ S~ \textbf{end}\\
+  ~|&amp;~ \textbf{while}~ B~ \textbf{do}~ S~ \textbf{end}\\
+A ~\rightarrow&amp;~ N\\
+  ~|&amp;~ V\\
+  ~|&amp;~ (~ A~ +~ A~ )\\
+  ~|&amp;~ (~ A~ -~ A~ )\\
+  ~|&amp;~ (~ A~ *~ A~ )\\
+B ~\rightarrow&amp;~ \textbf{true}\\
+  ~|&amp;~ \textbf{false}\\
+  ~|&amp;~ (~ A~ &lt;=~ A~ )\\
+  ~|&amp;~ (~ B~ \textbf{and}~ B~ )\\
+  ~|&amp;~ \textbf{not}~ B\\
+V ~\rightarrow&amp;~ Identifier\\
+N ~\rightarrow&amp;~ IntegerLiteral\end{split}\]</div>
+<p>In order to avoid ambiguities, arithmetic and boolean expressions are
+parenthesized where necessary, and conditionals and loops end with the
+<code class="docutils literal notranslate"><span class="pre">end</span></code> keyword. The <code class="docutils literal notranslate"><span class="pre">skip</span></code> statement simply does nothing, and it is
+equivalent to the empty statement in many languages. It allows us to
+write conditionals that do nothing in a branch. Variables consist of
+any identifier, and we will use combinations of letters and numbers to
+denote them. Any integer can be used as a number literal.</p>
+</section>
+<section id="states-and-transitions">
+<h2>States and Transitions<a class="headerlink" href="#states-and-transitions" title="Link to this heading"></a></h2>
+<p>The <em>state</em> of a program consists of a mapping from variables to
+values, and we will use the lowercase Greek sigma (<span class="math notranslate nohighlight">\(\sigma\)</span>) to
+denote a state. In our simple language, variables only hold integer
+values, and the value of a variable <span class="math notranslate nohighlight">\(v\)</span> is specified as
+<span class="math notranslate nohighlight">\(\sigma(v)\)</span>. In the initial state, the value of each variable is
+undefined. We use the notation</p>
+<div class="math notranslate nohighlight">
+\[\sigma[v := n]\]</div>
+<p>to denote a state where the value of the variable <span class="math notranslate nohighlight">\(v\)</span> has
+value <span class="math notranslate nohighlight">\(n\)</span>, but the remaining variables have the same value as in
+<span class="math notranslate nohighlight">\(\sigma\)</span>. Formally, we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma[v := n](w) =
+  \begin{cases}
+    n, &amp;\textrm{if}~ v = w\\
+    \sigma(w), &amp;\textrm{if}~ v \neq w\\
+  \end{cases}\end{split}\]</div>
+<p>A <em>transition</em> denotes the result of a computation:</p>
+<div class="math notranslate nohighlight">
+\[\langle s, \sigma\rangle\Downarrow\langle u, \sigma'\rangle\]</div>
+<p>The left-hand side is the combination of a program fragment <span class="math notranslate nohighlight">\(s\)</span>
+and an initial state <span class="math notranslate nohighlight">\(\sigma\)</span>. The right-hand side consists of a
+value <span class="math notranslate nohighlight">\(u\)</span> and a new state <span class="math notranslate nohighlight">\(\sigma\)</span>. The transition as a
+whole denotes that <span class="math notranslate nohighlight">\(s\)</span>, when computed in the context of state
+<span class="math notranslate nohighlight">\(\sigma\)</span>, results in the value <span class="math notranslate nohighlight">\(u\)</span> and a new state
+<span class="math notranslate nohighlight">\(\sigma'\)</span>. If the computation does not produce a value, then no
+value appears on the right-hand side:</p>
+<div class="math notranslate nohighlight">
+\[\langle s, \sigma\rangle\Downarrow \sigma'\]</div>
+<p>Similarly, if the computation does not result in a new state, then the
+state may be elided from the right-hand side:</p>
+<div class="math notranslate nohighlight">
+\[\langle s, \sigma\rangle\Downarrow u\]</div>
+<p>In big-step operational semantics, a transition may only result in a
+value and/or state. Program fragments may not appear on the right-hand
+side of a transition. Thus, a transition specifies the complete result
+of computing a program fragment.</p>
+<p>We specify computation in the form of <em>transition rules</em>, also called
+<em>derivation rules</em>. They have the following general form:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle s_1, \sigma_1\rangle\Downarrow\langle u_1, \sigma_1'\rangle
+  ~~~\dots~~~
+  \langle s_k, \sigma_k\rangle\Downarrow\langle u_k, \sigma_k'\rangle
+}{
+  \langle s, \sigma\rangle\Downarrow\langle u, \sigma'\rangle
+}\]</div>
+<p>Only transitions may appear at the top or bottom of a rule. The top of
+a rule is called the <em>premise</em>, and the bottom the <em>conclusion</em>. It
+should thus be read as a conditional rule: if program fragment
+<span class="math notranslate nohighlight">\(s_1\)</span>, when computed in state <span class="math notranslate nohighlight">\(\sigma_1\)</span>, evaluates to
+value <span class="math notranslate nohighlight">\(u_1\)</span> in state <span class="math notranslate nohighlight">\(\sigma_1'\)</span>, <span class="math notranslate nohighlight">\(\dots\)</span>, and
+<span class="math notranslate nohighlight">\(s_k\)</span>, when computed in state <span class="math notranslate nohighlight">\(\sigma_k\)</span>, evaluates to
+<span class="math notranslate nohighlight">\(u_k\)</span> in state <span class="math notranslate nohighlight">\(\sigma_k'\)</span>, then fragment <span class="math notranslate nohighlight">\(s\)</span> in
+state <span class="math notranslate nohighlight">\(\sigma\)</span> can evaluate to <span class="math notranslate nohighlight">\(u\)</span> in state
+<span class="math notranslate nohighlight">\(\sigma'\)</span>. If a computation does not affect the state of the
+program, then the state may be elided from the right-hand side of a
+transition. Similarly, if a computation does not result in a value, as
+in the execution of a statement, then the right-hand side of a
+transition will not include a value.</p>
+<p>A transition rule prescribes how to perform a computation in an
+interpreter. A particular program fragment <span class="math notranslate nohighlight">\(p\)</span> can be
+interpreted by finding a transition rule where <span class="math notranslate nohighlight">\(p\)</span> appears in
+the conclusion and performing the computations listed in the premise
+of the rule. The results of these smaller computations are then
+combined as specified in the rule to produce the result of program
+fragment <span class="math notranslate nohighlight">\(p\)</span>. If more than one rule has <span class="math notranslate nohighlight">\(p\)</span> in its
+conclusion, then the interpreter is free to chose which of the rules
+to apply. Each computational step in a program applies a transition
+rule, and a program terminates when no more transition rules can be
+applied.</p>
+</section>
+<section id="expressions">
+<h2>Expressions<a class="headerlink" href="#expressions" title="Link to this heading"></a></h2>
+<p>Expressions are generally used for the values to which they evaluate,
+and in our language, expressions do not have side effects. As a
+result, the right-hand side of transitions will not include a new
+state in most of the rules we define below.</p>
+<section id="arithmetic-expressions">
+<h3>Arithmetic Expressions<a class="headerlink" href="#arithmetic-expressions" title="Link to this heading"></a></h3>
+<p>An integer literal evaluates to the respective integer in all cases.
+The transition rule is as follows, where <span class="math notranslate nohighlight">\(n\)</span> denotes an
+arbitrary integer:</p>
+<div class="math notranslate nohighlight">
+\[\frac{}{\langle n, \sigma\rangle \Downarrow n}\]</div>
+<p>A rule like this, with an empty premise, is called an <em>axiom</em>. Axioms
+are the starting point of computation, as we will see below.</p>
+<p>A variable, denoted by <span class="math notranslate nohighlight">\(v\)</span> below, evaluates to its value as
+tracked by the state:</p>
+<div class="math notranslate nohighlight">
+\[\frac{}{\langle v, \sigma\rangle \Downarrow \sigma(v)}\]</div>
+<p>The rules for addition, subtraction, and multiplication are as
+follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{
+  \langle a_1, \sigma\rangle \Downarrow n_1 ~~~
+  \langle a_2, \sigma\rangle \Downarrow n_2
+}{
+  \langle(a_1 + a_2), \sigma\rangle \Downarrow n
+} ~~~ &amp;\textrm{where}~ n = n_1 + n_2\\\\
+\frac{
+  \langle a_1, \sigma\rangle \Downarrow n_1 ~~~
+  \langle a_2, \sigma\rangle \Downarrow n_2
+}{
+  \langle(a_1 - a_2), \sigma\rangle \Downarrow n
+} ~~~ &amp;\textrm{where}~ n = n_1 - n_2\\\\
+\frac{
+  \langle a_1, \sigma\rangle \Downarrow n_1 ~~~
+  \langle a_2, \sigma\rangle \Downarrow n_2
+}{
+  \langle(a_1 * a_2), \sigma\rangle \Downarrow n
+} ~~~ &amp;\textrm{where}~ n = n_1 \times n_2\end{split}\]</div>
+<p>In evaluating <span class="math notranslate nohighlight">\((a_1 + a_2)\)</span> in state <span class="math notranslate nohighlight">\(\sigma\)</span>, if
+<span class="math notranslate nohighlight">\(a_1\)</span> evaluates to <span class="math notranslate nohighlight">\(n_1\)</span> in <span class="math notranslate nohighlight">\(\sigma\)</span> and <span class="math notranslate nohighlight">\(a_2\)</span>
+to <span class="math notranslate nohighlight">\(n_2\)</span>, then <span class="math notranslate nohighlight">\((a_1 + a_2)\)</span> evaluates to the sum of
+<span class="math notranslate nohighlight">\(n_1\)</span> and <span class="math notranslate nohighlight">\(n_2\)</span>. Similarly for subtraction and
+multiplication.</p>
+<p>The process of evaluating a compound expression results in a
+derivation tree starting with axioms. For example, consider the
+evaluation of <span class="math notranslate nohighlight">\(((x + 3) * (y - 5))\)</span>, where <span class="math notranslate nohighlight">\(x\)</span> and
+<span class="math notranslate nohighlight">\(y\)</span> are variables with values 1 and 2, respectively, in state
+<span class="math notranslate nohighlight">\(\sigma\)</span>. The full derivation tree is as follows:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \cfrac{
+    \cfrac{}{\langle x, \sigma\rangle \Downarrow 1} ~~~
+    \cfrac{}{\langle 3, \sigma\rangle \Downarrow 3}
+  }{\langle(x + 3), \sigma\rangle \Downarrow 4} ~~~
+  \cfrac{
+    \cfrac{}{\langle y, \sigma\rangle \Downarrow 2} ~~~
+    \cfrac{}{\langle 5, \sigma\rangle \Downarrow 5}
+  }{\langle(y - 5), \sigma\rangle \Downarrow -3}
+}{
+  \langle((x + 3) * (y - 5)), \sigma\rangle \Downarrow -12
+}\]</div>
+<p>In this tree, we’ve applied transition rules to each subexpression to
+get from axioms to the conclusion that <span class="math notranslate nohighlight">\(((x + 3) * (y - 5))\)</span>
+evaluates to -12 in <span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
+<p>The tree above demonstrates how computation could proceed in an
+interpreter. The program fragment <span class="math notranslate nohighlight">\(((x + 3) * (y - 5))\)</span> has the
+form <span class="math notranslate nohighlight">\((a_1 * a_2)\)</span>, where <span class="math notranslate nohighlight">\(a_1 = (x + 3)\)</span> and <span class="math notranslate nohighlight">\(a_2 =
+(y - 5)\)</span>. The interpreter would thus apply the rule for
+multiplication, which in turn requires computing <span class="math notranslate nohighlight">\((x + 3)\)</span> and
+<span class="math notranslate nohighlight">\((y - 5)\)</span>. The former has the form <span class="math notranslate nohighlight">\((a_1 + a_2)\)</span>, so the
+interpreter would apply the rule for addition, which itself requires
+the computation of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(3\)</span>. The former is a variable,
+so applying the rule for a variable results in the value <span class="math notranslate nohighlight">\(1\)</span>,
+while the latter is an integer literal, which evaluates to the value
+<span class="math notranslate nohighlight">\(3\)</span> that it represents. Thus, the addition <span class="math notranslate nohighlight">\((x + 3)\)</span>
+evaluates to the value <span class="math notranslate nohighlight">\(4\)</span>. Repeating the same process for the
+expression <span class="math notranslate nohighlight">\((y - 5)\)</span> results in the value <span class="math notranslate nohighlight">\(-3\)</span>, so the
+full program fragment evaluates to <span class="math notranslate nohighlight">\(-12\)</span>.</p>
+</section>
+<section id="order-of-evaluation">
+<h3>Order of Evaluation<a class="headerlink" href="#order-of-evaluation" title="Link to this heading"></a></h3>
+<p>If expressions may have side effects, then transitions must include a
+new state, and we need to consider the order of evaluation of
+operands. The following rule specifies that the left-hand operand of
+an addition must be evaluated before the right-hand operand:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle a_1, \sigma\rangle \Downarrow \langle n_1, \sigma_1\rangle
+  ~~~
+  \langle a_2, \sigma_1\rangle \Downarrow \langle n_2, \sigma_2\rangle
+}{
+  \langle(a_1 + a_2), \sigma\rangle \Downarrow \langle n, \sigma_2\rangle
+} ~~~ \textrm{where}~ n = n_1 + n_2\]</div>
+<p>In this rule, we’ve specified that the first operand is to be
+evaluated in the original state, while the second operand is to be
+evaluated in the new state produced by evaluating the first operand.
+The final state is the new state produced by evaluating the second
+operand.</p>
+<p>If, on the other hand, we choose to allow operands to be evaluated in
+either order, but require that they be evaluated in <em>some</em> order, we
+can introduce a second rule for addition that enables the evaluation
+to done in reverse order:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle a_2, \sigma\rangle \Downarrow \langle n_2, \sigma_2\rangle
+  ~~~
+  \langle a_1, \sigma_2\rangle \Downarrow \langle n_1, \sigma_1\rangle
+}{
+  \langle(a_1 + a_2), \sigma\rangle \Downarrow \langle n, \sigma_1\rangle
+} ~~~ \textrm{where}~ n = n_1 + n_2\]</div>
+<p>Now, in evaluating <span class="math notranslate nohighlight">\((a_1 + a_2)\)</span>, we can apply either rule to
+get either order of evaluation. Thus, implementations are now free to
+evaluate operands in either order.</p>
+</section>
+<section id="boolean-expressions">
+<h3>Boolean Expressions<a class="headerlink" href="#boolean-expressions" title="Link to this heading"></a></h3>
+<p>There are two axioms corresponding to boolean expressions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{}{
+  \langle \textbf{true}, \sigma\rangle \Downarrow \textbf{true}
+}\\\\
+\frac{}{
+  \langle \textbf{false}, \sigma\rangle \Downarrow \textbf{false}
+}\end{split}\]</div>
+<p>The following are the rules for comparisons, assuming that expressions
+have no side effects:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{
+  \langle a_1, \sigma\rangle \Downarrow n_1 ~~~
+  \langle a_2, \sigma\rangle \Downarrow n_2
+}{
+  \langle(a_1 &lt;= a_2), \sigma\rangle \Downarrow \textbf{true}
+} ~~~ &amp;\textrm{if}~ n_1 \leq n_2\\\\
+\frac{
+  \langle a_1, \sigma\rangle \Downarrow n_1 ~~~
+  \langle a_2, \sigma\rangle \Downarrow n_2
+}{
+  \langle(a_1 &lt;= a_2), \sigma\rangle \Downarrow \textbf{false}
+} ~~~ &amp;\textrm{if}~ n_1 &gt; n_2\end{split}\]</div>
+<p>The rules for negation are as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{
+  \langle b, \sigma\rangle \Downarrow \textbf{true}
+}{
+  \langle\textbf{not}~ b, \sigma\rangle \Downarrow \textbf{false}
+}\\\\
+\frac{
+  \langle b, \sigma\rangle \Downarrow \textbf{false}
+}{
+  \langle\textbf{not}~ b, \sigma\rangle \Downarrow \textbf{true}
+}\end{split}\]</div>
+<p>Conjunction can be specified as follows:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle b_1, \sigma\rangle \Downarrow t_1 ~~~
+  \langle b_2, \sigma\rangle \Downarrow t_2
+}{
+  \langle(b_1 ~\textbf{and}~ b_2), \sigma\rangle \Downarrow t
+} ~~~ \textrm{where}~ t = t_1 \wedge t_2\]</div>
+<p>Notice that this rule does not short circuit: it requires both
+operands of <span class="math notranslate nohighlight">\(\textbf{and}\)</span> to be evaluated. If we want short
+circuiting, we can use the following rules for conjunction instead:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{
+  \langle b_1, \sigma\rangle \Downarrow \textbf{false}
+}{
+  \langle(b_1 ~\textbf{and}~ b_2), \sigma\rangle \Downarrow
+  \textbf{false}
+}\\\\
+\frac{
+  \langle b_1, \sigma\rangle \Downarrow \textbf{true} ~~~
+  \langle b_2, \sigma\rangle \Downarrow t_2
+}{
+  \langle(b_1 ~\textbf{and}~ b_2), \sigma\rangle \Downarrow t_2
+}\end{split}\]</div>
+<p>Here, the right-hand side need only be evaluated when the left-hand
+side is true. An interpreter, upon encountering a conjunction, would
+evaluate the left-hand operand. If the result is false, the first rule
+must be applied, but if it is true, then the second rule must apply.</p>
+</section>
+</section>
+<section id="statements">
+<h2>Statements<a class="headerlink" href="#statements" title="Link to this heading"></a></h2>
+<p>Statements in imperative programs are generally used for their side
+effects, so they change the state of the program. In our language,
+statements do not have a value. In our transition rules below, the
+right-hand side of a transition will be a new state, representing the
+state that results from completely executing the statement:</p>
+<div class="math notranslate nohighlight">
+\[\langle s, \sigma\rangle \Downarrow \sigma'\]</div>
+<p>The intended meaning of such a transition is that executing statement
+<span class="math notranslate nohighlight">\(s\)</span> in state <span class="math notranslate nohighlight">\(\sigma\)</span> terminates in a new state
+<span class="math notranslate nohighlight">\(\sigma'\)</span>. Not all statements terminate; a statement that does
+not terminate will not yield a final state through any sequence of
+transition rules.</p>
+<p>The <span class="math notranslate nohighlight">\(\textbf{skip}\)</span> statement terminates with no effect on the
+state:</p>
+<div class="math notranslate nohighlight">
+\[\frac{}{\langle\textbf{skip}, \sigma\rangle \Downarrow \sigma}\]</div>
+<p>Assignment produces a new state such that the given variable now has
+the value of the given expression:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle a, \sigma\rangle \Downarrow n
+}{
+  \langle v = a, \sigma\rangle \Downarrow \sigma[v := n]
+}\]</div>
+<p>As described in <a class="reference internal" href="#states-and-transitions">States and Transitions</a>, the notation
+<span class="math notranslate nohighlight">\(\sigma[v := n]\)</span> denotes a state where variable <span class="math notranslate nohighlight">\(v\)</span> has
+the value <span class="math notranslate nohighlight">\(n\)</span>, but all other variables have the same value is in
+<span class="math notranslate nohighlight">\(\sigma\)</span>. Thus, the assignment <span class="math notranslate nohighlight">\(v = a\)</span> produces a new
+state where <span class="math notranslate nohighlight">\(v\)</span> has the value that is the result of evaluating
+<span class="math notranslate nohighlight">\(a\)</span>, but the remaining variables are unchanged.</p>
+<p>Sequencing ensures that the second statement executes in the new state
+produced from executing the first:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle s_1, \sigma\rangle \Downarrow \sigma_1 ~~~
+  \langle s_2, \sigma_1\rangle \Downarrow \sigma_2
+}{
+  \langle s_1; s_2, \sigma\rangle \Downarrow \sigma_2
+}\]</div>
+<p>Conditionals require separate rules for when the predicate is true or
+false:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{
+  \langle b, \sigma\rangle \Downarrow \textbf{true} ~~~
+  \langle s_1, \sigma\rangle \Downarrow \sigma_1
+}{
+  \langle \textbf{if}~ b~ \textbf{then}~ s_1~ \textbf{else}~ s_2~
+  \textbf{end}, \sigma\rangle \Downarrow \sigma_1
+}\\\\
+\frac{
+  \langle b, \sigma\rangle \Downarrow \textbf{false} ~~~
+  \langle s_2, \sigma\rangle \Downarrow \sigma_2
+}{
+  \langle \textbf{if}~ b~ \textbf{then}~ s_1~ \textbf{else}~ s_2~
+  \textbf{end}, \sigma\rangle \Downarrow \sigma_2
+}\end{split}\]</div>
+<p>If the test evaluates to true, then the first rule applies, executing
+the <em>then</em> statement. If the test is false, on the other hand, the
+second rule applies, executing the <em>else</em> statement.</p>
+<p>A loop whose predicate is false has no effect:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle b, \sigma\rangle \Downarrow \textbf{false}
+}{
+  \langle \textbf{while}~ b~ \textbf{do}~ s~ \textbf{end},
+  \sigma\rangle \Downarrow \sigma
+}\]</div>
+<p>On the other hand, a loop whose predicate is true has the same effect
+as executing the body and then recursively executing the loop in the
+resulting state:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle b, \sigma\rangle \Downarrow \textbf{true} ~~~
+  \langle s, \sigma\rangle \Downarrow \sigma_1 ~~~
+  \langle \textbf{while}~ b~ \textbf{do}~ s~ \textbf{end},
+  \sigma_1\rangle \Downarrow \sigma_2
+}{
+  \langle \textbf{while}~ b~ \textbf{do}~ s~ \textbf{end},
+  \sigma\rangle \Downarrow \sigma_2
+}\]</div>
+<p>The following demonstrates the execution of the terminating loop
+<span class="math notranslate nohighlight">\(\textbf{while}~ (x &lt;= 2)~ \textbf{do}~ x = (x + 1)~
+\textbf{end}\)</span>, with <span class="math notranslate nohighlight">\(x\)</span> having an initial value of 1. Applying a
+single transition rule for <span class="math notranslate nohighlight">\(\textbf{while}\)</span>, along with fully
+evaluating the predicate and executing one iteration of the body,
+yields:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \cfrac{
+    \cfrac{
+    }{
+      \langle x, \sigma\rangle \Downarrow 1
+    } ~~~
+    \cfrac{
+    }{
+      \langle 2, \sigma\rangle \Downarrow 2
+    }
+  }{
+    \langle (x &lt;= 2), \sigma\rangle \Downarrow \textbf{true}
+  } ~~~
+  \cfrac{
+    \cfrac{
+      \cfrac{
+      }{
+        \langle x, \sigma\rangle \Downarrow 1
+      } ~~~
+      \cfrac{
+      }{
+        \langle 1, \sigma\rangle \Downarrow 1
+      }
+    }{
+      \langle (x + 1), \sigma\rangle \Downarrow 2
+    }
+  }{
+    \langle x = (x + 1), \sigma\rangle \Downarrow \sigma[x := 2]
+  } ~~~
+  \langle \textbf{while}~ (x &lt;= 2)~ \textbf{do}~ x = (x + 1)~
+  \textbf{end}, \sigma[x := 2]\rangle \Downarrow \sigma'
+}{
+  \langle \textbf{while}~ (x &lt;= 2)~ \textbf{do}~ x = (x + 1)~
+  \textbf{end}, \sigma\rangle \Downarrow \sigma'
+}\]</div>
+<p>Recursively executing the <span class="math notranslate nohighlight">\(\textbf{while}\)</span> produces the
+following, where we’ve truncated the derivation tree for the predicate
+and body:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \small{
+  \langle (x &lt;= 2), \sigma[x := 2]\rangle \Downarrow \textbf{true}
+  ~
+  \langle x = (x + 1), \sigma[x := 2]\rangle \Downarrow \sigma[x := 3]
+  ~
+  \langle \textbf{while}~ (x &lt;= 2)~ \textbf{do}~ x = (x + 1)~
+  \textbf{end}, \sigma[x := 3]\rangle \Downarrow \sigma'
+  }
+}{
+  \langle \textbf{while}~ (x &lt;= 2)~ \textbf{do}~ x = (x + 1)~
+  \textbf{end}, \sigma[x := 2]\rangle \Downarrow \sigma'
+}\]</div>
+<p>One more recursive execution results in:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle (x &lt;= 2), \sigma[x := 3]\rangle \Downarrow \textbf{false}
+}{
+  \langle \textbf{while}~ (x &lt;= 2)~ \textbf{do}~ x = (x + 1)~
+  \textbf{end}, \sigma[x := 3]\rangle \Downarrow \sigma[x := 3]
+}\]</div>
+<p>This implies that the final state is <span class="math notranslate nohighlight">\(\sigma' = \sigma[x := 3]\)</span>,
+so the result of the <span class="math notranslate nohighlight">\(\textbf{while}\)</span> loop is that <span class="math notranslate nohighlight">\(x\)</span> now
+has value 3.</p>
+<p>As an example of a non-terminating or <em>divergent</em> computation,
+consider the loop <span class="math notranslate nohighlight">\(\textbf{while}~ \textbf{true}~ \textbf{do}~
+\textbf{skip}~ \textbf{end}\)</span>. Applying the transition rule for
+<span class="math notranslate nohighlight">\(\textbf{while}\)</span> results in:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \cfrac{
+  }{
+    \langle \textbf{true}, \sigma\rangle \Downarrow \textbf{true}
+  } ~~~
+  \cfrac{
+  }{
+    \langle \textbf{skip}, \sigma\rangle \Downarrow \sigma
+  } ~~~
+  \langle \textbf{while}~ \textbf{true}~ \textbf{do}~ \textbf{skip}~
+  \textbf{end}, \sigma\rangle \Downarrow \sigma'
+}{
+  \langle \textbf{while}~ \textbf{true}~ \textbf{do}~ \textbf{skip}~
+  \textbf{end}, \sigma\rangle \Downarrow \sigma'
+}\]</div>
+<p>In order to execute the <span class="math notranslate nohighlight">\(\textbf{while}\)</span> in the premise, we need
+to recursively apply the same transition rule, producing the same
+result. This repeats forever, resulting in a divergent computation.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p>Operational semantics allows us to reason about the execution of
+programs, specify equivalences between program fragments, and prove
+statements about programs. As an example, the following rule specifies
+an equivalence between two forms of <code class="docutils literal notranslate"><span class="pre">define</span></code> in Scheme:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \langle(\texttt{define}~ f~ (\texttt{lambda}~ (params)~ body)),
+  \sigma\rangle
+  \Downarrow \langle u, \sigma_1\rangle
+}{
+  \langle(\texttt{define}~ (f~ params)~ body), \sigma\rangle
+  \Downarrow \langle u, \sigma_1\rangle
+}\]</div>
+<p>In Scheme, an expression produces a value but may also have side
+effects, so the right-hand side of a transition includes a new state.
+The rule above states that if the expression <span class="math notranslate nohighlight">\((\texttt{define}~
+f~ (\texttt{lambda}~ (params)~ body))\)</span> results in a particular value
+and new state, then the expression <span class="math notranslate nohighlight">\((\texttt{define}~ (f~
+params)~ body)\)</span> evaluates to the same value and new state. Thus, an
+interpreter could handle the latter <code class="docutils literal notranslate"><span class="pre">define</span></code> form by translating it
+to the former and proceeding to evaluate the translated form.</p>
+<p>As another example, in our simple language above, we can demonstrate
+that swapping operands in an addition is a legal transformation, since
+<span class="math notranslate nohighlight">\(x + y\)</span> and <span class="math notranslate nohighlight">\(y + x\)</span> always evaluate to the same value:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{
+  \langle x, \sigma\rangle \Downarrow n_x ~~~
+  \langle y, \sigma\rangle \Downarrow n_y
+}{
+  \langle(x + y), \sigma\rangle \Downarrow n
+} ~~~ &amp;\textrm{where}~ n = n_x + n_y\\\\
+\frac{
+  \langle y, \sigma\rangle \Downarrow n_y ~~~
+  \langle x, \sigma\rangle \Downarrow n_x
+}{
+  \langle(y + x), \sigma\rangle \Downarrow n
+} ~~~ &amp;\textrm{where}~ n = n_x + n_y\end{split}\]</div>
+</section>
+<section id="operational-semantics-for-lambda-calculus">
+<h2>Operational Semantics for Lambda Calculus<a class="headerlink" href="#operational-semantics-for-lambda-calculus" title="Link to this heading"></a></h2>
+<p>As another example, we proceed to develop operational semantics for
+<a class="reference internal" href="#lambda-calculus">lambda calculus</a>. Computation in <span class="math notranslate nohighlight">\(\lambda\)</span>-calculus does not
+involve a state that maps variables to values. Thus, transitions have
+the following form, with neither a state on the left-hand nor on the
+right-hand side:</p>
+<div class="math notranslate nohighlight">
+\[e_1 \Downarrow e_2\]</div>
+<p>An expression <span class="math notranslate nohighlight">\(e\)</span> that is in normal form evaluates to itself:</p>
+<div class="math notranslate nohighlight">
+\[\frac{}{e\Downarrow e} ~~~ \textrm{where}~ normal(e)\]</div>
+<p>The following defines whether or not an expression is in normal form:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}normal(v) &amp;= true\\
+normal(\lambda v.~ e) &amp;= normal(e)\\
+normal(v~ e) &amp;= true\\
+normal((e_1~ e_2)~ e_3) &amp;= normal(e_1~ e_2)\\
+normal((\lambda v.~ e_1)~ e_2) &amp;= false\\\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(v\)</span> denotes a variable, while <span class="math notranslate nohighlight">\(e\)</span>, and <span class="math notranslate nohighlight">\(e_i\)</span>
+denote arbitrary expressions. A variable is always in normal form,
+while a function abstraction is in normal form exactly when its body
+is in normal form. For a function application, if the left-hand side
+is a variable or application in normal form, then the overall
+expression is in normal form. On the other hand, if the left-hand side
+is an abstraction, then a <span class="math notranslate nohighlight">\(\beta\)</span>-reduction can be applied, so
+the application is not in normal form.</p>
+<p>A function abstraction that is not in normal form is evaluated by
+evaluating its body:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  e_1 \Downarrow e_2
+}{
+  \lambda v.~ e_1 \Downarrow \lambda v.~ e_2
+}\]</div>
+<p>In a function application, a <span class="math notranslate nohighlight">\(\beta\)</span>-reduction involves
+substituting the parameter of a function for its argument in the body
+of the function, then evaluating the substituted body. Assuming that
+no variable names are shared between the function and its argument,
+the following rule specifies this computation:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  e_1 \Downarrow e_3 ~~~ subst(e_3, v, e_2) \Downarrow e_4
+}{
+  (\lambda v.~ e_1)~ e_2 \Downarrow e_4
+}\]</div>
+<p>The <span class="math notranslate nohighlight">\(subst(body, var, arg)\)</span> transformer performs substitution of
+an expression <span class="math notranslate nohighlight">\(arg\)</span> for a variable <span class="math notranslate nohighlight">\(var\)</span> in some larger
+expression <span class="math notranslate nohighlight">\(body\)</span>. It can be defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}subst(v_1, v, e) &amp;=
+  \begin{cases}
+    e~ \textrm{if}~ v = v_1\\
+    v_1~ \textrm{otherwise}
+  \end{cases}\\
+subst(\lambda v_1.~ e_1, v, e) &amp;=
+  \begin{cases}
+    \lambda v_1. e_1~ \textrm{if}~ v = v_1\\
+    \lambda v_1.~ subst(e_1, v, e)~ \textrm{otherwise}
+  \end{cases}\\
+subst(e_1~ e_2, v, e) &amp;= subst(e_1, v, e)~ subst(e_2, v, e)\end{split}\]</div>
+<p>A variable is substituted with the argument expression if it is the
+same as the variable being replaced. Otherwise, substitution has no
+effect on the variable.</p>
+<p>For a function abstraction, if the function’s parameter has the same
+name as the substitution variable, then all references to that name
+within the body of the function refer to the parameter rather than the
+substitution variable. Thus, the body should remain unchanged. On the
+other hand, if the parameter name is different, then the body itself
+should recursively undergo substitution.</p>
+<p>Finally, applying substitution to a function application recursively
+applies it to both the function and its argument.</p>
+<p>The transition rule above for <span class="math notranslate nohighlight">\(\beta\)</span>-reduction assumes that no
+<span class="math notranslate nohighlight">\(\alpha\)</span>-reduction is necessary between a function and its
+argument. However, <span class="math notranslate nohighlight">\(\alpha\)</span>-reduction becomes necessary in the
+following cases:</p>
+<ul>
+<li><p>The argument contains a bound variable with the same name as a bound
+or free variable in the function. The following are examples:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}(\lambda x.~ \lambda y.~ x~ y)~ (\lambda y.~ y)\\
+(\lambda x.~ x~ y)~ (\lambda y.~ y)\end{split}\]</div>
+</li>
+<li><p>The function contains a bound variable with the same name as a free
+variable in the argument. The following is an example:</p>
+<div class="math notranslate nohighlight">
+\[(\lambda x.~ \lambda y.~ x~ y)~ y\]</div>
+</li>
+</ul>
+<p>In the first case, our convention is to apply
+<span class="math notranslate nohighlight">\(\alpha\)</span>-reduction to the argument, while in the second, we are
+forced to <span class="math notranslate nohighlight">\(\alpha\)</span>-reduce the function.</p>
+<p>Thus, we need to determine the bound and free variables of an
+expression. We first define <span class="math notranslate nohighlight">\(boundvars(expr)\)</span> to collect the
+bound variables of an expression <span class="math notranslate nohighlight">\(expr\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}boundvars(v) &amp;= \emptyset\\
+boundvars(e_1~ e_2) &amp;= boundvars(e_1) \cup boundvars(e_2)\\
+boundvars(\lambda v.~ e) &amp;= \{v\} \cup boundvars(e)\end{split}\]</div>
+<p>A variable on its own contributes no bound variables. The bound
+variables of a function application are the union of the bound
+variables in the function and its argument. The bound variables of a
+function abstraction are the bound variables of the body plus the
+parameter of the function itself.</p>
+<p>In order to determine the free variables of an expression, we require
+as input the set of variables that are bound when the expression is
+encountered. We define <span class="math notranslate nohighlight">\(freevars(bound, expr)\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}freevars(bound, v) &amp;=
+  \begin{cases}
+    \{v\}~ \textrm{if}~ v \notin bound\\
+    \emptyset~ \textrm{otherwise}
+  \end{cases}\\
+freevars(bound, e_1~ e_2) &amp;= freevars(bound, e_1) \cup
+                             freevars(bound, e_2)\\
+freevars(bound, \lambda v.~ e) &amp;= freevars(bound \cup \{v\}, e)\end{split}\]</div>
+<p>A variable is free if it is not included in the bound set. The free
+variables of a function application are the union of the free
+variables in the function and its argument. The free variables of a
+function abstraction are the free variables in the body, using a bound
+set that includes the parameter of the abstraction.</p>
+<p>We can also define a transformer <span class="math notranslate nohighlight">\(alpha(vars, expr)\)</span> to rename
+the bound variables in <span class="math notranslate nohighlight">\(expr\)</span> that occur in the set
+<span class="math notranslate nohighlight">\(vars\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}alpha(vars, v) &amp;= v\\
+alpha(vars, e_1~ e_2) &amp;= alpha(vars, e_1)~ alpha(vars, e_2)\\
+alpha(vars, \lambda v.~ e) &amp;=
+  \begin{cases}
+    \lambda w.~ alpha(vars, subst(e, v, w))~ \textrm{if}~ v \in vars,~
+      \textrm{where}~ w~ \textrm{is fresh}\\
+    \lambda v.~ alpha(vars, e)~ \textrm{otherwise}
+  \end{cases}\end{split}\]</div>
+<p>A variable on its own is not bound, so it should not be renamed. A
+function application is renamed by renaming both the function and its
+argument. For a function abstraction, if the parameter appears in
+<span class="math notranslate nohighlight">\(vars\)</span>, we replace it with a new name that is <em>fresh</em>, meaning
+that it is not used anywhere in the program. This requires applying
+substitution to the body, replacing the old variable name with the new
+one. We also have to recursively apply renaming to the body, whether
+the parameter is replaced or not.</p>
+<p>To put this all together, we define a transformer <span class="math notranslate nohighlight">\(beta(func,
+arg)\)</span> for performing <span class="math notranslate nohighlight">\(\beta\)</span>-reduction when <span class="math notranslate nohighlight">\(func\)</span> is
+applied to <span class="math notranslate nohighlight">\(arg\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}alpha_{arg}(func, arg) &amp;= alpha(boundvars(func) \cup
+                               freevars(\emptyset, func), arg)\\
+alpha_{func}(func, arg) &amp;= alpha(freevars(\emptyset, arg), func)\\
+beta(func, arg) &amp;= subst(e', v', alpha_{arg}(func, arg)),~
+  \textrm{where}~ \lambda v'.~ e' = alpha_{func}(func, arg)\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(alpha_{arg}(func, arg)\)</span> applies renaming to <span class="math notranslate nohighlight">\(arg\)</span>
+given the bound and free variables in <span class="math notranslate nohighlight">\(func\)</span>, and
+<span class="math notranslate nohighlight">\(alpha_{func}(func, arg)\)</span> applies renaming to <span class="math notranslate nohighlight">\(func\)</span> given
+the free variables in <span class="math notranslate nohighlight">\(arg\)</span>. The result must be an abstraction
+of the form <span class="math notranslate nohighlight">\(\lambda v'.~ e'\)</span>, so <span class="math notranslate nohighlight">\(beta(func, arg)\)</span>
+proceeds to substitute <span class="math notranslate nohighlight">\(v'\)</span> for the renamed argument in the body
+<span class="math notranslate nohighlight">\(e'\)</span>.</p>
+<p>We can now proceed to write a general transition rule for
+<span class="math notranslate nohighlight">\(\beta\)</span>-reduction:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  e_1 \Downarrow e_3 ~~~ beta(\lambda v.~ e_3, e_2) \Downarrow e_4
+}{
+  (\lambda v.~ e_1)~ e_2 \Downarrow e_4
+}\]</div>
+<p>Finally, we need a transition rule for a sequence of function
+applications:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  e_1~ e_2 \Downarrow e_4 ~~~ e_4~ e_3 \Downarrow e_5
+}{
+  (e_1~ e_2)~ e_3 \Downarrow e_5
+}\]</div>
+<p>We can apply the rules to derive the following computation for
+<span class="math notranslate nohighlight">\((\lambda x.~ \lambda y.~ y~ x)~ x~ a\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \cfrac{
+    \cfrac{
+    }{
+      \lambda y.~ y~ x
+      \Downarrow
+      \lambda y.~ y~ x
+    }
+    ~~~
+    \cfrac{
+    }{
+      beta(\lambda x.~ \lambda y.~ y~ x, x) = \lambda y.~ y~ x
+      \Downarrow
+      \lambda y.~ y~ x
+    }
+  }{
+    (\lambda x.~ \lambda y.~ y~ x)~ x
+    \Downarrow
+    \lambda y.~ y~ x
+  }
+  ~~~
+  \cfrac{
+    \cfrac{
+    }{
+      y~ x
+      \Downarrow
+      y~ x
+    }
+    ~~~
+    \cfrac{
+    }{
+      beta(\lambda y.~ y~ x, a) = a~ x
+      \Downarrow
+      a~ x
+    }
+  }{
+    (\lambda y.~ y~ x)~ a
+    \Downarrow
+    a~ x
+  }
+}{
+  (\lambda x.~ \lambda y.~ y~ x)~ x~ a
+  \Downarrow
+  a~ x
+}\]</div>
+<p>Here, we’ve applied the rule for a sequence of function applications,
+then applied the <span class="math notranslate nohighlight">\(\beta\)</span>-reduction rule to each of the premises.
+The end result is <span class="math notranslate nohighlight">\(a~ x\)</span>.</p>
+</section>
+</section>
+<section id="formal-type-systems">
+<span id="id5"></span><h1>Formal Type Systems<a class="headerlink" href="#formal-type-systems" title="Link to this heading"></a></h1>
+<p>We now turn our attention to type systems and <em>type checking</em>, which
+determines whether or not the use of types in a program is correct.
+Given a language, we will define rules to determine the type of each
+expression in the language. Where the rules do not assign a type for a
+particular expression, that expression should be considered erroneous.</p>
+<p>We start with a simple language of boolean and integer expressions,
+parenthesized where necessary to avoid ambiguity:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P ~\rightarrow&amp;~ E\\
+E ~\rightarrow&amp;~ N\\
+  ~|&amp;~ B\\
+  ~|&amp;~ (~ E~ +~ E~ )\\
+  ~|&amp;~ (~ E~ -~ E~ )\\
+  ~|&amp;~ (~ E~ *~ E~ )\\
+  ~|&amp;~ (~ E~ &lt;=~ E~ )\\
+  ~|&amp;~ (~ E~ \textbf{and}~ E~ )\\
+  ~|&amp;~ \textbf{not}~ E\\
+  ~|&amp;~ (~ \textbf{if}~ E~ \textbf{then}~ E~ \textbf{else}~ E~ )\\
+N ~\rightarrow&amp;~ IntegerLiteral\\
+B ~\rightarrow&amp;~ \textbf{true}\\
+  ~|&amp;~ \textbf{false}\end{split}\]</div>
+<p>The two types in this language are <span class="math notranslate nohighlight">\(Int\)</span> for integer expressions
+and <span class="math notranslate nohighlight">\(Bool\)</span> for boolean expressions. We use the notation <span class="math notranslate nohighlight">\(t
+~:~ T\)</span> to denote that a term <span class="math notranslate nohighlight">\(t\)</span> has the type <span class="math notranslate nohighlight">\(T\)</span>. A
+statement of the form <span class="math notranslate nohighlight">\(t ~:~ T\)</span> is often called a <em>typing
+relation</em> or <em>type judgment</em>.</p>
+<p>The base typing rules assign types to integer and boolean literals:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  IntegerLiteral ~:~ Int
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \textbf{true} ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \textbf{false} ~:~ Bool
+}\]</div>
+<p>For more complex expressions, we have derivation rules that are similar
+to those in <a class="reference internal" href="#operational-semantics">operational semantics</a>, where the top of the rule is the
+<em>premise</em> and the bottom the <em>conclusion</em>. The following is the rule
+for addition:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  t_1 ~:~ Int ~~~~~~~~~~ t_2 ~:~ Int
+}{
+  (t_1 + t_2) ~:~ Int
+}\]</div>
+<p>This rule states that if <span class="math notranslate nohighlight">\(t_1\)</span> has type <span class="math notranslate nohighlight">\(Int\)</span>, and
+<span class="math notranslate nohighlight">\(t_2\)</span> has type <span class="math notranslate nohighlight">\(Int\)</span>, then the term <span class="math notranslate nohighlight">\((t_1 + t_2)\)</span>
+also has type <span class="math notranslate nohighlight">\(Int\)</span>. Thus, the rule allows us to compute the
+type of a larger expression from the types of the subexpressions,
+as in the following derivation:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \cfrac{
+  }{
+    1 ~:~ Int
+  }
+  ~~~~~~~~~~
+  \cfrac{
+    \cfrac{
+    }{
+      3 ~:~ Int
+    }
+    ~~~~~~~~~~
+    \cfrac{
+    }{
+      5 ~:~ Int
+    }
+  }{
+    (3 + 5) ~:~ Int
+  }
+}{
+  (1 + (3 + 5)) ~:~ Int
+}\]</div>
+<p>On the other hand, an expression such as <span class="math notranslate nohighlight">\((\textbf{true} + 1)\)</span>
+is not well typed: since <span class="math notranslate nohighlight">\(\textbf{true} ~:~ Bool\)</span>, the premise
+in the rule for addition does not hold, so it cannot be applied to
+derive a type for <span class="math notranslate nohighlight">\((\textbf{true} + 1)\)</span>. Since no type can be
+derived for the expression, the expression does not type check, and it
+is erroneous.</p>
+<p>The following rules for subtraction and multiplication are similar to
+that of addition:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  t_1 ~:~ Int ~~~~~~~~~~ t_2 ~:~ Int
+}{
+  (t_1 - t_2) ~:~ Int
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  t_1 ~:~ Int ~~~~~~~~~~ t_2 ~:~ Int
+}{
+  (t_1 * t_2) ~:~ Int
+}\]</div>
+<p>The rule for comparison requires that the two operands have type
+<span class="math notranslate nohighlight">\(Int\)</span>, in which case the type of the overall expression is
+<span class="math notranslate nohighlight">\(Bool\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  t_1 ~:~ Int ~~~~~~~~~~ t_2 ~:~ Int
+}{
+  (t_1 &lt;= t_2) ~:~ Bool
+}\]</div>
+<p>The rule for conjunction requires that the operands have type
+<span class="math notranslate nohighlight">\(Bool\)</span>, and the resulting expression also has type <span class="math notranslate nohighlight">\(Bool\)</span>.
+Negation similarly requires its operand to have type <span class="math notranslate nohighlight">\(Bool\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  t_1 ~:~ Bool ~~~~~~~~~~ t_2 ~:~ Bool
+}{
+  (t_1 ~\textbf{and}~ t_2) ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  t ~:~ Bool
+}{
+  \textbf{not}~ t ~:~ Bool
+}\]</div>
+<p>The conditional expression requires the test to have type
+<span class="math notranslate nohighlight">\(Bool\)</span>. However, the only restrictions on the remaining two
+operands is that they are well typed, and that they both have the same
+type. For example, an expression such as <span class="math notranslate nohighlight">\((\textbf{if}~ test~
+\textbf{then}~ 3~ \textbf{else}~ 5)\)</span> will always produce an integer,
+regardless of the value of <span class="math notranslate nohighlight">\(test\)</span>, while <span class="math notranslate nohighlight">\((\textbf{if}~
+test~ \textbf{then}~ false~ \textbf{else}~ true)\)</span> will always produce
+a boolean. Thus, our typing rule has a type variable <span class="math notranslate nohighlight">\(T\)</span> to
+represent the type of the last two operands, ensuring that they match:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  t_1 ~:~ Bool
+  ~~~~~~~~~~
+  t_2 ~:~ T
+  ~~~~~~~~~~
+  t_3 ~:~ T
+}{
+  (\textbf{if}~ t_1 ~\textbf{then}~ t_2 ~\textbf{else}~ t_3) : T
+}\]</div>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Link to this heading"></a></h2>
+<p>Now that we have typing rules for a simple language of booleans and
+integers, we proceed to introduce variables into the language. For the
+purposes of typing, we will assume that each variable in a program has
+a distinct name. As we saw in <a class="reference internal" href="#lambda-calculus">lambda calculus</a>, we can rename
+variables if necessary so that this is the case.</p>
+<p>We introduce the following syntax for a binding construct to the
+language:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E ~\rightarrow&amp;~ (~ \textbf{let}~ V~ =~ E~ \textbf{in}~ E~ )\\
+  ~|&amp;~ V\\
+V ~\rightarrow&amp;~ Identifier\end{split}\]</div>
+<p>The semantics of this construct are to replace all occurrences of the
+given variable in the body of the <span class="math notranslate nohighlight">\(\bf let\)</span> with the
+variable’s bound value. Thus, an expression such as the following
+should produce an integer:</p>
+<div class="math notranslate nohighlight">
+\[(\textbf{let}~ x = 3~ \textbf{in}~ (x + 2))\]</div>
+<p>On the other hand, the following expression should not type check,
+since replacing <span class="math notranslate nohighlight">\(x\)</span> with its bound value results in an ill-typed
+body:</p>
+<div class="math notranslate nohighlight">
+\[(\textbf{let}~ x = 3~ \textbf{in}~ \textbf{not}~ x)\]</div>
+<p>In order to determine whether or not the body of a <span class="math notranslate nohighlight">\(\bf let\)</span> is
+well typed, we need a <em>type context</em> or <em>type environment</em> that keeps
+track of the type of the variables that are in scope. The following is
+the notation we use for a type environment:</p>
+<ul class="simple">
+<li><p>The symbol <span class="math notranslate nohighlight">\(\Gamma\)</span> represents a type environment.</p></li>
+<li><p>The notation <span class="math notranslate nohighlight">\(x : T \in \Gamma\)</span> denotes that <span class="math notranslate nohighlight">\(\Gamma\)</span>
+maps the name <span class="math notranslate nohighlight">\(x\)</span> to the type <span class="math notranslate nohighlight">\(T\)</span>.</p></li>
+<li><p>We extend a type environment as <span class="math notranslate nohighlight">\(\Gamma, x : T\)</span>, which denotes
+the type environment that assigns the type <span class="math notranslate nohighlight">\(T\)</span> to <span class="math notranslate nohighlight">\(x\)</span>
+but assigns all other variables the same type as in <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p></li>
+<li><p>We express a type judgment as <span class="math notranslate nohighlight">\(\Gamma ~\vdash~ t ~:~ T\)</span>,
+which states that the term <span class="math notranslate nohighlight">\(t\)</span> has type <span class="math notranslate nohighlight">\(T\)</span> within the
+context of the type environment <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p></li>
+</ul>
+<p>As indicated by the last point above, type judgments are now made in
+the context of a type environment that maps variables to their types.
+If a particular term has the same type regardless of typing
+environment, then we can elide the environment in a type judgment. For
+example, the judgment <span class="math notranslate nohighlight">\(\vdash~ \textbf{true} ~:~ Bool\)</span> indicates
+that <span class="math notranslate nohighlight">\(\bf true\)</span> always has type <span class="math notranslate nohighlight">\(Bool\)</span> within the context
+of any type environment.</p>
+<p>The following are our existing typing rules using the notation
+of type environments:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ IntegerLiteral ~:~ Int
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ \textbf{true} ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ \textbf{false} ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Int ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Int
+}{
+  \Gamma ~\vdash~ (t_1 + t_2) ~:~ Int
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Int ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Int
+}{
+  \Gamma ~\vdash~ (t_1 - t_2) ~:~ Int
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Int ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Int
+}{
+  \Gamma ~\vdash~ (t_1 * t_2) ~:~ Int
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Int ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Int
+}{
+  \Gamma ~\vdash~ (t_1 &lt;= t_2) ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Bool ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Bool
+}{
+  \Gamma ~\vdash~ (t_1 ~\textbf{and}~ t_2) ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t ~:~ Bool
+}{
+  \Gamma ~\vdash~ \textbf{not}~ t ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Bool
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_2 ~:~ T
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_3 ~:~ T
+}{
+  \Gamma ~\vdash~ (\textbf{if}~ t_1 ~\textbf{then}~ t_2 ~\textbf{else}~ t_3) ~:~ T
+}\]</div>
+<p>We need a rule for typing a variable:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  v : T \in \Gamma
+}{
+  \Gamma ~\vdash~ v ~:~ T
+}\]</div>
+<p>Here, we use <span class="math notranslate nohighlight">\(v\)</span> to denote a variable. The rule states that if
+the type environment <span class="math notranslate nohighlight">\(\Gamma\)</span> maps the variable <span class="math notranslate nohighlight">\(v\)</span> to
+type <span class="math notranslate nohighlight">\(T\)</span>, then the term consisting of <span class="math notranslate nohighlight">\(v\)</span> itself has type
+<span class="math notranslate nohighlight">\(T\)</span> within the context of <span class="math notranslate nohighlight">\(\Gamma\)</span>.</p>
+<p>We can now add a rule for the <span class="math notranslate nohighlight">\(\bf let\)</span> binding construct:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_1
+  ~~~~~~~~~~
+  \Gamma, v : T_1 ~\vdash~ t_2 ~:~ T_2
+}{
+  \Gamma ~\vdash~ (\textbf{let}~ v = t_1 ~ \textbf{in}~ t_2) ~:~ T_2
+}\]</div>
+<p>Here, we use <span class="math notranslate nohighlight">\(v\)</span> to denote the name of the variable introduced
+by the <span class="math notranslate nohighlight">\(\bf let\)</span>. The rule states that if the initializer
+expression is assigned the type <span class="math notranslate nohighlight">\(T_1\)</span> within the context of the
+original type environment <span class="math notranslate nohighlight">\(\Gamma\)</span>, and the body has type
+<span class="math notranslate nohighlight">\(T_2\)</span> within the context of the original environment extended
+with the mapping <span class="math notranslate nohighlight">\(v : T_1\)</span>, then the overall <span class="math notranslate nohighlight">\(\bf let\)</span>
+expression also has type <span class="math notranslate nohighlight">\(T_2\)</span>. We can use this to derive the
+type of our first <span class="math notranslate nohighlight">\(\bf let\)</span> example in the context of any type
+environment:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \cfrac{
+  }{
+    \vdash~ 3 ~:~ Int
+  }
+  ~~~~~~~~~~
+  \cfrac{
+    \cfrac{
+      x : Int \in x : Int
+    }{
+      x : Int ~\vdash~ x ~:~ Int
+    }
+    ~~~~~~~~~~
+    \cfrac{
+    }{
+      x : Int ~\vdash~ 2 ~:~ Int
+    }
+  }{
+    x : Int ~\vdash~ (x + 2) ~:~ Int
+  }
+}{
+  \vdash~ (\textbf{let}~ x = 3~ \textbf{in}~ (x + 2)) ~:~ Int
+}\]</div>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<p>Now that we have typing rules for expressions of booleans and
+integers, we proceed to add functions to our language and introduce
+rules for computing the types of function abstractions and
+applications. As in <a class="reference internal" href="#lambda-calculus">lambda calculus</a>, we will consider functions
+that take in exactly one argument. A function then has two types that
+are relevant: the type of the argument to the function, and the type
+of its return value. We will use the notation <span class="math notranslate nohighlight">\(T_1 \rightarrow
+T_2\)</span> to denote the type of a function that takes in an argument of
+type <span class="math notranslate nohighlight">\(T_1\)</span> and returns a value of type <span class="math notranslate nohighlight">\(T_2\)</span>.</p>
+<p>For simplicity, we will require that the parameter type of a function
+be explicitly specified. It would also be reasonable to infer the type
+of the parameter from how it is used in the body, or to deduce the
+type of the parameter independently each time the function is applied
+to an argument. The latter would provide a form of <a class="reference internal" href="data.html#parametric-polymorphism"><span class="std std-ref">parametric
+polymorphism</span></a>. However, we will not consider
+such schemes here.</p>
+<p>To allow functions to be defined, with explicit typing of parameters,
+we extend our language as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E ~\rightarrow&amp;~ (~ \textbf{lambda}~ V~ :~ T~ .~ E~ )\\
+  ~|&amp;~ (~ E~ E~ )\\
+T ~\rightarrow&amp;~ Int\\
+  ~|&amp;~ Bool\\
+  ~|&amp;~ T~ \rightarrow~ T\\
+  ~|&amp;~ (~ T~ )\end{split}\]</div>
+<p>We introduce two new expressions, one for function abstraction and one
+for function application, borrowing syntax from
+<span class="math notranslate nohighlight">\(\lambda\)</span>-calculus. We also introduce types into our grammar,
+with <span class="math notranslate nohighlight">\(Int\)</span> and <span class="math notranslate nohighlight">\(Bool\)</span> as the non-function types. A
+function type is specified by separating its input and output types by
+the <em>type constructor</em> <span class="math notranslate nohighlight">\(\rightarrow\)</span>. When chained, the type
+constructor is right associative, so that <span class="math notranslate nohighlight">\(Int \rightarrow Int
+\rightarrow Bool\)</span> is equivalent to <span class="math notranslate nohighlight">\(Int \rightarrow (Int
+\rightarrow Bool)\)</span>, denoting a function that takes in an <span class="math notranslate nohighlight">\(Int\)</span>
+and returns a function with type <span class="math notranslate nohighlight">\(Int \rightarrow Bool\)</span>.</p>
+<p>As with <span class="math notranslate nohighlight">\(\bf let\)</span>, we will assume that parameter names
+introduced by <span class="math notranslate nohighlight">\(\bf lambda\)</span> expressions are distinct from any
+other names in the program, knowing that we can always rename
+variables to ensure that this is the case.</p>
+<p>We can now define the typing rule for abstraction as follows:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma, v : T_1 ~\vdash~ t_2 ~:~ T_2
+}{
+  \Gamma ~\vdash~ (\textbf{lambda}~ v : T_1 .~ t_2) ~:~ T_1 \rightarrow T_2
+}\]</div>
+<p>The rule states that if the body <span class="math notranslate nohighlight">\(t_2\)</span> has type <span class="math notranslate nohighlight">\(T_2\)</span> in
+the type environment that consists of <span class="math notranslate nohighlight">\(\Gamma\)</span> extended with the
+mapping <span class="math notranslate nohighlight">\(v : T_1\)</span> for the parameter, then the function as a
+whole has type <span class="math notranslate nohighlight">\(T_1 \rightarrow T_2\)</span>. Thus, the function takes
+in a value of type <span class="math notranslate nohighlight">\(T_1\)</span> as an argument and returns a value of
+type <span class="math notranslate nohighlight">\(T_2\)</span>.</p>
+<p>The following is the rule for application:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_2 \rightarrow T_3
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_2 ~:~ T_2
+}{
+  \Gamma ~\vdash~ (t_1~ t_2) ~:~ T_3
+}\]</div>
+<p>This states that if the function has type <span class="math notranslate nohighlight">\(T_2 \rightarrow T_3\)</span>,
+taking in a <span class="math notranslate nohighlight">\(T_2\)</span> and returning a <span class="math notranslate nohighlight">\(T_3\)</span>, and the argument
+has the requisite type <span class="math notranslate nohighlight">\(T_2\)</span>, then the application results in
+the type <span class="math notranslate nohighlight">\(T_3\)</span>.</p>
+<p>As an example, consider the following program fragment:</p>
+<div class="math notranslate nohighlight">
+\[(\textbf{let}~ f = (\textbf{lambda}~ x : Int .~ (x &lt;= 10))~
+  \textbf{in}~ (f~ 3))\]</div>
+<p>We can derive the type of this expression in any type environment as
+follows:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \cfrac{
+    \cfrac{
+      \cfrac{
+        x : Int \in x : Int
+      }{
+        x : Int ~\vdash~ x ~:~ Int
+      }
+      ~~~~~~~~
+      \cfrac{
+      }{
+        x : Int ~\vdash~ 10 ~:~ Int
+      }
+    }{
+      x : Int ~\vdash~ (x &lt;= 10) ~:~ Bool
+    }
+  }{
+    \vdash~ (\textbf{lambda}~ x : Int .~ (x &lt;= 10)) ~:~
+    Int \rightarrow Bool
+  }
+  ~~~~~~~~
+  \cfrac{
+    \cfrac{
+      f : Int \rightarrow Bool \in f : Int \rightarrow Bool
+    }{
+      f : Int \rightarrow Bool ~\vdash~ f ~:~ Int \rightarrow Bool
+    }
+    ~~~~~~~~
+    \cfrac{
+    }{
+      f : Int \rightarrow Bool ~\vdash~ 3 ~:~ Int
+    }
+  }{
+    f : Int \rightarrow Bool ~\vdash~ (f~ 3) ~:~ Bool
+  }
+}{
+  \vdash~ (\textbf{let}~ f = (\textbf{lambda}~ x : Int .~ (x &lt;= 10))~
+    \textbf{in}~ (f~ 3)) ~:~ Bool
+}\]</div>
+<p>At the bottom of the derivation, we apply the rule for <span class="math notranslate nohighlight">\(\bf
+let\)</span>, requiring us to compute the type of the variable initializer as
+well as the type of the body in a type environment where the new
+variable has its computed type.</p>
+<p>To compute the type of the initializer, we apply the rule for
+abstraction, requiring us to compute the type of the body in a type
+environment with the function parameter having its designated type of
+<span class="math notranslate nohighlight">\(Int\)</span>. This applies the rule for <span class="math notranslate nohighlight">\(&lt;=\)</span>, further requiring
+computation of types for the variable <span class="math notranslate nohighlight">\(x\)</span> and integer literal
+<span class="math notranslate nohighlight">\(10\)</span>. The body then has the type <span class="math notranslate nohighlight">\(Bool\)</span>, so the
+abstraction has type <span class="math notranslate nohighlight">\(Int \rightarrow Bool\)</span>.</p>
+<p>We can then compute the type of the body of the <span class="math notranslate nohighlight">\(let\)</span>, in a type
+context where <span class="math notranslate nohighlight">\(f\)</span> has type <span class="math notranslate nohighlight">\(Int \rightarrow Bool\)</span>. This
+requires us to apply the rule for function application, computing the
+type of both the function and its argument. The function is the
+variable <span class="math notranslate nohighlight">\(f\)</span>, which has type <span class="math notranslate nohighlight">\(Int \rightarrow Bool\)</span> in the
+type environment. The argument is the integer literal <span class="math notranslate nohighlight">\(3\)</span>, which
+has type <span class="math notranslate nohighlight">\(Int\)</span>. Thus, the application is applying an <span class="math notranslate nohighlight">\(Int
+\rightarrow Bool\)</span> to an <span class="math notranslate nohighlight">\(Int\)</span>, resulting in <span class="math notranslate nohighlight">\(Bool\)</span>. This
+is also the type of the <span class="math notranslate nohighlight">\(\bf let\)</span> expression as a whole.</p>
+</section>
+<section id="subtyping">
+<h2>Subtyping<a class="headerlink" href="#subtyping" title="Link to this heading"></a></h2>
+<p>Our working language now has the base types <span class="math notranslate nohighlight">\(Bool\)</span> and
+<span class="math notranslate nohighlight">\(Int\)</span>, as well as function types. Let us extend the language by
+adding floating-point numbers:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E ~\rightarrow&amp;~ F\\
+F ~\rightarrow&amp;~ FloatingLiteral\\
+T ~\rightarrow&amp;~ Float\end{split}\]</div>
+<p>We add a typing rule for floating-point literals:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ FloatingLiteral ~:~ Float
+}\]</div>
+<p>We would also like to allow operations such as addition on expressions
+of type <span class="math notranslate nohighlight">\(Float\)</span>. We could define a separate rule for adding two
+<span class="math notranslate nohighlight">\(Float\)</span>s:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Float ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Float
+}{
+  \Gamma ~\vdash~ (t_1 + t_2) ~:~ Float
+}\]</div>
+<p>However, the combination of this rule and the rule for adding
+<span class="math notranslate nohighlight">\(Int\)</span>s does not permit us to add a <span class="math notranslate nohighlight">\(Float\)</span> and an
+<span class="math notranslate nohighlight">\(Int\)</span>. Adding more rules for such a combination is not a
+scalable solution: introducing more numerical types would result in a
+combinatorial explosion in the number of rules required.</p>
+<p>Functions pose a similar problem. If we define a function such as
+<span class="math notranslate nohighlight">\((\textbf{lambda}~ x : Float .~ (x + 1.0))\)</span>, we would like to be
+able to apply it to an <span class="math notranslate nohighlight">\(Int\)</span> as well as a <span class="math notranslate nohighlight">\(Float\)</span>.
+Conceptually, every integer is also a floating-point number <a class="footnote-reference brackets" href="#id7" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>, so
+we would expect such an operation to be valid.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id7" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">3</a><span class="fn-bracket">]</span></span>
+<p>This may not actually be the case in the implementation,
+depending on the representation used for the two types.
+However, it still makes sense semantically that an integer
+should be allowed where a floating-point number is expected.</p>
+</aside>
+</aside>
+<p>Rather than adding more rules to permit this specific case, we
+introduce a notion of <em>subtyping</em> that allows a type to be used in
+contexts that expect a different type. We say that type <span class="math notranslate nohighlight">\(S\)</span> is a
+<em>subtype</em> of type <span class="math notranslate nohighlight">\(T\)</span> if a term of type <span class="math notranslate nohighlight">\(S\)</span> can be
+substituted anywhere a term of type <span class="math notranslate nohighlight">\(T\)</span> is expected. We use the
+notation <span class="math notranslate nohighlight">\(S &lt;: T\)</span> to denote that <span class="math notranslate nohighlight">\(S\)</span> is a subtype of
+<span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p>The subtype relation <span class="math notranslate nohighlight">\(&lt;:\)</span> must satisfy the following
+requirements:</p>
+<ul class="simple">
+<li><p>It is <em>reflexive</em>, meaning that for any type <span class="math notranslate nohighlight">\(S\)</span>, it must be
+that <span class="math notranslate nohighlight">\(S &lt;: S\)</span>, so that <span class="math notranslate nohighlight">\(S\)</span> is a subtype of itself.</p></li>
+<li><p>It is <em>transitive</em>, so that <span class="math notranslate nohighlight">\(S &lt;: T\)</span> and <span class="math notranslate nohighlight">\(T &lt;: U\)</span>
+implies that <span class="math notranslate nohighlight">\(S &lt;: U\)</span>.</p></li>
+</ul>
+<p>Thus, the subtype relation must be a <em>preorder</em>. In many languages,
+the subtype relation is also a <em>partial order</em>, additionally
+satisfying the following:</p>
+<ul class="simple">
+<li><p>It is <em>antisymmetric</em>, so that <span class="math notranslate nohighlight">\(S &lt;: T\)</span> and <span class="math notranslate nohighlight">\(T &lt;: S\)</span>
+implies that <span class="math notranslate nohighlight">\(S = T\)</span>.</p></li>
+</ul>
+<p>In our working language, we specify that <span class="math notranslate nohighlight">\(Int\)</span> is a subtype of
+<span class="math notranslate nohighlight">\(Float\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[Int &lt;: Float\]</div>
+<p>To allow our type system to accommodate subtyping, we introduce a new
+typing rule, called the <em>subsumption</em> rule, to enable a subtype to be
+used where a supertype is expected:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t ~:~ S
+  ~~~~~~~~~~
+  S &lt;: T
+}{
+  \Gamma ~\vdash~ t ~:~ T
+}\]</div>
+<p>This rule states that if the type of term <span class="math notranslate nohighlight">\(t\)</span> has been computed
+as <span class="math notranslate nohighlight">\(S\)</span>, and <span class="math notranslate nohighlight">\(S\)</span> is a subtype of <span class="math notranslate nohighlight">\(T\)</span>, then we can
+also conclude that <span class="math notranslate nohighlight">\(t\)</span> has type <span class="math notranslate nohighlight">\(T\)</span>. This allows a
+function that expects a <span class="math notranslate nohighlight">\(Float\)</span> to be applied to an <span class="math notranslate nohighlight">\(Int\)</span>
+as well:</p>
+<div class="math notranslate nohighlight">
+\[\cfrac{
+  \Gamma ~\vdash~ f ~:~ Float \rightarrow Float
+  ~~~~~~~~~~
+  \cfrac{
+    \Gamma ~\vdash~ x ~:~ Int
+    ~~~~~~~~~~
+    Int &lt;: Float
+  }{
+    \Gamma ~\vdash~ x ~:~ Float
+  }
+}{
+  \Gamma ~\vdash~ (f~ x) ~:~ Float
+}\]</div>
+<section id="subtyping-and-arithmetic-operators">
+<h3>Subtyping and Arithmetic Operators<a class="headerlink" href="#subtyping-and-arithmetic-operators" title="Link to this heading"></a></h3>
+<p>It may be tempting to rewrite the rules for arithmetic operators on
+numbers to require both operands to be of the <span class="math notranslate nohighlight">\(Float\)</span> type:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Float ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Float
+}{
+  \Gamma ~\vdash~ (t_1 + t_2) ~:~ Float
+}\]</div>
+<p>However, such a rule always produces a <span class="math notranslate nohighlight">\(Float\)</span> as a result. This
+precludes us from using the result as an argument to a function that
+expects an <span class="math notranslate nohighlight">\(Int\)</span> as its argument: it is not the case that
+<span class="math notranslate nohighlight">\(Float &lt;: Int\)</span>, so we cannot use a <span class="math notranslate nohighlight">\(Float\)</span> in a context
+that requires <span class="math notranslate nohighlight">\(Int\)</span>.</p>
+<p>Instead, we need to rewrite the rule such that it produces a
+<span class="math notranslate nohighlight">\(Float\)</span> when at least one of the operands is a <span class="math notranslate nohighlight">\(Float\)</span>,
+but it results in an <span class="math notranslate nohighlight">\(Int\)</span> if both operands are <span class="math notranslate nohighlight">\(Int\)</span>s.
+More generally, we desire the following, where <span class="math notranslate nohighlight">\(T_1\)</span> and
+<span class="math notranslate nohighlight">\(T_2\)</span> are the types of the two operands:</p>
+<ul>
+<li><p>Both operands are of numerical type. In our language, this means that
+they are each of a type that is some subtype of <span class="math notranslate nohighlight">\(Float\)</span>. Thus,
+we require that <span class="math notranslate nohighlight">\(T_1 &lt;: Float\)</span> and <span class="math notranslate nohighlight">\(T_2 &lt;: Float\)</span>.</p></li>
+<li><p>The result is the <em>least upper bound</em>, or <em>join</em>, of the two operand
+types. This means that the result type is the minimal type <span class="math notranslate nohighlight">\(T\)</span>
+such that <span class="math notranslate nohighlight">\(T_1 &lt;: T\)</span> and <span class="math notranslate nohighlight">\(T_2 &lt;: T\)</span>. We use the notation
+<a class="footnote-reference brackets" href="#id9" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> <span class="math notranslate nohighlight">\(T = T_1 \sqcup T_2\)</span> to denote that <span class="math notranslate nohighlight">\(T\)</span> is the join
+of <span class="math notranslate nohighlight">\(T_1\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span>.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id9" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">4</a><span class="fn-bracket">]</span></span>
+<p>The symbols <span class="math notranslate nohighlight">\(\vee\)</span> and <span class="math notranslate nohighlight">\(\cup\)</span> are also commonly
+used to denote the least upper bound. However, we will stick
+to <span class="math notranslate nohighlight">\(\sqcup\)</span> to avoid confusion with disjunction and set
+union.</p>
+</aside>
+</aside>
+<p>Since <span class="math notranslate nohighlight">\(S &lt;: S\)</span>, it is always the case that <span class="math notranslate nohighlight">\(S = S \sqcup
+S\)</span>. Thus, in our language, we have <span class="math notranslate nohighlight">\(Int = Int \sqcup Int\)</span>,
+<span class="math notranslate nohighlight">\(Float = Float \sqcup Float\)</span>, and <span class="math notranslate nohighlight">\(Float = Int \sqcup
+Float\)</span>.</p>
+</li>
+</ul>
+<p>Putting these requirements together, we can define the typing rule for
+addition as follows:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_1 ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ T_2
+  ~~~~~~~~~~
+  T_1 &lt;: Float ~~~~~~~~~~ T_2 &lt;: Float
+  ~~~~~~~~~~
+  T = T_1 \sqcup T_2
+}{
+  \Gamma ~\vdash~ (t_1 + t_2) ~:~ T
+}\]</div>
+<p>Subtraction and multiplication can be similarly defined.</p>
+</section>
+<section id="the-top-type">
+<h3>The Top Type<a class="headerlink" href="#the-top-type" title="Link to this heading"></a></h3>
+<p>Many languages include a <span class="math notranslate nohighlight">\(Top\)</span> type, also written as
+<span class="math notranslate nohighlight">\(\top\)</span>, that is a supertype of every other type in the language.
+Thus, for any type <span class="math notranslate nohighlight">\(S\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[S &lt;: Top\]</div>
+<p>The <span class="math notranslate nohighlight">\(Top\)</span> type corresponds to the <span class="math notranslate nohighlight">\(Object\)</span> type in many
+object-oriented languages. For example, the <code class="docutils literal notranslate"><span class="pre">object</span></code> type in Python
+is a supertype of every other type.</p>
+<p>Introducing <span class="math notranslate nohighlight">\(Top\)</span> into our language ensures that a join exists
+for every pair of types in the language. However, it is not
+necessarily the case in general that a particular language has a join
+for every pair of types, even if it has a <span class="math notranslate nohighlight">\(Top\)</span> type.</p>
+<p>The existence of a join for each pair of types allows us to loosen
+the typing rule for conditionals:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Bool
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_2 ~:~ T_2
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_3 ~:~ T_3
+  ~~~~~~~~~~
+  T = T_2 \sqcup T_3
+}{
+  \Gamma ~\vdash~ (\textbf{if}~ t_1 ~\textbf{then}~ t_2 ~\textbf{else}~ t_3)
+    ~:~ T
+}\]</div>
+<p>Rather than requiring that both branches have exactly the same type,
+we allow each branch to have an arbitrary type. Since we can always
+compute the join of the two types in our language, the resulting type
+of the conditional is the join of the types of the branches.</p>
+</section>
+<section id="subtyping-and-functions">
+<h3>Subtyping and Functions<a class="headerlink" href="#subtyping-and-functions" title="Link to this heading"></a></h3>
+<p>In a language with higher-order functions, subtyping is also
+applicable to function types. There are contexts where it would be
+semantically valid to accept a function type that is different from
+the one that is expected. For instance, consider the following
+higher-order function:</p>
+<div class="math notranslate nohighlight">
+\[(\textbf{lambda}~ f : Int \rightarrow Bool .~ (f~ 3))\]</div>
+<p>This function takes in another function <span class="math notranslate nohighlight">\(f\)</span> as an argument and
+then applies <span class="math notranslate nohighlight">\(f\)</span> to an <span class="math notranslate nohighlight">\(Int\)</span>. If the actual function
+provided as an argument had type <span class="math notranslate nohighlight">\(Float \rightarrow Bool\)</span>
+instead, it would still be semantically valid to invoke it on an
+<span class="math notranslate nohighlight">\(Int\)</span>. Thus, it should be the case that <span class="math notranslate nohighlight">\(Float \rightarrow
+Bool &lt;: Int \rightarrow Bool\)</span>, since the former can be used in
+contexts that expect the latter.</p>
+<p>Now consider another higher-order function:</p>
+<div class="math notranslate nohighlight">
+\[(\textbf{lambda}~ f : Int \rightarrow Float .~ (f~ 3))\]</div>
+<p>This new function takes in a function <span class="math notranslate nohighlight">\(f\)</span> and applies it to an
+<span class="math notranslate nohighlight">\(Int\)</span> to produce a <span class="math notranslate nohighlight">\(Float\)</span>. However, if the function we
+provide as the argument has type <span class="math notranslate nohighlight">\(Int \rightarrow Int\)</span>, it would
+produce an <span class="math notranslate nohighlight">\(Int\)</span>; the latter is a valid substitution for a
+<span class="math notranslate nohighlight">\(Float\)</span>, making such an argument semantically valid. Thus, it
+should also be the case that <span class="math notranslate nohighlight">\(Int \rightarrow Int &lt;: Int
+\rightarrow Float\)</span>.</p>
+<p>Putting both cases together, we end up with the following subtyping
+rule for functions:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  T_1 &lt;: S_1 ~~~~~~~~~~ S_2 &lt;: T_2
+}{
+  S_1 \rightarrow S_2 &lt;: T_1 \rightarrow T_2
+}\]</div>
+<p>A function that accepts parameters of type <span class="math notranslate nohighlight">\(S_1\)</span> accepts more
+general argument values than one that accepts type <span class="math notranslate nohighlight">\(T_1\)</span>; the
+former has a more general <em>domain</em> than the latter. Any contexts that
+expect to pass a <span class="math notranslate nohighlight">\(T_1\)</span> as an argument would be just as well
+served if the function accepts an <span class="math notranslate nohighlight">\(S_1\)</span>. Thus, the function type
+that accepts an <span class="math notranslate nohighlight">\(S_1\)</span> should be substitutable for the function
+type that accepts a <span class="math notranslate nohighlight">\(T_1\)</span>.</p>
+<p>A function that produces a return value of type <span class="math notranslate nohighlight">\(S_2\)</span> has a more
+restricted set of outputs, or <em>codomain</em>, than a function that produces
+a <span class="math notranslate nohighlight">\(T_2\)</span>. Any context that expects a <span class="math notranslate nohighlight">\(T_2\)</span> as output would
+be just as well served by an <span class="math notranslate nohighlight">\(S_2\)</span> as output. Thus, the function
+type that produces an <span class="math notranslate nohighlight">\(S_2\)</span> should be substitutable for the
+function type that produces a <span class="math notranslate nohighlight">\(T_2\)</span>.</p>
+<p>The subtyping rule permits a <em>contravariant</em> parameter type in the
+function subtype: it is contravariant since the direction of the
+relation <span class="math notranslate nohighlight">\(&lt;:\)</span> is reversed for the parameter types compared to
+the relation for the function types. The rule also permits a
+<em>covariant</em> return type, since the direction of <span class="math notranslate nohighlight">\(&lt;:\)</span> is the same
+for the return types and the function types.</p>
+<p>Covariant return types often appear in object-oriented languages in a
+different context, that of overriding a base class’s method, for the
+same semantic reasons they are valid here. We will discuss
+<a class="reference internal" href="data.html#covariance-and-contravariance"><span class="std std-ref">covariance and contravariance</span></a>
+in object-oriented programming in more detail later.</p>
+</section>
+</section>
+<section id="full-typing-rules">
+<h2>Full Typing Rules<a class="headerlink" href="#full-typing-rules" title="Link to this heading"></a></h2>
+<p>Putting together all the features we have discussed, the following are
+the rules for subtyping:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(Top\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[S &lt;: Top\]</div>
+</li>
+<li><p>Numbers:</p>
+<div class="math notranslate nohighlight">
+\[Int &lt;: Float\]</div>
+</li>
+<li><p>Functions:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  T_1 &lt;: S_1 ~~~~~~~~~~ S_2 &lt;: T_2
+}{
+  S_1 \rightarrow S_2 &lt;: T_1 \rightarrow T_2
+}\]</div>
+</li>
+<li><p>Subsumption:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t ~:~ S
+  ~~~~~~~~~~
+  S &lt;: T
+}{
+  \Gamma ~\vdash~ t ~:~ T
+}\]</div>
+</li>
+</ul>
+<p>The typing rules for each kind of term are as follows:</p>
+<ul>
+<li><p>Literals:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ IntegerLiteral ~:~ Int
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ \textbf{true} ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ \textbf{false} ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+}{
+  \vdash~ FloatingLiteral ~:~ Float
+}\]</div>
+</li>
+<li><p>Arithmetic:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_1 ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ T_2
+  ~~~~~~~~~~
+  T_1 &lt;: Float ~~~~~~~~~~ T_2 &lt;: Float
+  ~~~~~~~~~~
+  T = T_1 \sqcup T_2
+}{
+  \Gamma ~\vdash~ (t_1 + t_2) ~:~ T
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_1 ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ T_2
+  ~~~~~~~~~~
+  T_1 &lt;: Float ~~~~~~~~~~ T_2 &lt;: Float
+  ~~~~~~~~~~
+  T = T_1 \sqcup T_2
+}{
+  \Gamma ~\vdash~ (t_1 - t_2) ~:~ T
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_1 ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ T_2
+  ~~~~~~~~~~
+  T_1 &lt;: Float ~~~~~~~~~~ T_2 &lt;: Float
+  ~~~~~~~~~~
+  T = T_1 \sqcup T_2
+}{
+  \Gamma ~\vdash~ (t_1 * t_2) ~:~ T
+}\]</div>
+</li>
+<li><p>Comparisons <a class="footnote-reference brackets" href="#id11" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>:</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id11" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">5</a><span class="fn-bracket">]</span></span>
+<p>We avoid unnecessary conversions in this rule, in light of
+the fact that many implementations use different
+representations for integer and floating-point values. Of
+course, such an implementation would still require a
+conversion when the operand types are different.</p>
+</aside>
+</aside>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_1 ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ T_2
+  ~~~~~~~~~~
+  T_1 &lt;: Float ~~~~~~~~~~ T_2 &lt;: Float
+}{
+  \Gamma ~\vdash~ (t_1 &lt;= t_2) ~:~ Bool
+}\]</div>
+</li>
+<li><p>Logic:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Bool ~~~~~~~~~~ \Gamma ~\vdash~ t_2 ~:~ Bool
+}{
+  \Gamma ~\vdash~ (t_1 ~\textbf{and}~ t_2) ~:~ Bool
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t ~:~ Bool
+}{
+  \Gamma ~\vdash~ \textbf{not}~ t ~:~ Bool
+}\]</div>
+</li>
+<li><p>Conditionals:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ Bool
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_2 ~:~ T_2
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_3 ~:~ T_3
+  ~~~~~~~~~~
+  T = T_2 \sqcup T_3
+}{
+  \Gamma ~\vdash~ (\textbf{if}~ t_1 ~\textbf{then}~ t_2 ~\textbf{else}~ t_3)
+    ~:~ T
+}\]</div>
+</li>
+<li><p>Variables:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  v : T \in \Gamma
+}{
+  \Gamma ~\vdash~ v ~:~ T
+}\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\bf let\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_1
+  ~~~~~~~~~~
+  \Gamma, v : T_1 ~\vdash~ t_2 ~:~ T_2
+}{
+  \Gamma ~\vdash~ (\textbf{let}~ v = t_1 ~ \textbf{in}~ t_2) ~:~ T_2
+}\]</div>
+</li>
+<li><p>Function abstraction and application:</p>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma, v : T_1 ~\vdash~ t_2 ~:~ T_2
+}{
+  \Gamma ~\vdash~ (\textbf{lambda}~ v : T_1 .~ t_2) ~:~ T_1 \rightarrow T_2
+}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{
+  \Gamma ~\vdash~ t_1 ~:~ T_2 \rightarrow T_3
+  ~~~~~~~~~~
+  \Gamma ~\vdash~ t_2 ~:~ T_2
+}{
+  \Gamma ~\vdash~ (t_1~ t_2) ~:~ T_3
+}\]</div>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="functional.html" class="btn btn-neutral float-left" title="Introduction to Scheme" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data.html" class="btn btn-neutral float-right" title="Functional Data Abstraction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016, Amir Kamil, licensed under the Creative Commons Attribution-ShareAlike 4.0 International license.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+
+<!-- Mirrored from eecs390.github.io/notes/theory.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Mar 2024 18:15:44 GMT -->
+</html>

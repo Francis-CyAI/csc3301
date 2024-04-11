@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+
+<!-- Mirrored from eecs390.github.io/notes/search.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Mar 2024 18:15:34 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search &mdash; Programming Language Principles and Paradigms 0.4 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/style-extra.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
+    
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery3b25.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compatfa9a.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options804b.js?v=7f00635f"></script>
+        <script src="_static/doctools56c1.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight7f57.js?v=dc90522c"></script>
+        <script src="_static/js-extraf31b.js?v=c32e72a1"></script>
+        <script src="_static/dark_mode_js/default_light679c.js?v=c2e647ce"></script>
+        <script src="_static/dark_mode_js/theme_switcher2b7c.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="#" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #C53390" >
+
+          
+          
+          <a href="index-2.html" class="icon icon-home">
+            Programming Language Principles and Paradigms
+          </a>
+              <div class="version">
+                0.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Foundations</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#basic-python">Basic Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#basic-data-structures">Basic Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#compound-statements">Compound Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#function-definitions">Function Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#class-definitions">Class Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#modules">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#executing-a-module">Executing a Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#python-reference-semantics">Python Reference Semantics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#basic-elements">Basic Elements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#levels-of-description">Levels of Description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#lexical-structure">Lexical Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#syntax">Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#semantics">Semantics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#entities-objects-and-variables">Entities, Objects, and Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#l-values-and-r-values">L-Values and R-Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#expressions">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#statements">Statements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#names-and-environments">Names and Environments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#blocks">Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#name-lookup">Name Lookup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#nested-inline-blocks">Nested Inline Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#scope-in-functions">Scope in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#id2">Static Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#dynamic-scope">Dynamic Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#point-of-declaration-or-definition">Point of Declaration or Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#implementation-strategies">Implementation Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#control-flow">Control Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#expression-sequencing">Expression Sequencing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#short-circuiting">Short Circuiting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#explicit-sequences">Explicit Sequences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#compound-assignment">Compound Assignment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#statement-sequences">Statement Sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#unstructured-transfer-of-control">Unstructured Transfer of Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#structured-control">Structured Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#conditionals">Conditionals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#loops">Loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#loop-termination">Loop Termination</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#memory-management">Memory Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#storage-duration-classes">Storage Duration Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#static-storage">Static Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#automatic-storage">Automatic Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#thread-local-storage">Thread-Local Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#dynamic-storage">Dynamic Storage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#value-and-reference-semantics">Value and Reference Semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#raii-and-scope-based-resource-management">RAII and Scope-Based Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#garbage-collection">Garbage Collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#reference-counting">Reference Counting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#tracing-collectors">Tracing Collectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#finalizers">Finalizers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="foundations.html#grammars">Grammars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#regular-expressions">Regular Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#context-free-grammars">Context-Free Grammars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="foundations.html#grammars-in-programming-languages">Grammars in Programming Languages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="foundations.html#vexing-parse">Vexing Parse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Functional Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">Introduction to Scheme</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#expressions">Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#compound-values">Compound Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#symbolic-data">Symbolic Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#functions">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#keyword-arguments">Keyword Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#default-arguments">Default Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#variadic-functions">Variadic Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#parameter-passing">Parameter Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#evaluation-of-function-calls">Evaluation of Function Calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#recursion">Recursion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#activation-records">Activation Records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#tail-recursion">Tail Recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#higher-order-functions">Higher-Order Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#function-objects">Function Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#functions-as-parameters">Functions as Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#function-pointers">Function Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#binding-policy">Binding Policy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#nested-functions">Nested Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#decorators">Decorators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#lambda-functions">Lambda Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#scheme">Scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#java">Java</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#c">C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#common-patterns">Common Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#sequence-patterns">Sequence Patterns</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#map">Map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#reduce">Reduce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#filter">Filter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functional.html#any">Any</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#composition">Composition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#partial-application-and-currying">Partial Application and Currying</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html#continuations">Continuations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#restricted-continuations">Restricted Continuations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#subroutines">Subroutines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#generators">Generators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#first-class-continuations">First-Class Continuations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#signaling-errors">Signaling Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#call-and-return">Call and Return</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional.html#id11">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Lambda Calculus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#non-terminating-computation">Non-Terminating Computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#normal-order-evaluation">Normal-Order Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#encoding-data">Encoding Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#booleans">Booleans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#pairs">Pairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#church-numerals">Church Numerals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#recursion">Recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#equivalent-models">Equivalent Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html#operational-semantics">Operational Semantics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#language">Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#states-and-transitions">States and Transitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#expressions">Expressions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#arithmetic-expressions">Arithmetic Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#order-of-evaluation">Order of Evaluation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#boolean-expressions">Boolean Expressions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#statements">Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#operational-semantics-for-lambda-calculus">Operational Semantics for Lambda Calculus</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html#formal-type-systems">Formal Type Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#variables">Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#subtyping">Subtyping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#subtyping-and-arithmetic-operators">Subtyping and Arithmetic Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#the-top-type">The Top Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="theory.html#subtyping-and-functions">Subtyping and Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#full-typing-rules">Full Typing Rules</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data Abstraction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Functional Data Abstraction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#pairs-and-lists">Pairs and Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#message-passing">Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#lists">Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dictionaries">Dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#dispatch-dictionaries">Dispatch Dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#object-oriented-programming">Object-Oriented Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#members">Members</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#access-control">Access Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#kinds-of-methods">Kinds of Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#nested-and-local-classes">Nested and Local Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implementation-strategies">Implementation Strategies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#inheritance-and-polymorphism">Inheritance and Polymorphism</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#types-of-inheritance">Types of Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#class-hierarchies">Class Hierarchies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#method-overriding">Method Overriding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#covariance-and-contravariance">Covariance and Contravariance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#accessing-hidden-or-overridden-members">Accessing Hidden or Overridden Members</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implementing-dynamic-binding">Implementing Dynamic Binding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#full-lookup-and-dispatch-process">Full Lookup and Dispatch Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#multiple-inheritance">Multiple Inheritance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#dictionary-based-implementation">Dictionary-Based Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#record-based-implementation">Record-Based Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#static-analysis">Static Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#types">Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-equivalence">Type Equivalence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-compatibility">Type Compatibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#type-inference">Type Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#control-flow-analysis">Control-Flow Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#dynamic-typing">Dynamic Typing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#generics">Generics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#implicit-parametric-polymorphism">Implicit Parametric Polymorphism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#explicit-parametric-polymorphism">Explicit Parametric Polymorphism</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#non-type-parameters">Non-Type Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#constraints">Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#implementation">Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#java-generics">Java Generics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#curiously-recurring-template-pattern">Curiously Recurring Template Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#duck-typing">Duck Typing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html#modules-and-namespaces">Modules and Namespaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#translation-units">Translation Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#modules-packages-and-namespaces">Modules, Packages, and Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#linkage">Linkage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#information-hiding">Information Hiding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#initialization">Initialization</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Declarative Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html">Logic Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#prolog">Prolog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#lists">Lists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#arithmetic">Arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#side-effects">Side Effects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#unification-and-search">Unification and Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#search-order-and-backtracking">Search Order and Backtracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#the-cut-operator">The Cut Operator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#negation">Negation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html#constraints-and-dependencies">Constraints and Dependencies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#constraint-logic-programming">Constraint Logic Programming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#search">Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative.html#id2">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative.html#make">Make</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative.html#pattern-matching">Pattern Matching</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Metaprogramming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html">Macros and Code Generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#scheme-macros">Scheme Macros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#cpp-macros">CPP Macros</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metaprogramming.html#stringification-and-concatenation">Stringification and Concatenation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metaprogramming.html#the-macro-namespace">The Macro Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#code-generation">Code Generation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html#template-metaprogramming">Template Metaprogramming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#pairs">Pairs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#numerical-computations">Numerical Computations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#templates-and-function-overloading">Templates and Function Overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#sfinae">SFINAE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#ensuring-a-substitution-failure">Ensuring a Substitution Failure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#variadic-templates">Variadic Templates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metaprogramming.html#example-multidimensional-arrays">Example: Multidimensional Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#points">Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#domains">Domains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#arrays">Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#stencil">Stencil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metaprogramming.html#nested-iteration">Nested Iteration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Concurrent Programming</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.html">Parallel Computing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#parallelism-in-python">Parallelism in Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#threading">Threading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#multiprocessing">Multiprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#the-problem-with-shared-state">The Problem with Shared State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#when-no-synchronization-is-necessary">When No Synchronization is Necessary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#synchronized-data-structures">Synchronized Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#locks">Locks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#barriers">Barriers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#message-passing">Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#application-examples">Application Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#web-crawler">Web Crawler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#particle-simulator">Particle Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#synchronization-pitfalls">Synchronization Pitfalls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#under-synchronization">Under-synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#over-synchronization">Over-synchronization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html#deadlock">Deadlock</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concurrent.html#asynchronous-tasks">Asynchronous Tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#limiting-the-number-of-tasks">Limiting the Number of Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concurrent.html#launch-policy">Launch Policy</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #C53390" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index-2.html">Programming Language Principles and Paradigms</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index-2.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Search</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <noscript>
+  <div id="fallback" class="admonition warning">
+    <p class="last">
+      Please activate JavaScript to enable the search functionality.
+    </p>
+  </div>
+  </noscript>
+
+  
+  <div id="search-results">
+  
+  </div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2016, Amir Kamil, licensed under the Creative Commons Attribution-ShareAlike 4.0 International license.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+  <script>
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+  
+  <script id="searchindexloader"></script>
+   
+
+
+</body>
+
+<!-- Mirrored from eecs390.github.io/notes/search.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Mar 2024 18:15:35 GMT -->
+</html>

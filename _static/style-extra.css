@@ -1,0 +1,198 @@
+.wy-nav-top {
+  background: #C53390;
+}
+
+.wy-nav-content {
+  max-width: 1000px;
+}
+
+div.contents ul.simple ul {
+  margin-left:2em;
+}
+
+html[data-theme="dark"] img:not(.noinvert, .manual-invert) {
+  filter: invert(1);
+}
+
+html[data-theme="dark"] .rst-content .sidebar {
+  background: #232626;
+  border: #313435;
+}
+
+html[data-theme="dark"] .rst-content .sidebar .sidebar-title {
+  background: #313435;
+}
+
+html[data-theme="dark"] .rst-content aside.footnote code {
+  color: #999 !important;
+}
+
+html[data-theme="dark"] .btn-neutral {
+  color: #c1c1c1 !important;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* https://github.com/readthedocs/sphinx_rtd_theme/issues/117
+ * override table width restrictions */
+.wy-table-responsive table td, .wy-table-responsive table th {
+  /* !important prevents the common CSS stylesheets from
+     overriding this as on RTD they are loaded after this stylesheet */
+  white-space: normal !important;
+}
+
+.wy-table-responsive {
+  overflow: visible !important;
+}
+
+.rst-content .midbar {
+  float: unset;
+  width: 90%;
+}
+
+.rst-content .midbar ul {
+  font-size: 100%;
+}
+
+.theme-switcher {
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+}
+
+html[data-theme="dark"] .highlight .bp {
+  color: #0eff0e;
+}
+html[data-theme="dark"] .highlight .c,
+html[data-theme="dark"] .highlight .c1,
+html[data-theme="dark"] .highlight .ch,
+html[data-theme="dark"] .highlight .cm,
+html[data-theme="dark"] .highlight .cs {
+  color: #888 !important;
+}
+html[data-theme="dark"] .highlight .cp {
+  color: #dd940f;
+}
+html[data-theme="dark"] .highlight .cpf {
+  color: #55b1b1;
+}
+html[data-theme="dark"] .highlight .dl {
+  color: #c79999;
+}
+html[data-theme="dark"] .highlight .fm {
+  color: #9d9de5;
+}
+html[data-theme="dark"] .highlight .gh,
+html[data-theme="dark"] .highlight .gp {
+  color: #7979fc;
+}
+html[data-theme="dark"] .highlight .gi {
+  color: #00ce00;
+}
+html[data-theme="dark"] .highlight .go {
+  color: #999;
+}
+html[data-theme="dark"] .highlight .gr {
+  color: #de9e9e;
+}
+html[data-theme="dark"] .highlight .gt {
+  color: #abc2f6;
+}
+html[data-theme="dark"] .highlight .gu {
+  color: #ea79ea;
+}
+html[data-theme="dark"] .highlight .il {
+  color: #ee8b20 !important;
+}
+html[data-theme="dark"] .highlight .k,
+html[data-theme="dark"] .highlight .kc,
+html[data-theme="dark"] .highlight .kd,
+html[data-theme="dark"] .highlight .kn,
+html[data-theme="dark"] .highlight .kp,
+html[data-theme="dark"] .highlight .kr {
+  color: #00be00;
+}
+html[data-theme="dark"] .highlight .kt {
+  color: #ff74a7;
+}
+html[data-theme="dark"] .highlight .m {
+  color: #a3a3a3;
+}
+html[data-theme="dark"] .highlight .mb,
+html[data-theme="dark"] .highlight .mf,
+html[data-theme="dark"] .highlight .mh,
+html[data-theme="dark"] .highlight .mi,
+html[data-theme="dark"] .highlight .mo {
+  color: #ee8b20 !important;
+}
+html[data-theme="dark"] .highlight .na {
+  color: #96ad32;
+}
+html[data-theme="dark"] .highlight .nb {
+  color: #00be00;
+}
+html[data-theme="dark"] .highlight .nc,
+html[data-theme="dark"] .highlight .nf,
+html[data-theme="dark"] .highlight .nn {
+  color: #31abfb !important;
+}
+html[data-theme="dark"] .highlight .nd {
+  color: #be96d6;
+}
+html[data-theme="dark"] .highlight .ne {
+  color: #ec8681;
+}
+html[data-theme="dark"] .highlight .ni {
+  color: #999;
+}
+html[data-theme="dark"] .highlight .nl {
+  color: #aaaa4d;
+}
+html[data-theme="dark"] .highlight .no {
+  color: #e3c7c7;
+}
+html[data-theme="dark"] .highlight .nt {
+  color: #00be00;
+}
+html[data-theme="dark"] .highlight .nv {
+  color: #a8a7c4;
+}
+html[data-theme="dark"] .highlight .o {
+  color: #c2ba78;
+}
+html[data-theme="dark"] .highlight .ow {
+  color: #cd86fa;
+}
+html[data-theme="dark"] .highlight .s {
+  color: #b3e87f;
+}
+html[data-theme="dark"] .highlight .s1,
+html[data-theme="dark"] .highlight .s2,
+html[data-theme="dark"] .highlight .sd,
+html[data-theme="dark"] .highlight .sh {
+  color: #ff3e3e;
+}
+html[data-theme="dark"] .highlight .sa,
+html[data-theme="dark"] .highlight .sb,
+html[data-theme="dark"] .highlight .sc {
+  color: #c79999;
+}
+html[data-theme="dark"] .highlight .se {
+  color: #ca9a74;
+}
+html[data-theme="dark"] .highlight .si,
+html[data-theme="dark"] .highlight .sr {
+  color: #d48faa;
+}
+html[data-theme="dark"] .highlight .ss {
+  color: #a8a7c4;
+}
+html[data-theme="dark"] .highlight .sx {
+  color: #00be00;
+}
+html[data-theme="dark"] .highlight .vc,
+html[data-theme="dark"] .highlight .vg,
+html[data-theme="dark"] .highlight .vi,
+html[data-theme="dark"] .highlight .vm {
+  color: #a8a7c4;
+}
